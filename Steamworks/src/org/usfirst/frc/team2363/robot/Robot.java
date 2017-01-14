@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 
 
 /**
@@ -24,12 +25,14 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 	public static Drivetrain drivetrain;
+	public static GearGrabber gearGrabber;
 	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
     public Robot() {
     	drivetrain = new Drivetrain();
+    	gearGrabber = new GearGrabber();
     }
     
 	/**

@@ -4,15 +4,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import static org.usfirst.frc.team2363.robot.RobotMap.L2;
-import static org.usfirst.frc.team2363.robot.RobotMap.LEFT_STICK_Y;
-import static org.usfirst.frc.team2363.robot.RobotMap.PS4_PORT;
-import static org.usfirst.frc.team2363.robot.RobotMap.R2;
-import static org.usfirst.frc.team2363.robot.RobotMap.RIGHT_STICK_X;
-import static org.usfirst.frc.team2363.robot.RobotMap.RIGHT_STICK_Y;
+import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
+import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -52,8 +49,12 @@ public class OI {
 		//Controllers
 		ps4Controller = new Joystick(PS4_PORT);
 		
-		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive());
-		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());
+		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); //Colson Wheels
+		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  //Omni Wheels
+		//Sucks in the gear
+		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.IN));
+		//Pushes out the gear
+		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.OUT));
 	}
 	
 	public boolean isFrontDeployed() {
