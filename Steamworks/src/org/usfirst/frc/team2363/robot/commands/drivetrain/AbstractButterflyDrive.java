@@ -6,16 +6,19 @@ import static org.usfirst.frc.team2363.robot.Robot.*;
 public abstract class AbstractButterflyDrive extends Command {
 	
 	public AbstractButterflyDrive() {
+		// needs code from the drivetrain subsystem
 		requires(drivetrain);
 	}
 	
 	@Override
 	protected void initialize() {
+		// colson drive
 		defaultDrive();
 	}
 
 	@Override
 	protected void execute() {
+		// retracts the omniwheels opposite of the ones deployed
 		if (oi.isFrontDeployed()) {
 			drivetrain.deployFront();
 			drivetrain.retractRear();
@@ -23,9 +26,11 @@ public abstract class AbstractButterflyDrive extends Command {
 			drivetrain.deployRear();
 			drivetrain.retractFront();
 		} else {
+			// colson drive (no omniwheels)
 			defaultDrive();
 		}
 		
+		// reads speed and turn angle when driving
 		drivetrain.arcadeDrive(oi.getThrottle(), oi.getTurn());
 	}
 	
@@ -33,6 +38,7 @@ public abstract class AbstractButterflyDrive extends Command {
 
 	@Override
 	protected boolean isFinished() {
+		// doesn't end
 		return false;
 	}
 

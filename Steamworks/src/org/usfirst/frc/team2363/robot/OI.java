@@ -49,27 +49,31 @@ public class OI {
 		//Controllers
 		ps4Controller = new Joystick(PS4_PORT);
 		
-		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); //Colson Wheels
-		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  //Omni Wheels
-		//Sucks in the gear
+		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); // Colson Wheels
+		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  // Omni Wheels
+		// Sucks in the gear
 		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.IN));
-		//Pushes out the gear
+		// Pushes out the gear
 		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.OUT));
 	}
 	
+	// front omni wheels
 	public boolean isFrontDeployed() {
 		return ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6;
 	}
 	
+	// back omni wheels
 	public boolean isRearDeployed() {
 		return ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6;
 	}
 	
+	// speed
 	public double getThrottle () {
 		return -ps4Controller.getRawAxis(LEFT_STICK_Y);
 
 	}
 	
+	// turn angle
 	public double getTurn() {
 		return -ps4Controller.getRawAxis(RIGHT_STICK_X);
 	}

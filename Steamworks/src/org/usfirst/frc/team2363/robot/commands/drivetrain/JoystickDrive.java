@@ -21,11 +21,13 @@ public class JoystickDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	// drives using speed and turn angle given from controller
     	drivetrain.arcadeDrive(oi.getThrottle(), oi.getTurn());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	// doesn't end
         return false;
     }
 

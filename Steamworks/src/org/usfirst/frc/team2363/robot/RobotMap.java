@@ -44,6 +44,9 @@ public class RobotMap {
 	//Gear Grabber Talons
 	public static final int GEAR_GRABBER_TALON = 4;
 	
+	//Gear Grabber Limit Switch
+	public static final int GEAR_LIMIT_CHANNEL = 0;
+	
 	//Solenoids
 	public static final int FRONT_DROPDOWN_1 = 6;
 	public static final int FRONT_DROPDOWN_2 = 1;

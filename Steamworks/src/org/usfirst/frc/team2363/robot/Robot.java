@@ -22,15 +22,19 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
  */
 public class Robot extends IterativeRobot {
 
-	
+	// ps4 interface class
 	public static OI oi;
+	
+	// subsystems
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
 	
+	// declare SmartDashboard tools
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
     public Robot() {
+    	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
     }
@@ -41,9 +45,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// declare ps4 interface
 		oi = new OI();
+		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new JoystickDrive());
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -59,6 +66,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
 	}
 
@@ -75,6 +83,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		// reads the selected autonomous mode from SmartDashboard
 		autonomousCommand = chooser.getSelected();
 
 		/*
@@ -94,6 +103,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
 	}
 
@@ -112,6 +122,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
 	}
 
@@ -120,6 +131,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		// brings up a window with the state of the robot parts
 		LiveWindow.run();
 	}
 }
