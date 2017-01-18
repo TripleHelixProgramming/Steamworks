@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
+import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 
 
 /**
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
+	public static Shooter shooter;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
+    	shooter = new Shooter();
     }
     
 	/**
@@ -61,13 +64,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		shooter.off();
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		SmartDashboard.putNumber("Shooter Error", shooter.getError());
 	}
 
 	/**
@@ -124,6 +129,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+        SmartDashboard.putNumber("Shooter Error", shooter.getError());
 	}
 
 	/**
