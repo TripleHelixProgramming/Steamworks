@@ -77,4 +77,11 @@ public class OI {
 	public double getTurn() {
 		return -ps4Controller.getRawAxis(RIGHT_STICK_X);
 	}
+	
+	/*
+	 * Returns a boolean dependent on the state of the SHARE button for macro recording
+	 */
+	public boolean getMacroRecord() {
+		return ps4Controller.getRawButton(SHARE);
+	}
 }

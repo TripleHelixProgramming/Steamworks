@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2363.robot.btMacro.BTMain;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
+	public static BTMain btMain;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -37,6 +39,7 @@ public class Robot extends IterativeRobot {
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
+    	btMain = new BTMain();
     }
     
 	/**
@@ -61,7 +64,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		btMain.isAuto = false;
+		btMain.isTele = false;
 	}
 
 	@Override
@@ -96,6 +100,8 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+		btMain.isAuto = true;
+		btMain.isTele = false;
 	}
 
 	/**
@@ -115,6 +121,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		btMain.isAuto = false;
+		btMain.isTele = true;
 	}
 
 	/**
