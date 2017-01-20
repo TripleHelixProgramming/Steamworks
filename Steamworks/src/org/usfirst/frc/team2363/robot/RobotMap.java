@@ -52,4 +52,6 @@ public class RobotMap {
 	public static final int FRONT_DROPDOWN_2 = 1;
 	public static final int REAR_DROPDOWN_1 = 5;
 	public static final int REAR_DROPDOWN_2 = 2;
+	public static final int GEAR_GRABBER_SOLENOID_A = 3;
+	public static final int GEAR_GRABBER_SOLENOID_B = 4;
 }
