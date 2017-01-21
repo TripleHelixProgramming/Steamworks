@@ -6,11 +6,15 @@ import java.io.IOException;
 
 import org.usfirst.frc.team2363.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team2363.robot.btMacro.RecordState;
+import static org.usfirst.frc.team2363.robot.RobotMap.TOUCHPAD;
 
 
-public class BTMain 
+
+public class BTMain extends Subsystem
 {
-	boolean isRecording = false;
+	public boolean isRecording = false;
 	//autoNumber defines an easy way to change the file you are recording to/playing from, in case you want to make a
 	//few different auto programs
 	static final int autoNumber = 10;
@@ -80,15 +84,12 @@ public class BTMain
 			e.printStackTrace();
 		}
 		
-    	while(isTele)
+    	while(isRecording)
     	{
-    		//the statement in this "if" checks if a button you designate as your record button 
-    		//has been pressed, and stores the fact that it has been pressed in a variable
-    		if (Robot.oi.getMacroRecord())
+    		if (Robot.oi.ps4Controller.getRawButton(TOUCHPAD))
 			{
     			isRecording = !isRecording;
 			}  
-			//if our record button has been pressed, lets start recording!
 			if (isRecording)
 			{
     			try
@@ -128,5 +129,10 @@ public class BTMain
     {
 
     }
+    
+	@Override
+	protected void initDefaultCommand() {
+//		setDefaultCommand(new RecordState(false));
+	}
 }
 

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.btMacro.RecordState;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
@@ -43,7 +44,7 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
-	private Joystick ps4Controller;
+	public Joystick ps4Controller;
 
 	public OI() {
 		//Controllers
@@ -55,6 +56,10 @@ public class OI {
 		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.IN));
 		// Pushes out the gear
 		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.OUT));
+		// Start recording
+		new JoystickButton(ps4Controller, SHARE).whenPressed(new RecordState(true));
+		//Stop recording
+		new JoystickButton(ps4Controller, OPTIONS).whenPressed(new RecordState(false));
 	}
 	
 	// front omni wheels
@@ -82,6 +87,6 @@ public class OI {
 	 * Returns a boolean dependent on the state of the SHARE button for macro recording
 	 */
 	public boolean getMacroRecord() {
-		return ps4Controller.getRawButton(SHARE);
+		return ps4Controller.getRawButton(OPTIONS);
 	}
 }

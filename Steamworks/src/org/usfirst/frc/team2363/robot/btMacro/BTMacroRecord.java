@@ -49,7 +49,7 @@ public class BTMacroRecord {
 		//the 2015 robot used the following motors during auto
 		
 		//drive motors
-		writer.append("," + Robot.drivetrain.FrontLeft.get());
+		writer.append("," + Robot.oi.getTurn());
 /*		writer.append("," + storage.robot.getFrontLeftMotor().get());
 		writer.append("," + storage.robot.getFrontRightMotor().get());
 		writer.append("," + storage.robot.getBackRightMotor().get());		

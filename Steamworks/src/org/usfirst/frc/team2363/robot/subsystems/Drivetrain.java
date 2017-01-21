@@ -20,7 +20,7 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
 	
 	//  Talons
-	public CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
+	private CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
 	private CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
 	private CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
 	private CANTalon RearRight = new CANTalon(REAR_RIGHT_TALON_ID);
