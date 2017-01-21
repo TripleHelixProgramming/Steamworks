@@ -37,14 +37,11 @@ public class GearGrabberCommand extends Command {
     			// turns gear grabber inwards
     			gearGrabber.in();
     		}
-    	} else if (run == GearGrabberState.OUT) {
-    		// turns gear grabber outwards
-    		gearGrabber.out();
-    	} else {
+    	}  else {
     		// keeps gear grabber still
     		gearGrabber.off();
-    	}
-    	
+    	} 
+    		
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -62,3 +59,5 @@ public class GearGrabberCommand extends Command {
     protected void interrupted() {
     }
 }
+
+
