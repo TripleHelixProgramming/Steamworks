@@ -7,26 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterCommand extends Command {
-	
-	private boolean run;
+public class StopShooter extends Command {
 
-    public ShooterCommand(boolean run) {
-    	requires(Robot.shooter);
-    	this.run = run;
+    public StopShooter() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (run) {
-    		Robot.shooter.setPower(Robot.shooter.getOutput());
-    	} else {
-    		Robot.shooter.setPower(0);
-    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.shooter.setPower(0);
+    	Robot.shooter.getRPM();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -48,8 +48,9 @@ public class RobotMap {
 	public static final int GEAR_LIMIT_CHANNEL = 0;
 	
 	public static final int SHOOTER_TALON = 40;
-	
 	public static final int SHOOTER_ENCODER = 1;
+	
+	public static final int FEEDER_TALON = 50;
 	
 	//Solenoids
 	public static final int FRONT_DROPDOWN_1 = 6;
