@@ -8,6 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import static org.usfirst.frc.team2363.robot.RobotMap.TOUCHPAD;
+
+import java.io.IOException;
+
+import org.usfirst.frc.team2363.robot.btMacro.BTMacroRecord;
 import org.usfirst.frc.team2363.robot.btMacro.BTMain;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
@@ -30,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
 	public static BTMain btMain;
+	BTMacroRecord recorder = null;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -55,6 +61,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
+		
 	}
 
 	/**
@@ -66,6 +73,19 @@ public class Robot extends IterativeRobot {
 	public void disabledInit() {
 		btMain.isAuto = false;
 		btMain.isTele = false;
+		btMain.isRecording = false;
+		try 
+    	{
+    		if(recorder != null)
+    		{
+    			recorder.end();
+    		}
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		SmartDashboard.putBoolean("isRecording", false);
 	}
 
 	@Override
@@ -119,11 +139,21 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		SmartDashboard.putBoolean("isRecording", true);
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		btMain.isAuto = false;
 		btMain.isTele = true;
+		//lets make a new record object, it will feed the stuff we record into the .csv file
+        try {
+			recorder = new BTMacroRecord();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
 	}
+	
 
 	/**
 	 * This function is called periodically during operator control
@@ -132,6 +162,29 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		if (Robot.oi.ps4Controller.getRawButton(TOUCHPAD))
+		{
+			btMain.isRecording = !btMain.isRecording;
+		}  
+		if (btMain.isRecording)
+		{
+			try
+			{
+				//if we succesfully have made the recorder object, lets start recording stuff
+				//2220 uses a storage object that we can get motors values, etc. from.
+				//if you don't need to pass an object like that in, modify the methods/classes
+				if(recorder != null)
+				{
+					recorder.record();
+					SmartDashboard.putBoolean("isRecording", true);
+				}
+			
+			}
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/**

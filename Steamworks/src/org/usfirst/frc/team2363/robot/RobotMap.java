@@ -36,10 +36,10 @@ public class RobotMap {
 	public static final int TOUCHPAD = 14;
 	
 	//Drivetrain Talons
-	public static final int FRONT_LEFT_TALON_ID = 1;
-	public static final int FRONT_RIGHT_TALON_ID = 3;
-	public static final int REAR_LEFT_TALON_ID = 0;
-	public static final int REAR_RIGHT_TALON_ID = 2;
+	public static final int FRONT_LEFT_TALON_ID = 5;
+	public static final int FRONT_RIGHT_TALON_ID = 2;
+	public static final int REAR_LEFT_TALON_ID = 1;
+	public static final int REAR_RIGHT_TALON_ID = 3;
 	
 	//Gear Grabber Talons
 	public static final int GEAR_GRABBER_TALON = 4;
