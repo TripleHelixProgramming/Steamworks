@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
@@ -16,12 +18,14 @@ public class GearGrabber extends Subsystem {
 	// declares the different gear grabber states
     public enum GearGrabberState {
     	IN,
-    	OUT,
+    	OUT, 
     	OFF
     }
     
     // Talons
     private CANTalon motor = new CANTalon(GEAR_GRABBER_TALON);
+    
+    private DoubleSolenoid solenoid = new DoubleSolenoid(GEAR_GRABBER_SOLENOID_A, GEAR_GRABBER_SOLENOID_B);
     
     // Limit Switch
     private DigitalInput gearLimit = new DigitalInput(GEAR_LIMIT_CHANNEL);
@@ -41,6 +45,22 @@ public class GearGrabber extends Subsystem {
     	motor.set(0);
     }
     
+    public void up() {
+    	solenoid.set(Value.kForward);
+    }
+   
+    public void down() {
+    	solenoid.set(Value.kReverse);
+    }
+    
+    public boolean isUp() {
+    	return solenoid.get() == Value.kForward;
+    }
+    
+    public boolean isDown() {
+    	return solenoid.get() == Value.kReverse;
+    }
+    
     public boolean hasGear() {
     	// reads if the gear grabber possesses a gear
     	return !gearLimit.get();
@@ -50,5 +70,6 @@ public class GearGrabber extends Subsystem {
     	// sets the default gear grabber state to off
         setDefaultCommand(new GearGrabberCommand(GearGrabberState.OFF));
     }
+
 }
 

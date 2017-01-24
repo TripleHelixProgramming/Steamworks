@@ -10,6 +10,7 @@ import org.usfirst.frc.team2363.robot.commands.PixyCam.PixyCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberPosition;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
 
 
@@ -57,7 +58,10 @@ public class OI {
 		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.IN));
 		// Pushes out the gear
 		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.OUT));
-		new JoystickButton(ps4Controller, L1).whenPressed(new PixyCommand()); // Colson Wheels
+    new JoystickButton(ps4Controller, TRIANGLE).whenPressed(new GearGrabberPosition(true)); // down
+		new JoystickButton(ps4Controller, X).whenPressed(new GearGrabberPosition(false)); // up
+    new JoystickButton(ps4Controller, L1).whenPressed(new PixyCommand()); // Pixy Camera Input
+
 	}
 	
 	// front omni wheels
