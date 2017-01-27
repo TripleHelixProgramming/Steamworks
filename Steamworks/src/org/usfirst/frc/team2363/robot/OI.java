@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.PixyCam.PixyCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -54,8 +56,8 @@ public class OI {
 		// Sucks in the gear
 		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.RETRIEVE));
 		// Pushes out the gear
-		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.DELIVER));
-		
+		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.DELIVER));	
+    new JoystickButton(ps4Controller, L1).whenPressed(new PixyCommand()); // Pixy Camera Input
 	}
 	
 	// front omni wheels
