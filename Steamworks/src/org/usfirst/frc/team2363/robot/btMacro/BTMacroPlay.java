@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.usfirst.frc.team2363.robot.Robot;
+
 /*Code outline to implement playing back a macro recorded in BTMacroRecord
 *Be sure to read out of the same file created in BTMacroRecord
 *BEWARE OF: setting your motors in a different order than in BTMacroRecord and changing motor values before
@@ -63,6 +65,7 @@ public class BTMacroPlay {
 				//for 2015 robot. these are all the motors available to manipulate during autonomous.
 				//it is extremely important to set the motors in the SAME ORDER as was recorded in BTMacroRecord
 				//otherwise, motor values will be sent to the wrong motors and the robot will be unpredicatable
+				Robot.drivetrain.arcadeDrive(0, scanner.nextDouble());
 /*				storage.robot.getFrontLeftMotor().setX(scanner.nextDouble());
 				storage.robot.getFrontRightMotor().setX(scanner.nextDouble());
 				storage.robot.getBackRightMotor().setX(scanner.nextDouble());

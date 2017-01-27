@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import org.usfirst.frc.team2363.robot.btMacro.BTMacroRecord;
 import org.usfirst.frc.team2363.robot.btMacro.BTMain;
+import org.usfirst.frc.team2363.robot.btMacro.MacroPlayCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
@@ -58,6 +59,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new JoystickDrive());
+		chooser.addObject("MacroPlay", new MacroPlayCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
