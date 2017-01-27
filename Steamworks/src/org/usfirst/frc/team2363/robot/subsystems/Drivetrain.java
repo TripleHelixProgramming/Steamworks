@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
 import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -20,9 +22,9 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
 	
 	//  Talons
-	private CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
-	private CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
-	private CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
+	private edu.wpi.first.wpilibj.CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
+	private edu.wpi.first.wpilibj.CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
+	private edu.wpi.first.wpilibj.CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
 	private CANTalon RearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
@@ -71,6 +73,25 @@ public class Drivetrain extends Subsystem {
 		// sets the default drive mode to colson drive
 		setDefaultCommand(new TractionDrive());
 	}
+	
+	public void setUpAutoControl() {
+		FrontLeft.changeControlMode(TalonControlMode.Speed);
+		FrontRight.changeControlMode(TalonControlMode.Speed);
+		RearLeft.changeControlMode(TalonControlMode.Follower);
+		RearLeft.set(FrontLeft.getDeviceID());
+		RearRight.changeControlMode(TalonControlMode.Follower);
+		RearRight.set(FrontRight.getDeviceID());
+	}
+	
+	public void setUpManualControl() {
+		FrontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		FrontRight.changeControlMode(TalonControlMode.PercentVbus);
+		RearLeft.changeControlMode(TalonControlMode.PercentVbus);
+		RearRight.changeControlMode(TalonControlMode.PercentVbus);
+	}
+	
+	public void setSpeeds(double leftSpeed, double rightSpeed) {
+		FrontLeft.set(leftSpeed);
+		FrontRight.set(rightSpeed);
+	}
 }
-
-
