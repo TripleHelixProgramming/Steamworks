@@ -17,8 +17,8 @@ public class GearGrabber extends Subsystem {
 
 	// declares the different gear grabber states
     public enum GearGrabberState {
-    	IN,
-    	OUT, 
+    	RETRIEVE,
+    	DELIVER, 
     	OFF
     }
     
@@ -36,8 +36,8 @@ public class GearGrabber extends Subsystem {
     }
     
     public void out() {
-    	// sets gear grabber to rotate out at 70% speed
-    	motor.set(0.7);
+    	// sets gear grabber to rotate out at 40% speed
+    	motor.set(0.4);
     }
     
     public void off() {
