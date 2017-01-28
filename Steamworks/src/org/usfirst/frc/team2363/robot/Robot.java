@@ -71,6 +71,8 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**
@@ -127,6 +129,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**
