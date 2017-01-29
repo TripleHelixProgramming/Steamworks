@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
+import org.usfirst.frc.team2363.robot.subsystems.Shooter;
+import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +31,8 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
+	public static Shooter shooter;
+	public static Feeder feeder;
 	public static Pixy pixy;
 	
 	// declare SmartDashboard tools
@@ -36,10 +40,13 @@ public class Robot extends IterativeRobot {
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
     public Robot() {
+      
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
-    	pixy = new Pixy();
+    	shooter = new Shooter();
+    	feeder = new Feeder();
+      pixy = new Pixy();
     }
     
 	/**
@@ -64,13 +71,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+
+		shooter.getRPM();  // print RPM to dashboard
+    
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
