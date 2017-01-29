@@ -12,8 +12,9 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
-import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 
+import org.usfirst.frc.team2363.robot.subsystems.Shooter;
+import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,17 +33,20 @@ public class Robot extends IterativeRobot {
 	public static GearGrabber gearGrabber;
 	public static Shooter shooter;
 	public static Feeder feeder;
+	public static Pixy pixy;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
     public Robot() {
+      
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
     	shooter = new Shooter();
     	feeder = new Feeder();
+      pixy = new Pixy();
     }
     
 	/**
@@ -73,7 +77,11 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		shooter.getRPM(); // print RPM to dashboard
+
+		shooter.getRPM();  // print RPM to dashboard
+    
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**
@@ -130,6 +138,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**

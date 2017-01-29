@@ -5,13 +5,19 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.PixyCam.PixyCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
+
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -54,13 +60,18 @@ public class OI {
 //		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); // Colson Wheels
 //		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  // Omni Wheels
 		// Sucks in the gear
-		new JoystickButton(ps4Controller, SQUARE).whileHeld(new GearGrabberCommand(GearGrabberState.IN));
+		new JoystickButton(ps4Controller, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
+		new JoystickButton(ps4Controller, SQUARE).whenReleased(new GearGrabberStop());
 		// Pushes out the gear
-		new JoystickButton(ps4Controller, CIRCLE).whileHeld(new GearGrabberCommand(GearGrabberState.OUT));
+
 		new JoystickButton(ps4Controller, L1).whenPressed(new PIDShooterCommand());
 		new JoystickButton(ps4Controller, R1).whenPressed(new StopShooter());
 		new JoystickButton(ps4Controller, L2).whenPressed(new FeederCommand(true));
 		new JoystickButton(ps4Controller, R2).whenPressed(new FeederCommand(false));
+
+		new JoystickButton(ps4Controller, CIRCLE).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
+		new JoystickButton(ps4Controller, CIRCLE).whenReleased(new GearGrabberStop());
+
 	}
 	
 	// front omni wheels
