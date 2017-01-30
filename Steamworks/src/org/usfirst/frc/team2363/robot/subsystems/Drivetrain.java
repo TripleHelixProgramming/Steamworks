@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -22,9 +22,9 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
 	
 	//  Talons
-	private edu.wpi.first.wpilibj.CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
-	private edu.wpi.first.wpilibj.CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
-	private edu.wpi.first.wpilibj.CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
+	private CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
+	private CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
+	private CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
 	private CANTalon RearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
