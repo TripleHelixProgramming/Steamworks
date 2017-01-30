@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
@@ -30,6 +33,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
 	public static Pixy pixy;
+	public static AHRS ahrs;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -40,6 +44,14 @@ public class Robot extends IterativeRobot {
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
     	pixy = new Pixy();
+    	
+		// Instantiate the NavMXP Gyro
+		try {
+			ahrs = new AHRS(SPI.Port.kMXP); 
+		} catch (RuntimeException ex ) {
+			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+		}
+
     }
     
 	/**
