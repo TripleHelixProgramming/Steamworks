@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj.SPI;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
+import org.usfirst.frc.team2363.robot.subsystems.Shooter;
+import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,6 +34,8 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
+	public static Shooter shooter;
+	public static Feeder feeder;
 	public static Pixy pixy;
 	public static AHRS ahrs;
 	
@@ -39,20 +43,23 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
-    public Robot() {
+  public Robot() {
+      
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
-    	pixy = new Pixy();
-    	
-		// Instantiate the NavMXP Gyro
-		try {
-			ahrs = new AHRS(SPI.Port.kMXP); 
-		} catch (RuntimeException ex ) {
-			DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-		}
+      shooter = new Shooter();
+    	feeder = new Feeder();
+      pixy = new Pixy();
+    
+      // Instantiate the NavMXP Gyro
+      try {
+          ahrs = new AHRS(SPI.Port.kMXP); 
+      } catch (RuntimeException ex ) {
+          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+      }
 
-    }
+  }
     
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -76,13 +83,17 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+
+		shooter.getRPM();  // print RPM to dashboard
+    
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**
@@ -139,6 +150,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 	}
 
 	/**
