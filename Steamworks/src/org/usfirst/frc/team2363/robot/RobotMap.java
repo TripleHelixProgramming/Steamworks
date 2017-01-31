@@ -47,6 +47,10 @@ public class RobotMap {
 	//Gear Grabber Limit Switch
 	public static final int GEAR_LIMIT_CHANNEL = 0;
 	
+	//Climber Talons
+	public static final int CLIMBER_MOTOR_1 = 4;
+	public static final int CLIMBER_MOTOR_2 = 5;
+	
 	//Solenoids
 	public static final int FRONT_DROPDOWN_1 = 6;
 	public static final int FRONT_DROPDOWN_2 = 1;
@@ -54,4 +58,7 @@ public class RobotMap {
 	public static final int REAR_DROPDOWN_2 = 2;
 	public static final int GEAR_GRABBER_SOLENOID_A = 3;
 	public static final int GEAR_GRABBER_SOLENOID_B = 4;
+	public static final int WALL_SOLENOID_A = 0;
+	public static final int WALL_SOLENOID_B = 7;
+	public static final int WALL_TRIGGER_SOLENOID = 1;
 }

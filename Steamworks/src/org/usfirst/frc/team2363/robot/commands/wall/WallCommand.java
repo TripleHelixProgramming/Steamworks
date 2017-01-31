@@ -1,13 +1,13 @@
-package org.usfirst.frc.team2363.robot.commands.HopperTrigger;
+package org.usfirst.frc.team2363.robot.commands.wall;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class HopperTriggerCommand extends Command {
+public class WallCommand extends Command {
 
-    public HopperTriggerCommand() {
+    public WallCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
