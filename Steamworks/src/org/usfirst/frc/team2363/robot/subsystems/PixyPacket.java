@@ -6,6 +6,7 @@ public class PixyPacket {
 	public int Width;
 	public int Height;
 	public int Sig;
+	public int Area;
 	
 	public void setX(int x) {
 		X = x;
@@ -21,6 +22,10 @@ public class PixyPacket {
 	}
 	public void setSig(int sig){
 		Sig = sig;
+	}
+	
+	public void setArea(int a){
+		Area = a;
 	}
 }
 

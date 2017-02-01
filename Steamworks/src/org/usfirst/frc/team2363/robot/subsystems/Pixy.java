@@ -67,6 +67,7 @@ public class Pixy extends Subsystem {
 		byte[] pixyValues = new byte[64];
 		pixyValues[0] = (byte) 0b01010101;
 		pixyValues[1] = (byte) 0b10101010;
+		
 		PixyPacket packet = new PixyPacket();
 		pixyi2c.readOnly(pixyValues, 64);
 		if (pixyValues != null) {
@@ -90,9 +91,32 @@ public class Pixy extends Subsystem {
 			packet.Width = width;
 			packet.Height = height;
 			packet.Sig = pixyValues[5];
+			packet.Area = packet.Height * packet.Width;
 		
 		}
+	/*	int largestArea = 0;
+		int targetX = 0;
+		int targetY = 0;
+		
+		if (largestArea < packet.Area){
+			largestArea = packet.Area;
+			targetX = packet.X;
+			targetY = packet.Y;
+		}*/
+		
 		return packet;
+	}
+	
+	public double autoAllign() {
+		PixyPacket target = readPixyPacket();
+		
+		double screenWidth = 640;
+		double screenHeight = 400;
+		double horizontalAngle = 75;
+		double verticleAngle = 47;
+	
+		double turnAngle = (target.X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
+		return turnAngle;
 	}
 }
 
