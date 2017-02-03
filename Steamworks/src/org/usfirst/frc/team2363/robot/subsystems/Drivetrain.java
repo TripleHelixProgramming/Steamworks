@@ -22,17 +22,17 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
 	
 	//  Talons
-	private CANTalon FrontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
-	private CANTalon FrontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
-	private CANTalon RearLeft = new CANTalon(REAR_LEFT_TALON_ID);
-	private CANTalon RearRight = new CANTalon(REAR_RIGHT_TALON_ID);
+	private CANTalon frontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
+	private CANTalon frontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
+	private CANTalon rearLeft = new CANTalon(REAR_LEFT_TALON_ID);
+	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
 	private DoubleSolenoid frontOmni = new DoubleSolenoid(FRONT_DROPDOWN_1, FRONT_DROPDOWN_2);
 	private DoubleSolenoid rearOmni = new DoubleSolenoid(REAR_DROPDOWN_1, REAR_DROPDOWN_2);
 	
 	// Drivetrain
-	private RobotDrive robotDrive = new RobotDrive(FrontLeft, RearLeft, FrontRight, RearRight);
+	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	
 	public Drivetrain() {
 	}
@@ -68,6 +68,13 @@ public class Drivetrain extends Subsystem {
 		rearOmni.set(Value.kReverse);
 	}
 	
+	public void driveMotors(double lSpeed, double rSpeed) {
+		frontLeft.set(lSpeed);
+		rearLeft.set(lSpeed);
+		frontRight.set(rSpeed);
+		rearRight.set(rSpeed);
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		// sets the default drive mode to colson drive
@@ -75,23 +82,23 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setUpAutoControl() {
-		FrontLeft.changeControlMode(TalonControlMode.Speed);
-		FrontRight.changeControlMode(TalonControlMode.Speed);
-		RearLeft.changeControlMode(TalonControlMode.Follower);
-		RearLeft.set(FrontLeft.getDeviceID());
-		RearRight.changeControlMode(TalonControlMode.Follower);
-		RearRight.set(FrontRight.getDeviceID());
+		frontLeft.changeControlMode(TalonControlMode.Speed);
+		frontRight.changeControlMode(TalonControlMode.Speed);
+		rearLeft.changeControlMode(TalonControlMode.Follower);
+		rearLeft.set(frontLeft.getDeviceID());
+		rearRight.changeControlMode(TalonControlMode.Follower);
+		rearRight.set(frontRight.getDeviceID());
 	}
 	
 	public void setUpManualControl() {
-		FrontLeft.changeControlMode(TalonControlMode.PercentVbus);
-		FrontRight.changeControlMode(TalonControlMode.PercentVbus);
-		RearLeft.changeControlMode(TalonControlMode.PercentVbus);
-		RearRight.changeControlMode(TalonControlMode.PercentVbus);
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
+		rearRight.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
-		FrontLeft.set(leftSpeed);
-		FrontRight.set(rightSpeed);
+		frontLeft.set(leftSpeed);
+		frontRight.set(rightSpeed);
 	}
 }

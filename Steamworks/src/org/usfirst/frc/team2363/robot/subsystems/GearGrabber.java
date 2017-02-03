@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberCommand;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 
 import com.ctre.CANTalon;
 
@@ -17,8 +17,8 @@ public class GearGrabber extends Subsystem {
 
 	// declares the different gear grabber states
     public enum GearGrabberState {
-    	IN,
-    	OUT, 
+    	RETRIEVE,
+    	DELIVER, 
     	OFF
     }
     
@@ -36,8 +36,8 @@ public class GearGrabber extends Subsystem {
     }
     
     public void out() {
-    	// sets gear grabber to rotate out at 70% speed
-    	motor.set(0.7);
+    	// sets gear grabber to rotate out at 40% speed
+    	motor.set(0.4);
     }
     
     public void off() {
@@ -65,10 +65,23 @@ public class GearGrabber extends Subsystem {
     	// reads if the gear grabber possesses a gear
     	return !gearLimit.get();
     }
+    
+    public double getOutputCurrent() {
+    	return motor.getOutputCurrent();
+    }
+    
+    public boolean isOverCurrent() {
+    	//detects if the gear grabber goes over 20 amps to prevent damage to the motor
+    	if (getOutputCurrent() > 20) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
 
     public void initDefaultCommand() {
     	// sets the default gear grabber state to off
-        setDefaultCommand(new GearGrabberCommand(GearGrabberState.OFF));
+        setDefaultCommand(new GearGrabberStop());
     }
 
 }
