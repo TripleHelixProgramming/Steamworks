@@ -19,6 +19,8 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -47,10 +49,12 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	private Joystick ps4Controller;
-
+	private Joystick operatorController;
+	
 	public OI() {
 		//Controllers
 		ps4Controller = new Joystick(PS4_PORT);
+		operatorController = new Joystick(OPERATOR_PORT);
 		
 		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); // Colson Wheels
 		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  // Omni Wheels
@@ -83,5 +87,13 @@ public class OI {
 	// turn angle
 	public double getTurn() {
 		return -ps4Controller.getRawAxis(RIGHT_STICK_X);
+	}
+	public double getClimberPower() {
+//		return operatorController.getRawAxis(RIGHT_STICK_Y);
+		if (operatorController.getRawAxis(RIGHT_STICK_Y) >= 0) {
+			return 0;
+		} else {
+			return -Math.pow(operatorController.getRawAxis(RIGHT_STICK_Y), 2);
+		}
 	}
 }

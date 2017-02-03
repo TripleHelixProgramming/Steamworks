@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.Robot;
 import org.usfirst.frc.team2363.robot.commands.wall.WallCommand;
 /**
  *
@@ -17,8 +18,8 @@ public class Wall extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	public enum WallState {
-		WALL_EXTEND,	//Hopper tilt wall out
-		WALL_RETRACT,	//Hopper Tilt wall in
+		EXTEND,	//Hopper tilt wall out
+		RETRACT,	//Hopper Tilt wall in
 		TRIGGER_ON, 	//Hopper trigger activated
 		TRIGGER_OFF,	//Hopper trigger deactivated
 		CLIMBER_ON,
@@ -35,11 +36,11 @@ public class Wall extends Subsystem {
 	
 	}
 		
-	public void wallExtend() {
+	public void extend() {
 		wallSolenoid.set(Value.kForward);
 	}
 	
-	public void wallRetract() {
+	public void retract() {
 		wallSolenoid.set(Value.kReverse);
 	}
 	
@@ -52,8 +53,8 @@ public class Wall extends Subsystem {
 	}
 	
 	public void climberOn() {
-		climberMotor1.set(1);
-		climberMotor2.set(1);
+		climberMotor1.set(Robot.oi.getClimberPower());
+		climberMotor2.set(Robot.oi.getClimberPower());
 	}
 	
 	public void climberOff() {
@@ -62,15 +63,15 @@ public class Wall extends Subsystem {
 	}
 	
 	public void off() {
-		wallSolenoid.set(Value.kReverse);
 		triggerSolenoid.set(false);
+		wallSolenoid.set(Value.kReverse);
 	}
 	
-	public boolean isWallExtented() {
+	public boolean isExtended() {
 		return wallSolenoid.get() ==Value.kForward;
 	}
 	
-	public boolean isWallRetracted() {
+	public boolean isRetracted() {
 		return wallSolenoid.get() ==Value.kReverse;
 	}
 	
@@ -84,6 +85,14 @@ public class Wall extends Subsystem {
 	
 	public boolean isTiltWallOff() {
 		return wallSolenoid.get() == Value.kReverse;
+	}
+	
+	public boolean isClimberOn() {
+		return ((climberMotor1.get() == 1) && (climberMotor2.get() == 1));
+	}
+	
+	public boolean isClimberOff() {
+		return ((climberMotor1.get() == 0) && (climberMotor2.get() == 0));
 	}
 	
 	public boolean isOff() {

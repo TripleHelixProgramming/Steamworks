@@ -12,6 +12,7 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.Pixy;
+import org.usfirst.frc.team2363.robot.subsystems.Wall;
 
 
 /**
@@ -30,6 +31,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	public static GearGrabber gearGrabber;
 	public static Pixy pixy;
+	public static Wall tiltingWall;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -40,6 +42,7 @@ public class Robot extends IterativeRobot {
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
     	pixy = new Pixy();
+    	tiltingWall = new Wall();
     }
     
 	/**
