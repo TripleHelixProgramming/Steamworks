@@ -40,21 +40,13 @@ public class RobotMap {
 	public static final int TOUCHPAD = 14;
 	
 	//Drivetrain Talons
-<<<<<<< HEAD
-	public static final int FRONT_LEFT_TALON_ID = 5;
-	public static final int FRONT_RIGHT_TALON_ID = 2;
-	public static final int REAR_LEFT_TALON_ID = 1;
-	public static final int REAR_RIGHT_TALON_ID = 3;
-	
 	//Gear Grabber Talons
-=======
 	public static final int FRONT_LEFT_TALON_ID = 11;
 	public static final int FRONT_RIGHT_TALON_ID = 13;
 	public static final int REAR_LEFT_TALON_ID = 10;
 	public static final int REAR_RIGHT_TALON_ID = 12;
 
 	//Gear Grabber Subsystem
->>>>>>> refs/remotes/origin/master
 	public static final int GEAR_GRABBER_TALON = 4;
 	public static final int GEAR_LIMIT_CHANNEL = 0;
 	public static final int GEAR_GRABBER_SOLENOID_A = 3;
