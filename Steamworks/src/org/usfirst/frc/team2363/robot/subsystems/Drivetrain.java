@@ -30,6 +30,7 @@ public class Drivetrain extends Subsystem {
 	// Solenoids
 	private DoubleSolenoid frontOmni = new DoubleSolenoid(FRONT_DROPDOWN_1, FRONT_DROPDOWN_2);
 	private DoubleSolenoid rearOmni = new DoubleSolenoid(REAR_DROPDOWN_1, REAR_DROPDOWN_2);
+	private DoubleSolenoid shifters = new DoubleSolenoid(SHIFTER_UP, SHIFTER_DOWN);
 	
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
@@ -37,35 +38,29 @@ public class Drivetrain extends Subsystem {
 	public Drivetrain() {
 	}
 	
- /*   public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new JoystickDrive()); 
-
-    }*/
 	public void arcadeDrive(double throttle, double turn) {
 		// drives using speed and turn angle given from controller
 		robotDrive.arcadeDrive(throttle, turn);
 	}
 	
-	public void deployFront() {
-		// deploys the front two omniwheels
+	public void deployOmnis() {
+		// deploy front & back Omni wheels
 		frontOmni.set(Value.kForward);
-	}
-	
-	public void retractFront() {
-		// retracts the front two omniwheels
-		frontOmni.set(Value.kReverse);
-	}
-	
-	public void deployRear() {
-		// deploys the back two omniwheels
 		rearOmni.set(Value.kForward);
 	}
 	
-	public void retractRear() {
-		// retracts the back two omniwheels
-		rearOmni.set(Value.kReverse);
+	public void retractOmnis() {
+		// retract front & back Omni wheels
+		frontOmni.set(Value.kReverse);
+		rearOmni.set(Value.kForward);
+	}
+	
+	public void shiftUp() {
+		shifters.set(Value.kForward);
+	}
+	
+	public void shiftDown() {
+		shifters.set(Value.kReverse);
 	}
 	
 	public void driveMotors(double lSpeed, double rSpeed) {

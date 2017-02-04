@@ -40,22 +40,31 @@ public class RobotMap {
 	public static final int TOUCHPAD = 14;
 	
 	//Drivetrain Talons
-  public static final int FRONT_LEFT_TALON_ID = 11;
+	public static final int FRONT_LEFT_TALON_ID = 11;
 	public static final int FRONT_RIGHT_TALON_ID = 13;
 	public static final int REAR_LEFT_TALON_ID = 10;
 	public static final int REAR_RIGHT_TALON_ID = 12;
 
-	//Gear Grabber Talons
+	//Gear Grabber Subsystem
 	public static final int GEAR_GRABBER_TALON = 4;
-	
-	//Gear Grabber Limit Switch
 	public static final int GEAR_LIMIT_CHANNEL = 0;
+	public static final int GEAR_GRABBER_SOLENOID_A = 3;
+	public static final int GEAR_GRABBER_SOLENOID_B = 4;
 	
+	//Wall Subsystem
+	public static final int CLIMBER_MOTOR_1 = 4;
+	public static final int CLIMBER_MOTOR_2 = 5;
+	public static final int WALL_SOLENOID_A = 0;
+	public static final int WALL_SOLENOID_B = 7;
+	public static final int WALL_TRIGGER_SOLENOID = 1;
+
+	//Shooter Subsystem
 	public static final int SHOOTER_TALON = 40;
 	public static final int SHOOTER_ENCODER = 1;
 	
+	//Feeder Subsystem
 	public static final int FEEDER_TALON = 50;
-	
+
 	//Solenoids
 	public static final int FRONT_DROPDOWN_1 = 6;
 	public static final int FRONT_DROPDOWN_2 = 1;
@@ -63,7 +72,9 @@ public class RobotMap {
 	public static final int REAR_DROPDOWN_2 = 2;
 	public static final int GEAR_GRABBER_SOLENOID_A = 3;
 	public static final int GEAR_GRABBER_SOLENOID_B = 4;
+	public static final int SHIFTER_UP = 0;
+	public static final int SHIFTER_DOWN = 7;
 	
 	//LED Ring relay port
 	public static final int LIGHT_RING_RELAY = 0;
-}
+}	

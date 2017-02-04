@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
-import org.usfirst.frc.team2363.robot.commands.PixyCam.PixyCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 
@@ -35,10 +34,7 @@ public class OI {
 	public OI() {
 		//Controllers
 		driverController = new Joystick(DRIVER_PORT);
-		operatorController = new Joystick(OPERATOR_PORT);
-		
-//		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); // Colson Wheels
-//		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  // Omni Wheels
+		operatorController = new Joystick(OPERATOR_PORT);		
 		
 		//shooter
 		//Turns on the shooter
@@ -68,16 +64,20 @@ public class OI {
 		//Turns the light to red and green while square is being held
 		new JoystickButton(operatorController, SQUARE).whenPressed(new LightRingBoth());
 		new JoystickButton(operatorController, SQUARE).whenReleased(new LightRingOff());
+		//Traction Drive and Omni Drive controlls
+		new JoystickButton(driverController, TRIANGLE).whenPressed(new OmniDrive());
+		new JoystickButton(driverController, TRIANGLE).whenReleased(new TractionDrive());
+		
+		// Need to deconflict Button operations - driver verses operator actions then 
+		// activate shifting buttons.
+		
+		// new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(false));
+		// new JoystickButton(driverController, R1).whenPressed(new ShiftCommand(true));
 	}
 	
-	// front omni wheels
-	public boolean isFrontDeployed() {
-		return driverController.getRawAxis(RIGHT_STICK_Y) < -0.6;
-	}
-	
-	// back omni wheels
-	public boolean isRearDeployed() {
-		return driverController.getRawAxis(RIGHT_STICK_Y) > 0.6;
+	// omni wheels
+	public boolean isOmnisDeployed() {
+		return ((ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6) && (ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6));
 	}
 	
 	// speed
@@ -92,5 +92,13 @@ public class OI {
 	
 	public static double getTurnScaling(double x) {
 		return -Math.abs(LOW_SPEED_SCALING - HIGH_SPEED_SCALING) * Math.abs(x) + LOW_SPEED_SCALING;
+	}
+	public double getClimberPower() {
+		//  return operatorController.getRawAxis(RIGHT_STICK_Y);
+		if (operatorController.getRawAxis(RIGHT_STICK_Y) >= 0) {
+			return 0;
+		} else { 
+			return -Math.pow(operatorController.getRawAxis(RIGHT_STICK_Y), 2);
+		}
 	}
 }
