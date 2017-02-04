@@ -8,8 +8,12 @@ package org.usfirst.frc.team2363.robot;
  */
 public class RobotMap {
 	
+	public static final double HIGH_SPEED_SCALING = 0.55;
+	public static final double LOW_SPEED_SCALING = 0.9;
+	
 	//Controllers
 	public static final int PS4_PORT = 0;
+	public static final int OPERATOR_PORT = 1;
 	
 	//PS4 joystick axis
 	public static final int LEFT_STICK_X = 0;
@@ -36,22 +40,47 @@ public class RobotMap {
 	public static final int TOUCHPAD = 14;
 	
 	//Drivetrain Talons
+<<<<<<< HEAD
 	public static final int FRONT_LEFT_TALON_ID = 5;
 	public static final int FRONT_RIGHT_TALON_ID = 2;
 	public static final int REAR_LEFT_TALON_ID = 1;
 	public static final int REAR_RIGHT_TALON_ID = 3;
 	
 	//Gear Grabber Talons
+=======
+	public static final int FRONT_LEFT_TALON_ID = 11;
+	public static final int FRONT_RIGHT_TALON_ID = 13;
+	public static final int REAR_LEFT_TALON_ID = 10;
+	public static final int REAR_RIGHT_TALON_ID = 12;
+
+	//Gear Grabber Subsystem
+>>>>>>> refs/remotes/origin/master
 	public static final int GEAR_GRABBER_TALON = 4;
-	
-	//Gear Grabber Limit Switch
 	public static final int GEAR_LIMIT_CHANNEL = 0;
+	public static final int GEAR_GRABBER_SOLENOID_A = 3;
+	public static final int GEAR_GRABBER_SOLENOID_B = 4;
 	
+	//Wall Subsystem
+	public static final int CLIMBER_MOTOR_1 = 4;
+	public static final int CLIMBER_MOTOR_2 = 5;
+	public static final int WALL_SOLENOID_A = 0;
+	public static final int WALL_SOLENOID_B = 7;
+	public static final int WALL_TRIGGER_SOLENOID = 1;
+
+	//Shooter Subsystem
+	public static final int SHOOTER_TALON = 40;
+	public static final int SHOOTER_ENCODER = 1;
+	
+	//Feeder Subsystem
+	public static final int FEEDER_TALON = 50;
+
 	//Solenoids
 	public static final int FRONT_DROPDOWN_1 = 6;
 	public static final int FRONT_DROPDOWN_2 = 1;
 	public static final int REAR_DROPDOWN_1 = 5;
 	public static final int REAR_DROPDOWN_2 = 2;
-	public static final int GEAR_GRABBER_SOLENOID_A = 3;
-	public static final int GEAR_GRABBER_SOLENOID_B = 4;
-}
+	public static final int SHIFTER_UP = 0;
+	public static final int SHIFTER_DOWN = 7;
+	
+
+}	

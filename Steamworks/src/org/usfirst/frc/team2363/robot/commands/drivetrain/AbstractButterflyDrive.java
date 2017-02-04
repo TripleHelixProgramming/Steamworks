@@ -19,12 +19,8 @@ public abstract class AbstractButterflyDrive extends Command {
 	@Override
 	protected void execute() {
 		// retracts the omniwheels opposite of the ones deployed
-		if (oi.isFrontDeployed()) {
-			drivetrain.deployFront();
-			drivetrain.retractRear();
-		} else if (oi.isRearDeployed()) {
-			drivetrain.deployRear();
-			drivetrain.retractFront();
+		if (oi.isOmnisDeployed()) {
+			drivetrain.deployOmnis();
 		} else {
 			// colson drive (no omniwheels)
 			defaultDrive();
