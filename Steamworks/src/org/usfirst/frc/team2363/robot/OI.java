@@ -15,10 +15,6 @@ import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingBoth;
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingGreen;
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingOff;
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingRed;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
 
@@ -62,18 +58,6 @@ public class OI {
 		
 		//Fuel Intake
 		//new JoystickButton(operatorController, X).whenPressed(new InsertCommandHere());
-		
-		/*//light ring
-		//Turns the light to green while triangle is being held
-		new JoystickButton(operatorController, TRIANGLE).whenPressed(new LightRingGreen());
-		new JoystickButton(operatorController, TRIANGLE).whenReleased(new LightRingOff());
-		//Turns the light to red while circle is being held
-		new JoystickButton(operatorController, CIRCLE).whenPressed(new LightRingRed());
-		new JoystickButton(operatorController, CIRCLE).whenReleased(new LightRingOff());
-		//Turns the light to red and green while square is being held
-		new JoystickButton(operatorController, SQUARE).whenPressed(new LightRingBoth());
-		new JoystickButton(operatorController, SQUARE).whenReleased(new LightRingOff());
-		*/
 
 		//Drivetrain controls
 		//Turns on Omni Drive
@@ -104,6 +88,7 @@ public class OI {
 	public static double getTurnScaling(double x) {
 		return -Math.abs(LOW_SPEED_SCALING - HIGH_SPEED_SCALING) * Math.abs(x) + LOW_SPEED_SCALING;
 	}
+	
 	public double getClimberPower() {
 		//  return operatorController.getRawAxis(RIGHT_STICK_Y);
 		if (operatorController.getRawAxis(RIGHT_STICK_Y) >= 0) {
@@ -111,5 +96,13 @@ public class OI {
 		} else { 
 			return -Math.pow(operatorController.getRawAxis(RIGHT_STICK_Y), 2);
 		}
+	}
+	
+	 /**
+	  * Gets the input from the operator d-pad
+	  * @return Angle the d-pad is being pressed
+	  */
+	public int getOeratorPOV() {
+		return operatorController.getPOV();
 	}
 }
