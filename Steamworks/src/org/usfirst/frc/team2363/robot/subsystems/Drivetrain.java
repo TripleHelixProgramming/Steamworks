@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.TalonControlMode;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -78,6 +80,25 @@ public class Drivetrain extends Subsystem {
 		// sets the default drive mode to colson drive
 		setDefaultCommand(new TractionDrive());
 	}
+	
+	public void setUpAutoControl() {
+		frontLeft.changeControlMode(TalonControlMode.Speed);
+		frontRight.changeControlMode(TalonControlMode.Speed);
+		rearLeft.changeControlMode(TalonControlMode.Follower);
+		rearLeft.set(frontLeft.getDeviceID());
+		rearRight.changeControlMode(TalonControlMode.Follower);
+		rearRight.set(frontRight.getDeviceID());
+	}
+	
+	public void setUpManualControl() {
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
+		rearRight.changeControlMode(TalonControlMode.PercentVbus);
+	}
+	
+	public void setSpeeds(double leftSpeed, double rightSpeed) {
+		frontLeft.set(leftSpeed);
+		frontRight.set(rightSpeed);
+	}
 }
-
-
