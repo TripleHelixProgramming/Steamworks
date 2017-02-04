@@ -77,12 +77,12 @@ public class OI {
 	
 	// speed
 	public double getThrottle () {
-		return -driverController.getRawAxis(LEFT_STICK_Y);
+		return driverController.getRawAxis(LEFT_STICK_Y);
 	}
 	
 	// turn angle
 	public double getTurn() {
-		return -driverController.getRawAxis(RIGHT_STICK_X) * getTurnScaling(getThrottle());
+		return driverController.getRawAxis(RIGHT_STICK_X) * getTurnScaling(getThrottle());
 	}
 	
 	public static double getTurnScaling(double x) {

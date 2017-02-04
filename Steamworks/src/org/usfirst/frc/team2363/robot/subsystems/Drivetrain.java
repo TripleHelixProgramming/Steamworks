@@ -29,8 +29,8 @@ public class Drivetrain extends Subsystem {
 	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
-	private Solenoid Omni = new Solenoid(DROP_DOWN);
-	private DoubleSolenoid shifters = new DoubleSolenoid(SHIFTER_UP, SHIFTER_DOWN);
+	private Solenoid Omni = new Solenoid(PCM_0, DROP_DOWN);
+	private DoubleSolenoid shifters = new DoubleSolenoid(PCM_0, SHIFTER_UP, SHIFTER_DOWN);
 	
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
