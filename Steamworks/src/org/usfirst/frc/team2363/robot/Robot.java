@@ -79,6 +79,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putNumber("autoturn", Robot.pixy.autoAllign());
 	}
 
 	/**
