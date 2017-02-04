@@ -11,8 +11,7 @@ public class OmniDrive extends AbstractButterflyDrive {
 
 	@Override
 	protected void defaultDrive() {
-		// deploys front/rear omniwheels
-		drivetrain.deployFront();
-		drivetrain.deployRear();
+		// deploys front & rear omni wheels
+		drivetrain.deployOmnis();
 	}
 }

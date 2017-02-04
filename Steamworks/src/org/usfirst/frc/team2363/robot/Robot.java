@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
-import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
@@ -50,21 +50,20 @@ public class Robot extends IterativeRobot {
 
   public Robot() {
       
-    	// declare subsystems
-    	drivetrain = new Drivetrain();
-    	gearGrabber = new GearGrabber();
-
-    	tiltingWall = new Wall();
-      shooter = new Shooter();
-    	feeder = new Feeder();
-      pixy = new Pixy();
+	// declare subsystems
+	drivetrain = new Drivetrain();
+	gearGrabber = new GearGrabber();
+	tiltingWall = new Wall();
+	shooter = new Shooter();
+	feeder = new Feeder();
+	pixy = new Pixy();
     
-      // Instantiate the NavMXP Gyro
-      try {
-          ahrs = new AHRS(SPI.Port.kMXP); 
-      } catch (RuntimeException ex ) {
-          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-      }
+	// Instantiate the NavMXP Gyro
+	try {
+		ahrs = new AHRS(SPI.Port.kMXP); 
+	} catch (RuntimeException ex ) {
+		DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+	}
 
   }
     
@@ -77,7 +76,7 @@ public class Robot extends IterativeRobot {
 		// declare ps4 interface
 		oi = new OI();
 		// sets the default autonomous mode
-		chooser.addDefault("Default Auto", new JoystickDrive());
+		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addObject("Red Hopper", new PathFollower(PathReader.getPathSteps("RedHopper")));
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
