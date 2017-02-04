@@ -17,10 +17,9 @@ import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
-import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Pixy;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
 import org.usfirst.frc.team2363.util.PathReader;
 
 /**
@@ -41,7 +40,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Feeder feeder;
 	public static Pixy pixy;
-	public static Wall tiltingWall;
 	public static AHRS ahrs;
 	
 	// declare SmartDashboard tools
@@ -50,20 +48,19 @@ public class Robot extends IterativeRobot {
 
   public Robot() {
       
-	// declare subsystems
-	drivetrain = new Drivetrain();
-	gearGrabber = new GearGrabber();
-	tiltingWall = new Wall();
-	shooter = new Shooter();
-	feeder = new Feeder();
-	pixy = new Pixy();
+    	// declare subsystems
+    	drivetrain = new Drivetrain();
+    	gearGrabber = new GearGrabber();
+      shooter = new Shooter();
+    	feeder = new Feeder();
+      pixy = new Pixy();
     
-	// Instantiate the NavMXP Gyro
-	try {
-		ahrs = new AHRS(SPI.Port.kMXP); 
-	} catch (RuntimeException ex ) {
-		DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-	}
+      // Instantiate the NavMXP Gyro
+      try {
+          ahrs = new AHRS(SPI.Port.kMXP); 
+      } catch (RuntimeException ex ) {
+          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+      }
 
   }
     
@@ -76,8 +73,7 @@ public class Robot extends IterativeRobot {
 		// declare ps4 interface
 		oi = new OI();
 		// sets the default autonomous mode
-		chooser.addDefault("Default Auto", new TractionDrive());
-		chooser.addObject("Red Hopper", new PathFollower(PathReader.getPathSteps("RedHopper")));
+		chooser.addDefault("Default Auto", new JoystickDrive());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
@@ -101,6 +97,7 @@ public class Robot extends IterativeRobot {
     
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
+		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
 	}
 
 	/**

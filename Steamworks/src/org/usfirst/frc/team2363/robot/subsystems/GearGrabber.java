@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -28,7 +29,7 @@ public class GearGrabber extends Subsystem {
     private DoubleSolenoid solenoid = new DoubleSolenoid(GEAR_GRABBER_SOLENOID_A, GEAR_GRABBER_SOLENOID_B);
     
     // Limit Switch
-    private DigitalInput gearLimit = new DigitalInput(GEAR_LIMIT_CHANNEL);
+    private AnalogInput gearLimit = new AnalogInput(GEAR_LIMIT_CHANNEL);
     
     public void in() {
     	// sets gear grabber to rotate in at 50% speed
@@ -63,7 +64,11 @@ public class GearGrabber extends Subsystem {
     
     public boolean hasGear() {
     	// reads if the gear grabber possesses a gear
-    	return !gearLimit.get();
+    	if (getGearLimit().getValue() > 300) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     public double getOutputCurrent() {
@@ -83,6 +88,10 @@ public class GearGrabber extends Subsystem {
     	// sets the default gear grabber state to off
         setDefaultCommand(new GearGrabberStop());
     }
+
+	public AnalogInput getGearLimit() {
+		return gearLimit;
+	}
 
 }
 

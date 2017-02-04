@@ -94,5 +94,17 @@ public class Pixy extends Subsystem {
 		}
 		return packet;
 	}
+	
+	public double autoAllign() {
+		PixyPacket target = readPixyPacket();
+		
+		double screenWidth = 640;
+		double screenHeight = 400;
+		double horizontalAngle = 75;
+		double verticleAngle = 47;
+	
+		double turnAngle = (target.X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
+		return turnAngle;
+	}
 }
 
