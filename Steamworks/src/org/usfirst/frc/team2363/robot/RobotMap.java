@@ -49,8 +49,6 @@ public class RobotMap {
 	//Gear Grabber Subsystem
 	public static final int GEAR_GRABBER_TALON = 4;
 	public static final int GEAR_LIMIT_CHANNEL = 0;
-	public static final int GEAR_GRABBER_SOLENOID_A = 3;
-	public static final int GEAR_GRABBER_SOLENOID_B = 4;
 	
 	//Wall Subsystem
 	public static final int CLIMBER_MOTOR_1 = 4;

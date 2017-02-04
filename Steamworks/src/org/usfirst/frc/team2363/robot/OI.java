@@ -77,7 +77,7 @@ public class OI {
 	
 	// omni wheels
 	public boolean isOmnisDeployed() {
-		return ((ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6) && (ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6));
+		return ((driverController.getRawAxis(RIGHT_STICK_Y) < -0.6) && (driverController.getRawAxis(RIGHT_STICK_Y) > 0.6));
 	}
 	
 	// speed
