@@ -24,15 +24,14 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
 	private Joystick ps4Controller;
-
+	private Joystick operatorController;
+	
 	public OI() {
 		//Controllers
 		ps4Controller = new Joystick(PS4_PORT);
+		operatorController = new Joystick(OPERATOR_PORT);
 		
-//		new JoystickButton(ps4Controller, L2).whenPressed(new TractionDrive()); // Colson Wheels
-//		new JoystickButton(ps4Controller, R2).whenPressed(new OmniDrive());  // Omni Wheels
 		// Sucks in the gear
 		new JoystickButton(ps4Controller, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
 		new JoystickButton(ps4Controller, SQUARE).whenReleased(new GearGrabberStop());
@@ -70,5 +69,13 @@ public class OI {
 	
 	public static double getTurnScaling(double x) {
 		return -Math.abs(LOW_SPEED_SCALING - HIGH_SPEED_SCALING) * Math.abs(x) + LOW_SPEED_SCALING;
+	}
+	public double getClimberPower() {
+//		return operatorController.getRawAxis(RIGHT_STICK_Y);
+		if (operatorController.getRawAxis(RIGHT_STICK_Y) >= 0) {
+			return 0;
+		} else {
+			return -Math.pow(operatorController.getRawAxis(RIGHT_STICK_Y), 2);
+		}
 	}
 }

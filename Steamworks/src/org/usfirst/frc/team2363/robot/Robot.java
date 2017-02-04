@@ -17,6 +17,8 @@ import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 
+import org.usfirst.frc.team2363.robot.subsystems.Pixy;
+import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 import org.usfirst.frc.team2363.util.PathReader;
@@ -39,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Feeder feeder;
 	public static Pixy pixy;
+	public static Wall tiltingWall;
 	public static AHRS ahrs;
 	
 	// declare SmartDashboard tools
@@ -50,6 +53,8 @@ public class Robot extends IterativeRobot {
     	// declare subsystems
     	drivetrain = new Drivetrain();
     	gearGrabber = new GearGrabber();
+
+    	tiltingWall = new Wall();
       shooter = new Shooter();
     	feeder = new Feeder();
       pixy = new Pixy();
