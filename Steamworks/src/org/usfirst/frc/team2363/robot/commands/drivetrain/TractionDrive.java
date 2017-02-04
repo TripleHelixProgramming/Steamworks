@@ -11,8 +11,7 @@ public class TractionDrive extends AbstractButterflyDrive {
 
 	@Override
 	protected void defaultDrive() {
-		// deploys front/rear omniwheels
-		drivetrain.retractFront();
-		drivetrain.retractRear();
+		// deploys front & rear omni wheels
+		drivetrain.retractOmnis();
 	}
 }

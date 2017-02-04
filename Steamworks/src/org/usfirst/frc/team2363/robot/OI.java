@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
-import org.usfirst.frc.team2363.robot.commands.PixyCam.PixyCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 
@@ -35,7 +34,6 @@ public class OI {
 		// Sucks in the gear
 		new JoystickButton(ps4Controller, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
 		new JoystickButton(ps4Controller, SQUARE).whenReleased(new GearGrabberStop());
-		// Pushes out the gear
 
 		new JoystickButton(ps4Controller, L1).whenPressed(new PIDShooterCommand());
 		new JoystickButton(ps4Controller, R1).whenPressed(new StopShooter());
@@ -44,17 +42,19 @@ public class OI {
 
 		new JoystickButton(ps4Controller, CIRCLE).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
 		new JoystickButton(ps4Controller, CIRCLE).whenReleased(new GearGrabberStop());
-
+		new JoystickButton(ps4Controller, TRIANGLE).whenPressed(new OmniDrive());
+		new JoystickButton(ps4Controller, TRIANGLE).whenReleased(new TractionDrive());
+		
+		// Need to deconflict Button operations - driver verses operator actions then 
+		// activate shifting buttons.
+		
+		// new JoystickButton(ps4Controller, L1).whenPressed(new ShiftCommand(false));
+		// new JoystickButton(ps4Controller, R1).whenPressed(new ShiftCommand(true));
 	}
 	
 	// front omni wheels
-	public boolean isFrontDeployed() {
-		return ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6;
-	}
-	
-	// back omni wheels
-	public boolean isRearDeployed() {
-		return ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6;
+	public boolean isOmnisDeployed() {
+		return ((ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6) && (ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6));
 	}
 	
 	// speed
@@ -71,10 +71,10 @@ public class OI {
 		return -Math.abs(LOW_SPEED_SCALING - HIGH_SPEED_SCALING) * Math.abs(x) + LOW_SPEED_SCALING;
 	}
 	public double getClimberPower() {
-//		return operatorController.getRawAxis(RIGHT_STICK_Y);
+		//  return operatorController.getRawAxis(RIGHT_STICK_Y);
 		if (operatorController.getRawAxis(RIGHT_STICK_Y) >= 0) {
 			return 0;
-		} else {
+		} else { 
 			return -Math.pow(operatorController.getRawAxis(RIGHT_STICK_Y), 2);
 		}
 	}
