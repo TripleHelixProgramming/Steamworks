@@ -75,7 +75,7 @@ public class Robot extends IterativeRobot {
 		// declare ps4 interface
 		oi = new OI();
 		// sets the default autonomous mode
-		chooser.addDefault("Default Auto", new JoystickDrive());
+		chooser.addDefault("Default Auto", new TractionDrive());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
