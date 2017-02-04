@@ -40,7 +40,6 @@ public class RobotMap {
 	public static final int TOUCHPAD = 14;
 	
 	//Drivetrain Talons
-	//Gear Grabber Talons
 	public static final int FRONT_LEFT_TALON_ID = 11;
 	public static final int FRONT_RIGHT_TALON_ID = 13;
 	public static final int REAR_LEFT_TALON_ID = 10;
@@ -73,4 +72,8 @@ public class RobotMap {
 	
 	//LED Ring relay port
 	public static final int LIGHT_RING_RELAY = 0;
+	
+	//PCMs
+	public static final int PCM_0 = 0;
+	public static final int PCM_1 = 1;
 }	
