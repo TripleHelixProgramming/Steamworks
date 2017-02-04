@@ -72,7 +72,7 @@ public class OI {
 	
 	// omni wheels
 	public boolean isOmnisDeployed() {
-		return ((driverController.getRawAxis(RIGHT_STICK_Y) < -0.6) && (driverController.getRawAxis(RIGHT_STICK_Y) > 0.6));
+		return(driverController.getRawButton(L1) == true);
 	}
 	
 	// speed

@@ -65,10 +65,7 @@ public class RobotMap {
 	public static final int FEEDER_TALON = 50;
 
 	//Solenoids
-	public static final int FRONT_DROPDOWN_1 = 6;
-	public static final int FRONT_DROPDOWN_2 = 1;
-	public static final int REAR_DROPDOWN_1 = 5;
-	public static final int REAR_DROPDOWN_2 = 2;
+	public static final int DROP_DOWN = 1;
 	public static final int GEAR_GRABBER_SOLENOID_A = 3;
 	public static final int GEAR_GRABBER_SOLENOID_B = 4;
 	public static final int SHIFTER_UP = 0;

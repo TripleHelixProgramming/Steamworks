@@ -5,6 +5,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -28,8 +29,7 @@ public class Drivetrain extends Subsystem {
 	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
-	private DoubleSolenoid frontOmni = new DoubleSolenoid(FRONT_DROPDOWN_1, FRONT_DROPDOWN_2);
-	private DoubleSolenoid rearOmni = new DoubleSolenoid(REAR_DROPDOWN_1, REAR_DROPDOWN_2);
+	private Solenoid Omni = new Solenoid(DROP_DOWN);
 	private DoubleSolenoid shifters = new DoubleSolenoid(SHIFTER_UP, SHIFTER_DOWN);
 	
 	// Drivetrain
@@ -45,14 +45,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void deployOmnis() {
 		// deploy front & back Omni wheels
-		frontOmni.set(Value.kForward);
-		rearOmni.set(Value.kForward);
+		Omni.set(true);
 	}
 	
 	public void retractOmnis() {
 		// retract front & back Omni wheels
-		frontOmni.set(Value.kReverse);
-		rearOmni.set(Value.kForward);
+		Omni.set(false);
 	}
 	
 	public void shiftUp() {
