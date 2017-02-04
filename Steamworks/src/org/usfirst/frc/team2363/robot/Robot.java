@@ -16,7 +16,7 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
-
+import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 import org.usfirst.frc.team2363.util.PathReader;
@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static Feeder feeder;
 	public static Pixy pixy;
 	public static AHRS ahrs;
+	public static LightRing lightRing;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -48,11 +49,12 @@ public class Robot extends IterativeRobot {
   public Robot() {
       
     	// declare subsystems
-    	drivetrain = new Drivetrain();
-    	gearGrabber = new GearGrabber();
-      shooter = new Shooter();
-    	feeder = new Feeder();
-      pixy = new Pixy();
+	  drivetrain = new Drivetrain();
+	  gearGrabber = new GearGrabber();
+	  shooter = new Shooter();
+	  feeder = new Feeder();
+	  pixy = new Pixy();
+	  lightRing = new LightRing();
     
       // Instantiate the NavMXP Gyro
       try {

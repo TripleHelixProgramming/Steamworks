@@ -11,8 +11,9 @@ public class RobotMap {
 	public static final double HIGH_SPEED_SCALING = 0.55;
 	public static final double LOW_SPEED_SCALING = 0.9;
 	
-	//Controllers
-	public static final int PS4_PORT = 0;
+	//PS4 Controllers
+	public static final int DRIVER_PORT = 0;
+	public static final int OPERATOR_PORT = 1;
 	
 	//PS4 joystick axis
 	public static final int LEFT_STICK_X = 0;
@@ -62,4 +63,7 @@ public class RobotMap {
 	public static final int REAR_DROPDOWN_2 = 2;
 	public static final int GEAR_GRABBER_SOLENOID_A = 3;
 	public static final int GEAR_GRABBER_SOLENOID_B = 4;
+	
+	//LED Ring relay port
+	public static final int LIGHT_RING_RELAY = 0;
 }
