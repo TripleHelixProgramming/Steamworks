@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.ShiftCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
@@ -38,23 +39,31 @@ public class OI {
 		
 		//shooter
 		//Turns on the shooter
-		new JoystickButton(driverController, L1).whenPressed(new PIDShooterCommand());
+		new JoystickButton(operatorController, R1).whenPressed(new PIDShooterCommand());
 		//Turns off the shooter
-		new JoystickButton(driverController, R1).whenPressed(new StopShooter());
-		//Turns on the shooter feeder
-		new JoystickButton(driverController, L2).whenPressed(new FeederCommand(true));
-		//Turns off the shooter feeder
-		new JoystickButton(driverController, R2).whenPressed(new FeederCommand(false));
+		new JoystickButton(operatorController, L1).whenPressed(new StopShooter());
+		//Turns on the shooter feeder while square is being held
+		new JoystickButton(operatorController, R2).whenPressed(new FeederCommand(true));
+		new JoystickButton(operatorController, R2).whenReleased(new FeederCommand(false));
+		//Aiming
+		//new JoystickButton(ps4Controller, PS).whenPressed(new InsertCommandHere());
 		
 		//gear grabber
 		//Sucks in the gear while square is being held
-		new JoystickButton(driverController, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
-		new JoystickButton(driverController, SQUARE).whenReleased(new GearGrabberStop());
+		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
+		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
+		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
 		//Pushes out the gear while circle is being held
-		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
-		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
+		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
+		new JoystickButton(operatorController, CIRCLE).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, OPTIONS).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
+		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
 		
-		//light ring
+		//Fuel Intake
+		//new JoystickButton(operatorController, X).whenPressed(new InsertCommandHere());
+		
+		/*//light ring
 		//Turns the light to green while triangle is being held
 		new JoystickButton(operatorController, TRIANGLE).whenPressed(new LightRingGreen());
 		new JoystickButton(operatorController, TRIANGLE).whenReleased(new LightRingOff());
@@ -64,20 +73,22 @@ public class OI {
 		//Turns the light to red and green while square is being held
 		new JoystickButton(operatorController, SQUARE).whenPressed(new LightRingBoth());
 		new JoystickButton(operatorController, SQUARE).whenReleased(new LightRingOff());
-		//Traction Drive and Omni Drive controlls
-		new JoystickButton(driverController, TRIANGLE).whenPressed(new OmniDrive());
-		new JoystickButton(driverController, TRIANGLE).whenReleased(new TractionDrive());
-		
-		// Need to deconflict Button operations - driver verses operator actions then 
-		// activate shifting buttons.
-		
-		// new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(false));
-		// new JoystickButton(driverController, R1).whenPressed(new ShiftCommand(true));
+		*/
+
+		//Drivetrain controls
+		//Turns on Omni Drive
+		new JoystickButton(driverController, L1).whenPressed(new OmniDrive());
+		//Turns on Traction Drive
+		new JoystickButton(driverController, R1).whenPressed(new TractionDrive());
+		//Low gear
+		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
+		//High gear
+		new JoystickButton(driverController, R2).whenPressed(new ShiftCommand(true));
 	}
 	
 	// omni wheels
 	public boolean isOmnisDeployed() {
-		return ((ps4Controller.getRawAxis(RIGHT_STICK_Y) < -0.6) && (ps4Controller.getRawAxis(RIGHT_STICK_Y) > 0.6));
+		return ((driverController.getRawAxis(RIGHT_STICK_Y) < -0.6) && (driverController.getRawAxis(RIGHT_STICK_Y) > 0.6));
 	}
 	
 	// speed
