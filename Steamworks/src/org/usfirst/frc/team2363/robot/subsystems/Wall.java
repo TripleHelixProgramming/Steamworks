@@ -54,7 +54,7 @@ public class Wall extends Subsystem {
 	
 	public void climberOn() {
 		climberMotor1.set(Robot.oi.getClimberPower());
-		climberMotor2.set(Robot.oi.getClimberPower());
+		climberMotor2.set(-Robot.oi.getClimberPower());
 	}
 	
 	public void climberOff() {
