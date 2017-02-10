@@ -36,6 +36,10 @@ public class Drivetrain extends Subsystem {
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	
 	public Drivetrain() {
+		frontLeft.changeControlMode(TalonControlMode.Follower);
+		frontLeft.set(rearLeft.getDeviceID());
+		frontRight.changeControlMode(TalonControlMode.Follower);
+		frontRight.set(rearRight.getDeviceID());
 	}
 	
 	public void arcadeDrive(double throttle, double turn) {
@@ -64,9 +68,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void driveMotors(double lSpeed, double rSpeed) {
-		frontLeft.set(lSpeed);
 		rearLeft.set(lSpeed);
-		frontRight.set(rSpeed);
 		rearRight.set(rSpeed);
 	}
 	
@@ -77,23 +79,17 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setUpAutoControl() {
-		frontLeft.changeControlMode(TalonControlMode.Speed);
-		frontRight.changeControlMode(TalonControlMode.Speed);
-		rearLeft.changeControlMode(TalonControlMode.Follower);
-		rearLeft.set(frontLeft.getDeviceID());
-		rearRight.changeControlMode(TalonControlMode.Follower);
-		rearRight.set(frontRight.getDeviceID());
+		rearLeft.changeControlMode(TalonControlMode.Speed);
+		rearRight.changeControlMode(TalonControlMode.Speed);
 	}
 	
 	public void setUpManualControl() {
-		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
-		frontRight.changeControlMode(TalonControlMode.PercentVbus);
 		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
 		rearRight.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
-		frontLeft.set(leftSpeed);
-		frontRight.set(rightSpeed);
+		rearLeft.set(leftSpeed);
+		rearRight.set(rightSpeed);
 	}
 }
