@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingOff;
+import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingOperator;
 
 /**
  *This is the subsystem for the light ring control.
@@ -48,7 +48,7 @@ public class LightRing extends Subsystem {
     }
 
     public void initDefaultCommand() {
-        setDefaultCommand(new LightRingOff());
+        setDefaultCommand(new LightRingOperator());
     }
 }
 

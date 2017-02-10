@@ -3,12 +3,14 @@ package org.usfirst.frc.team2363.robot.commands.lightRing;
 import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team2363.robot.Robot.*;
 
-/**
- *Set the light ring to green
- */
 public class LightRingGreen extends Command {
 
+	/**
+	 *Use to set the light ring to green.
+	 *Primarily used in vision processing.
+	 */
     public LightRingGreen() {
+        // Use requires() here to declare subsystem dependencies
         requires(lightRing);
     }
 

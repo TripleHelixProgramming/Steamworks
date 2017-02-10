@@ -5,6 +5,7 @@ import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -28,14 +29,17 @@ public class Drivetrain extends Subsystem {
 	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
-	private DoubleSolenoid frontOmni = new DoubleSolenoid(FRONT_DROPDOWN_1, FRONT_DROPDOWN_2);
-	private DoubleSolenoid rearOmni = new DoubleSolenoid(REAR_DROPDOWN_1, REAR_DROPDOWN_2);
-	private DoubleSolenoid shifters = new DoubleSolenoid(SHIFTER_UP, SHIFTER_DOWN);
+	private Solenoid Omni = new Solenoid(PCM_0, DROP_DOWN);
+	private DoubleSolenoid shifters = new DoubleSolenoid(PCM_0, SHIFTER_UP, SHIFTER_DOWN);
 	
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	
 	public Drivetrain() {
+		frontLeft.changeControlMode(TalonControlMode.Follower);
+		frontLeft.set(rearLeft.getDeviceID());
+		frontRight.changeControlMode(TalonControlMode.Follower);
+		frontRight.set(rearRight.getDeviceID());
 	}
 	
 	public void arcadeDrive(double throttle, double turn) {
@@ -45,14 +49,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void deployOmnis() {
 		// deploy front & back Omni wheels
-		frontOmni.set(Value.kForward);
-		rearOmni.set(Value.kForward);
+		Omni.set(true);
 	}
 	
 	public void retractOmnis() {
 		// retract front & back Omni wheels
-		frontOmni.set(Value.kReverse);
-		rearOmni.set(Value.kForward);
+		Omni.set(false);
 	}
 	
 	public void shiftUp() {
@@ -64,9 +66,7 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void driveMotors(double lSpeed, double rSpeed) {
-		frontLeft.set(lSpeed);
 		rearLeft.set(lSpeed);
-		frontRight.set(rSpeed);
 		rearRight.set(rSpeed);
 	}
 	
@@ -77,23 +77,17 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setUpAutoControl() {
-		frontLeft.changeControlMode(TalonControlMode.Speed);
-		frontRight.changeControlMode(TalonControlMode.Speed);
-		rearLeft.changeControlMode(TalonControlMode.Follower);
-		rearLeft.set(frontLeft.getDeviceID());
-		rearRight.changeControlMode(TalonControlMode.Follower);
-		rearRight.set(frontRight.getDeviceID());
+		rearLeft.changeControlMode(TalonControlMode.Speed);
+		rearRight.changeControlMode(TalonControlMode.Speed);
 	}
 	
 	public void setUpManualControl() {
-		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
-		frontRight.changeControlMode(TalonControlMode.PercentVbus);
 		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
 		rearRight.changeControlMode(TalonControlMode.PercentVbus);
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
-		frontLeft.set(leftSpeed);
-		frontRight.set(rightSpeed);
+		rearLeft.set(leftSpeed);
+		rearRight.set(rightSpeed);
 	}
 }
