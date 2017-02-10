@@ -56,7 +56,12 @@ public class WallCommand extends Command {
     			tiltingWall.extend();
     				
     		}
-    		tiltingWall.climberOn();
+    		if (tiltingWall.isClimberStalled()) {
+    			tiltingWall.climberOff();
+    		} else {
+    			tiltingWall.climberOn();
+    		}
+    		
     		break;
     	case CLIMBER_OFF:
     		if(!Robot.tiltingWall.isClimberOff()) {
