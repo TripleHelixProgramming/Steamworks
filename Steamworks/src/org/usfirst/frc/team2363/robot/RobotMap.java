@@ -46,12 +46,12 @@ public class RobotMap {
 	public static final int REAR_RIGHT_TALON_ID = 12;
 
 	//Gear Grabber Subsystem
-	public static final int GEAR_GRABBER_TALON = 4;
+	public static final int GEAR_GRABBER_TALON = 30;
 	public static final int GEAR_LIMIT_CHANNEL = 0;
 	
 	//Wall Subsystem
-	public static final int CLIMBER_MOTOR_1 = 4;
-	public static final int CLIMBER_MOTOR_2 = 5;
+	public static final int CLIMBER_MOTOR_LEFT = 60;
+	public static final int CLIMBER_MOTOR_RIGHT = 61;
 	public static final int WALL_SOLENOID_A = 0;
 	public static final int WALL_SOLENOID_B = 7;
 	public static final int WALL_TRIGGER_SOLENOID = 1;
@@ -61,7 +61,8 @@ public class RobotMap {
 	public static final int SHOOTER_ENCODER = 1;
 	
 	//Feeder Subsystem
-	public static final int FEEDER_TALON = 50;
+	public static final int SERIALIZER_TALON = 50;
+	public static final int FEEDER_TALON = 51;
 
 	//Solenoids
 	public static final int DROP_DOWN = 1;

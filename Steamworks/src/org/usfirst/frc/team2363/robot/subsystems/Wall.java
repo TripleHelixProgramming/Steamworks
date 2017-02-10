@@ -29,8 +29,8 @@ public class Wall extends Subsystem {
 	
 	private DoubleSolenoid wallSolenoid = new DoubleSolenoid(PCM_1, WALL_SOLENOID_A, WALL_SOLENOID_B); 
  	private Solenoid triggerSolenoid = new Solenoid(PCM_1, WALL_TRIGGER_SOLENOID);
-	private CANTalon climberMotor1 = new CANTalon(CLIMBER_MOTOR_1);
-	private CANTalon climberMotor2 = new CANTalon(CLIMBER_MOTOR_2);
+	private CANTalon climberMotor1 = new CANTalon(CLIMBER_MOTOR_LEFT);
+	private CANTalon climberMotor2 = new CANTalon(CLIMBER_MOTOR_RIGHT);
 	
 	public void wall() {
 	
@@ -54,7 +54,7 @@ public class Wall extends Subsystem {
 	
 	public void climberOn() {
 		climberMotor1.set(Robot.oi.getClimberPower());
-		climberMotor2.set(Robot.oi.getClimberPower());
+		climberMotor2.set(-Robot.oi.getClimberPower());
 	}
 	
 	public void climberOff() {
