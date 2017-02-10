@@ -3,12 +3,12 @@ package org.usfirst.frc.team2363.robot.commands.lightRing;
 import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team2363.robot.Robot.*;
 
-/**
- *Set the light ring to toggle between red and green
- */
-public class LightRingBoth extends Command {
-
-    public LightRingBoth() {
+public class LightRingOperator extends Command {
+	
+	/**
+	 *Use to give control of the light ring to the operator d-pad
+	 */
+    public LightRingOperator() {
         requires(lightRing);
     }
 
@@ -18,7 +18,19 @@ public class LightRingBoth extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	lightRing.both();
+    	if (oi.getOeratorPOV() == 90) {
+    		//right on d-pad
+    		lightRing.red();
+    	} else if (oi.getOeratorPOV() == 270) {
+    		//left on d-pad
+    		lightRing.green();
+    	} else if (oi.getOeratorPOV() == 0) {
+    		//up on d-pad
+    		lightRing.both();
+    	} else {
+    		//anything that isn't defined above
+    		lightRing.off();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
