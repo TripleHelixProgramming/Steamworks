@@ -23,7 +23,7 @@ public class TestPathFollower extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.setSpeeds(DrivetrainMath.RPM(5), DrivetrainMath.RPM(5));
+    	Robot.drivetrain.setSpeeds(DrivetrainMath.fpsToRpm(5, 4), DrivetrainMath.fpsToRpm(5, 4));
     }
 
     // Make this return true when this Command no longer needs to run execute()

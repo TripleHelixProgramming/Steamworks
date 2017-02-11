@@ -63,22 +63,16 @@ public class Drivetrain extends Subsystem {
 		
 		frontLeft.changeControlMode(TalonControlMode.Follower);
 		frontLeft.set(rearLeft.getDeviceID());
-<<<<<<< HEAD
 		rearLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
 		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-=======
 		frontLeft.enableBrakeMode(true);
 		
->>>>>>> branch 'F-Gain' of https://github.com/TripleHelixProgramming/Steamworks.git
 		frontRight.changeControlMode(TalonControlMode.Follower);
 		frontRight.set(rearRight.getDeviceID());
-<<<<<<< HEAD
 		rearRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
 		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rearRight.setF(DrivetrainMath.fGain(encoderTicks, gearRatio, maxRPM));
-=======
 		frontRight.enableBrakeMode(true);
->>>>>>> branch 'F-Gain' of https://github.com/TripleHelixProgramming/Steamworks.git
 	}
 	
 	public void arcadeDrive(double throttle, double turn) {

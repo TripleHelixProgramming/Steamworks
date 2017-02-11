@@ -125,11 +125,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
-<<<<<<< HEAD
-		autonomousCommand = new TestPathFollower();
-=======
 		autonomousCommand = new TestF();
->>>>>>> branch 'F-Gain' of https://github.com/TripleHelixProgramming/Steamworks.git
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
