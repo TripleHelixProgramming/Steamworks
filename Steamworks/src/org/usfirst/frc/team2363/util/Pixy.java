@@ -1,65 +1,27 @@
-package org.usfirst.frc.team2363.robot.subsystems;
+package org.usfirst.frc.team2363.util;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
-
-import org.usfirst.frc.team2363.robot.commands.PixyCam.*;
 
 /**
  *
  */
-public class Pixy extends Subsystem {
+public class Pixy {
 	
-	// declares the different Pixy Cam communication states
-    public enum PixyState {
-    	ON,
-    	OFF
-    }
     public static I2C pixyi2c;
-	public PixyState state;
 
 	public Pixy() {
-		
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
-		state = PixyState.OFF;
 	}
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-    	setDefaultCommand(new NoTargetAcquire());
-    }
+	private void UpdateSmartDash(PixyPacket Target) {
 
-	public void on() {
-		PixyPacket Target;
-		
-		state = PixyState.ON;
-		SmartDashboard.putNumber("Pixy", 1);
-		
-	    
-    	SmartDashboard.putNumber("Acquiring Target", 1);
-    	Target = pixy.readPixyPacket();
-    		
     	SmartDashboard.putNumber("xPosition", Target.X);
     	SmartDashboard.putNumber("yPosition", Target.Y);
     	SmartDashboard.putNumber("width", Target.Width);
     	SmartDashboard.putNumber("height", Target.Height);
-    	SmartDashboard.putNumber("Raw 5", Target.Sig);
-	}
-	
-	public void off() {
-		state = PixyState.OFF;
-		SmartDashboard.putNumber("Pixy", 0);
-	}
-	
-	public boolean isOn() {
-		return (state == PixyState.ON);
-	}
-	
-	public boolean isOff() {
-		return (state == PixyState.OFF);
+    	SmartDashboard.putNumber("Signature", Target.Sig);
+    	SmartDashboard.putNumber("Area", Target.Area);
 	}
 	
 	//This method parses raw data from the I2C port into Pixy Packet's X , Y, Width, Height, Signature.
@@ -92,6 +54,8 @@ public class Pixy extends Subsystem {
 			packet.Height = height;
 			packet.Sig = pixyValues[5];
 			packet.Area = packet.Height * packet.Width;
+			
+			UpdateSmartDash(packet);
 		
 		}
 	/*	int largestArea = 0;

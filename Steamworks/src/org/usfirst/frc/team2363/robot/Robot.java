@@ -19,9 +19,9 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
 import org.usfirst.frc.team2363.util.PathReader;
+import org.usfirst.frc.team2363.util.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the

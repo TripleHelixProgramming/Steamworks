@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
 /**
  *
@@ -11,7 +10,6 @@ public class AutonomousBoilerSide extends Command {
     public AutonomousBoilerSide() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(pixy);
     }
 
     // Called just before this Command runs the first time
