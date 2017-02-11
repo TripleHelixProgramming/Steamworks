@@ -12,11 +12,12 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
-
+import org.usfirst.frc.team2363.robot.commands.wall.WallCommand;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
+import org.usfirst.frc.team2363.robot.subsystems.Wall.WallState;
 
 
 /**
@@ -68,6 +69,9 @@ public class OI {
 		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
 		//High gear
 		new JoystickButton(driverController, R2).whenPressed(new ShiftCommand(true));
+		
+		//Climber activate
+		new JoystickButton(operatorController, L3).toggleWhenPressed(new WallCommand(WallState.CLIMBER_ON));
 	}
 	
 	// omni wheels

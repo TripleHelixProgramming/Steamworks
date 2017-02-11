@@ -12,14 +12,17 @@ import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
  */
 public class Feeder extends Subsystem {
 
-	CANTalon motor = new CANTalon(FEEDER_TALON);
+	CANTalon feeder = new CANTalon(FEEDER_TALON);
+	CANTalon serializer = new CANTalon(SERIALIZER_TALON);
 	
 	public void on() {
-		motor.set(-0.5);
+		feeder.set(-0.5);
+		serializer.set(0.5);
 	}
 	
 	public void off() {
-		motor.set(0);
+		feeder.set(0);
+		serializer.set(0);
 	}
 	
     public void initDefaultCommand() {
