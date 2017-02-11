@@ -1,4 +1,4 @@
-
+ 
 package org.usfirst.frc.team2363.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -67,7 +67,6 @@ public class Robot extends IterativeRobot {
       } catch (RuntimeException ex ) {
           DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
       }
-
   }
     
 	/**
@@ -123,7 +122,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new TestF();
+		autonomousCommand = new PathFollower(PathReader.getPathSteps("RedHopper1"));
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -144,6 +143,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		drivetrain.updateSmartDashboard();
 	}
 
 	@Override
@@ -165,6 +165,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
+		drivetrain.updateSmartDashboard();
 	}
 
 	/**

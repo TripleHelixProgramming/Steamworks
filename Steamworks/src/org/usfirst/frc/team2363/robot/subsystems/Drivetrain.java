@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
@@ -46,12 +47,18 @@ public class Drivetrain extends Subsystem {
 		
 		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
 //		rearLeft.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
+		rearLeft.setF(0.79);
+		rearLeft.setP(1);
+		rearLeft.setD(0.001);
 		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rearLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
 		rearLeft.reverseSensor(true);
 		
 		rearRight.changeControlMode(TalonControlMode.PercentVbus);
-		rearRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
+//		rearRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
+		rearRight.setF(0.79);
+		rearRight.setP(1);
+		rearRight.setD(0.001);
 		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		rearRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
 		rearRight.reverseSensor(true);
@@ -114,7 +121,14 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
-		rearLeft.set(-(leftSpeed / MAX_RPM) * 100);
-		rearRight.set((rightSpeed / MAX_RPM) * 100);
+//		rearLeft.set(-(leftSpeed / MAX_RPM) * 100);
+//		rearRight.set((rightSpeed / MAX_RPM) * 100);
+		rearLeft.set(leftSpeed);
+		rearRight.set(-rightSpeed);
+	}
+	
+	public void updateSmartDashboard() {
+		SmartDashboard.putNumber("Right Drivetrain RPM", rearRight.get());
+		SmartDashboard.putNumber("Left Drivetrain RPM", rearLeft.get());
 	}
 }

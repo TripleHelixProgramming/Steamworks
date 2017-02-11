@@ -22,8 +22,8 @@ public class TestF extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.setSpeeds(DrivetrainMath.fpsToRpm(2, 4), DrivetrainMath.fpsToRpm(2, 4) );
-//    	Robot.drivetrain.setSpeeds(20, 20);
+    	Robot.drivetrain.setSpeeds(DrivetrainMath.fpsToRpm(5, 4), DrivetrainMath.fpsToRpm(5, 4) );
+//    	Robot.drivetrain.setSpeeds(100, 100);
     }
 
     // Make this return true when this Command no longer needs to run execute()
