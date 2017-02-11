@@ -26,12 +26,14 @@ public class Wall extends Subsystem {
 		CLIMBER_OFF,
 		OFF
 	}
-	
+
+	private int stalledCurrent = 41;
 	private DoubleSolenoid wallSolenoid = new DoubleSolenoid(PCM_1, WALL_SOLENOID_A, WALL_SOLENOID_B); 
  	private Solenoid triggerSolenoid = new Solenoid(PCM_1, WALL_TRIGGER_SOLENOID);
+
 	private CANTalon climberMotor1 = new CANTalon(CLIMBER_MOTOR_LEFT);
 	private CANTalon climberMotor2 = new CANTalon(CLIMBER_MOTOR_RIGHT);
-	
+
 	public void wall() {
 	
 	}
@@ -53,6 +55,7 @@ public class Wall extends Subsystem {
 	}
 	
 	public void climberOn() {
+		
 		climberMotor1.set(Robot.oi.getClimberPower());
 		climberMotor2.set(-Robot.oi.getClimberPower());
 	}
@@ -93,6 +96,10 @@ public class Wall extends Subsystem {
 	
 	public boolean isClimberOff() {
 		return ((climberMotor1.get() == 0) && (climberMotor2.get() == 0));
+	}
+	
+	public boolean isClimberStalled() {
+		return ((climberMotor1.getOutputCurrent() > stalledCurrent) || (climberMotor2.getOutputCurrent() > stalledCurrent));
 	}
 	
 	public boolean isOff() {
