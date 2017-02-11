@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TurnForAngle extends Command {
 	
-	double angle;
+	private double angle;
 	
 	private static int DEFAULT_TOLERANCE = 5;
 
@@ -21,7 +21,7 @@ public class TurnForAngle extends Command {
 	 */
 	double gyroOutput;
 
-	PIDController gyroPID;
+	private PIDController gyroPID;
 
 	/**
 	 * Attempts to turn the robot by the given relative angle, within the given
@@ -38,16 +38,15 @@ public class TurnForAngle extends Command {
 		this.angle = angle;
 		this.setTimeout(5);
 
-		gyroPID = new PIDController(0.04, 0, 0, Robot.ahrs, new PIDOutput() {
+		new PIDController(0.04, 0, 0, Robot.ahrs, new PIDOutput() {
 			@Override
 			public void pidWrite(double output) {
 				gyroOutput = output;
 			}
 		});
 
-		gyroPID.setAbsoluteTolerance(tolerance);
+		getGyroPID().setAbsoluteTolerance(tolerance);
 
-		SmartDashboard.putData("gyroid", gyroPID);
 	}
 
 	/**
@@ -64,21 +63,17 @@ public class TurnForAngle extends Command {
 	protected void initialize() {
 		System.err.println("Initializing " + this);
 		
-		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + angle);
-		
-		gyroPID.setSetpoint(Robot.ahrs.getAngle() + angle);
-		gyroPID.enable();
+		getGyroPID().setSetpoint(Robot.ahrs.getAngle() + getAngle());
+		getGyroPID().enable();
 	}
 
 	@Override
 	public String toString() {
-		return "TurnForAngle [angle=" + angle + ", gyroOutput=" + gyroOutput + "]";
+		return "TurnForAngle [angle=" + getAngle() + ", gyroOutput=" + gyroOutput + "]";
 	}
 
 	protected void execute() {
 		// gyroTurn(angle);
-		
-		SmartDashboard.putNumber("gyro_value", Robot.ahrs.getAngle());
 
 		Robot.drivetrain.driveMotors(-gyroOutput, gyroOutput);
 	}
@@ -88,7 +83,7 @@ public class TurnForAngle extends Command {
 	}
 
 	protected void end() {
-		gyroPID.disable();
+		getGyroPID().disable();
 	}
 
 	protected void interrupted() {
@@ -96,7 +91,15 @@ public class TurnForAngle extends Command {
 	}
 
 	private boolean isGyroOnTarget() {
-		return gyroPID.onTarget();
+		return getGyroPID().onTarget();
+	}
+
+	public PIDController getGyroPID() {
+		return gyroPID;
+	}
+
+	public double getAngle() {
+		return angle;
 	}
 
 }

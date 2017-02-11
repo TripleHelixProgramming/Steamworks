@@ -26,5 +26,9 @@ public class Feeder extends Subsystem {
         // Set the default command for a subsystem here.
         setDefaultCommand(new FeederCommand(false));
     }
+    
+    public double getFeederCurrent() {
+    	return motor.getOutputCurrent();
+    }
 }
 

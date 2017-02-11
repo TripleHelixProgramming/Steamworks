@@ -36,22 +36,12 @@ public class Pixy extends Subsystem {
 		PixyPacket Target;
 		
 		state = PixyState.ON;
-		SmartDashboard.putNumber("Pixy", 1);
 		
-	    
-    	SmartDashboard.putNumber("Acquiring Target", 1);
     	Target = pixy.readPixyPacket();
-    		
-    	SmartDashboard.putNumber("xPosition", Target.X);
-    	SmartDashboard.putNumber("yPosition", Target.Y);
-    	SmartDashboard.putNumber("width", Target.Width);
-    	SmartDashboard.putNumber("height", Target.Height);
-    	SmartDashboard.putNumber("Raw 5", Target.Sig);
 	}
 	
 	public void off() {
 		state = PixyState.OFF;
-		SmartDashboard.putNumber("Pixy", 0);
 	}
 	
 	public boolean isOn() {
@@ -117,6 +107,10 @@ public class Pixy extends Subsystem {
 	
 		double turnAngle = (target.X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
 		return turnAngle;
+	}
+	
+	public PixyPacket getTarget() {
+		return pixy.readPixyPacket();
 	}
 }
 

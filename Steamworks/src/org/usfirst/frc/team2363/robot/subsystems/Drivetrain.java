@@ -41,6 +41,8 @@ public class Drivetrain extends Subsystem {
 	private static final double GEAR_RATIO = 50.0 / 34.0;
 	private static final int MAX_RPM = 415;
 	
+	public static int SHIFT_VARIABLE = 0;
+	
 	//Drivetrain Math
 	final double gearRatio = 34.0 /50.0;
 	final int maxRPM = 385;
@@ -127,4 +129,33 @@ public class Drivetrain extends Subsystem {
 		rearLeft.set(-(leftSpeed / MAX_RPM) * 100);
 		rearRight.set((rightSpeed / MAX_RPM) * 100);
 	}
+
+	public CANTalon getRearLeft() {
+		return rearLeft;
+	}
+	
+	public CANTalon getRearRight() {
+		return rearRight;
+	}
+	
+	public CANTalon getFrontLeft() {
+		return frontLeft;
+	}
+	
+	public CANTalon getFrontRight() {
+		return frontRight;
+	}
+
+	public String getShifters() {
+		if (shifters.get() == Value.kForward) {
+			return "High Gear";
+		} else {
+			return "Low Gear";
+		}
+	}
+	
+	public boolean getOmniState() {
+		return Omni.get();
+	}
+	
 }
