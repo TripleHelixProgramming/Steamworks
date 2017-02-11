@@ -12,6 +12,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -79,6 +80,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
+		chooser.addObject("TestF", new TestF());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
@@ -120,7 +122,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
-		autonomousCommand = chooser.getSelected();
+//		autonomousCommand = chooser.getSelected();
+		autonomousCommand = new TestF();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
