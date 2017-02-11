@@ -2,9 +2,7 @@ package org.usfirst.frc.team2363.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team2363.robot.Robot.pixy;
-
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 
 /**
  *
@@ -14,7 +12,6 @@ public class AutoBoilerSide extends Command {
     public AutoBoilerSide() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(pixy);
     	setTimeout(50);
     }
 
