@@ -4,18 +4,21 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class PathReader {
 	
 	public static List<PathStep> getPathSteps(String fileName) {
-		Path path = FileSystems.getDefault().getPath(fileName);
+		Path path = Paths.get("/home/lvuser/" + fileName);
 		try {
 			return Files.lines(path).map(line -> createPathStep(line)).collect(Collectors.toList());
 		} catch (IOException e) {
-			
+			DriverStation.reportError(e.toString(), true);
 		}
 		return Collections.emptyList();
 	}
