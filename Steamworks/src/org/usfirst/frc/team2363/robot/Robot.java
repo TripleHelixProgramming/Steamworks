@@ -21,7 +21,9 @@ import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
 import org.usfirst.frc.team2363.util.PathReader;
+import org.usfirst.frc.team2363.robot.commands.autonomous.TestPathFollower;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -120,7 +122,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
-		autonomousCommand = chooser.getSelected();
+//		autonomousCommand = chooser.getSelected();
+		autonomousCommand = new TestPathFollower();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -140,6 +143,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
+		
+//		Robot.drivetrain.setSpeeds(DrivetrainMath.RPM(5), DrivetrainMath.RPM(5));
 		Scheduler.getInstance().run();
 	}
 

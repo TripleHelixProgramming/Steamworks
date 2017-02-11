@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
 import com.ctre.CANTalon;
+import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -13,6 +14,7 @@ import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
 //  import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
 
 /**
  *
@@ -35,11 +37,21 @@ public class Drivetrain extends Subsystem {
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, rearLeft, frontRight, rearRight);
 	
+	//Drivetrain Math
+	final double gearRatio = 34.0 /50.0;
+	final int maxRPM = 385;
+	final int encoderTicks = 120;
+	
 	public Drivetrain() {
 		frontLeft.changeControlMode(TalonControlMode.Follower);
 		frontLeft.set(rearLeft.getDeviceID());
+		rearLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
+		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		frontRight.changeControlMode(TalonControlMode.Follower);
 		frontRight.set(rearRight.getDeviceID());
+		rearRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
+		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		rearRight.setF(DrivetrainMath.fGain(encoderTicks, gearRatio, maxRPM));
 	}
 	
 	public void arcadeDrive(double throttle, double turn) {
