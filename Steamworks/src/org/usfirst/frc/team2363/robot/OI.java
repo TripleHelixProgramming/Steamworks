@@ -69,7 +69,7 @@ public class OI {
 		new JoystickButton(driverController, R2).whenPressed(new ShiftCommand(true));
 		
 		//Climber activate
-		new JoystickButton(operatorController, L3).toggleWhenPressed(new WallClimber());
+		new JoystickButton(operatorController, R3).toggleWhenPressed(new WallClimber());
 	}
 	
 	// omni wheels

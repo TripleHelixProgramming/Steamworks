@@ -26,7 +26,7 @@ public class GearGrabber extends Subsystem {
     // Talons
     private CANTalon motor = new CANTalon(GEAR_GRABBER_TALON);
     
-    private DoubleSolenoid solenoid = new DoubleSolenoid(PCM_0, GEAR_GRABBER_SOLENOID_A, GEAR_GRABBER_SOLENOID_B);
+    private DoubleSolenoid solenoid = new DoubleSolenoid(PCM_0, GEAR_GRABBER_UP_SOLENOID, GEAR_GRABBER_DOWN_SOLENOID);
     
     // Limit Switch
     private AnalogInput gearLimit = new AnalogInput(GEAR_LIMIT_CHANNEL);

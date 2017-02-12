@@ -43,8 +43,8 @@ public class GearGrabberRetrieve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	// ends if current is over 20 amps
-        return gearGrabber.isOverCurrent();
+    	// ends if current is over 20 amps or if the IR sensor sees the gear
+        return gearGrabber.isOverCurrent() || gearGrabber.hasGear();
     }
 
     // Called once after isFinished returns true
