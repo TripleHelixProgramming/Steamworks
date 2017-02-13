@@ -34,11 +34,11 @@ public class Wall extends Subsystem {
 	}
 	
 	public void triggerExtend() {
-		triggerSolenoid.set(false); //must be false because of solenoid orientation on manifold
+		triggerSolenoid.set(true);
 	}
 	
 	public void triggerRetract() {
-		triggerSolenoid.set(true); //must be true because of solenoid orientation on manifold
+		triggerSolenoid.set(false);
 	}
 	
 	public void setClimber(double power) {

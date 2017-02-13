@@ -13,10 +13,10 @@ import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
+import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
-import org.usfirst.frc.team2363.robot.subsystems.GearGrabber.GearGrabberState;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,15 +45,17 @@ public class OI {
 		
 		//gear grabber
 		//Sucks in the gear while square is being held
-		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
+		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieve());
 		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieve(GearGrabberState.RETRIEVE));
+		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieve());
 		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
 		//Pushes out the gear while circle is being held
-		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
+		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(operatorController, CIRCLE).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, OPTIONS).whenPressed(new GearGrabberDelivery(GearGrabberState.DELIVER));
+		new JoystickButton(driverController, OPTIONS).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
+		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
 		
 		//Fuel Intake
 		//new JoystickButton(operatorController, X).whenPressed(new InsertCommandHere());
@@ -70,6 +72,9 @@ public class OI {
 		
 		//Climber activate
 		new JoystickButton(operatorController, R3).toggleWhenPressed(new WallClimber());
+		
+		//Hopper Trigger actuate
+		new JoystickButton(operatorController, TRIANGLE).toggleWhenPressed(new WallTriggerExtend());
 	}
 	
 	// omni wheels

@@ -79,12 +79,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void deployOmnis() {
 		// deploy front & back Omni wheels
-		Omni.set(false); //must be false because of solenoid orientation on manifold
+		Omni.set(true);
 	}
 	
 	public void retractOmnis() {
 		// retract front & back Omni wheels
-		Omni.set(true); //must be true because of solenoid orientation on manifold
+		Omni.set(false);
 	}
 	
 	public void shiftUp() {

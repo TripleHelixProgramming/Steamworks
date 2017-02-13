@@ -20,6 +20,7 @@ public class WallOff extends Command {
     protected void execute() {
 		tiltingWall.off();
 		tiltingWall.setClimber(0);
+		tiltingWall.triggerRetract();
     }
 
     // Make this return true when this Command no longer needs to run execute()
