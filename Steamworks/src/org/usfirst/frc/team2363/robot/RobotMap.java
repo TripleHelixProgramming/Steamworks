@@ -52,9 +52,6 @@ public class RobotMap {
 	//Wall Subsystem
 	public static final int CLIMBER_MOTOR_LEFT = 60;
 	public static final int CLIMBER_MOTOR_RIGHT = 61;
-	public static final int WALL_SOLENOID_A = 0;
-	public static final int WALL_SOLENOID_B = 7;
-	public static final int WALL_TRIGGER_SOLENOID = 1;
 
 	//Shooter Subsystem
 	public static final int SHOOTER_TALON = 40;
@@ -65,16 +62,19 @@ public class RobotMap {
 	public static final int FEEDER_TALON = 51;
 
 	//Solenoids
-	public static final int DROP_DOWN = 1;
-	public static final int GEAR_GRABBER_SOLENOID_A = 3;
-	public static final int GEAR_GRABBER_SOLENOID_B = 4;
-	public static final int SHIFTER_UP = 0;
-	public static final int SHIFTER_DOWN = 7;
+	public static final int DROP_DOWN = 3;
+	public static final int GEAR_GRABBER_UP_SOLENOID = 2;
+	public static final int GEAR_GRABBER_DOWN_SOLENOID = 5;
+	public static final int SHIFTER_UP = 1; //unknown if ports are reversed
+	public static final int SHIFTER_DOWN = 6; //^^^
+	public static final int WALL_RETRACT_SOLENOID = 0;
+	public static final int WALL_EXTEND_SOLENOID = 7;
+	public static final int WALL_TRIGGER_SOLENOID = 4;
 	
 	//LED Ring relay port
 	public static final int LIGHT_RING_RELAY = 0;
 	
-	//PCMs
+	//PCMs Currently using PCM_0 but is ready for use in the event that we could need 2 PCMs
 	public static final int PCM_0 = 0;
 	public static final int PCM_1 = 1;
 }	
