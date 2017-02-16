@@ -43,11 +43,6 @@ public class Drivetrain extends Subsystem {
 	
 	public static int SHIFT_VARIABLE = 0;
 	
-	//Drivetrain Math
-	final double gearRatio = 34.0 /50.0;
-	final int maxRPM = 385;
-	final int encoderTicks = 120;
-	
 	public Drivetrain() {
 		robotDrive.setSafetyEnabled(false);
 		
@@ -65,15 +60,10 @@ public class Drivetrain extends Subsystem {
 		
 		frontLeft.changeControlMode(TalonControlMode.Follower);
 		frontLeft.set(rearLeft.getDeviceID());
-		rearLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
-		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		frontLeft.enableBrakeMode(true);
 		
 		frontRight.changeControlMode(TalonControlMode.Follower);
 		frontRight.set(rearRight.getDeviceID());
-		rearRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(encoderTicks, gearRatio));
-		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rearRight.setF(DrivetrainMath.fGain(encoderTicks, gearRatio, maxRPM));
 		frontRight.enableBrakeMode(true);
 	}
 	
