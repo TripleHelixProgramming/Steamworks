@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnAroundBackWheel;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToBoiler;
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
@@ -23,10 +24,9 @@ public class RedGearAndHopper extends CommandGroup {
         addParallel(new PIDShooterCommand());
         addParallel(new GearGrabberStop());
         addSequential(new PathFollower("RedFromGearToHopper"));
-//        addParallel(new DeployFrontOmnis());
-        addSequential(new TurnForAngle(180));
+        addParallel(new TurnAroundBackWheel(0, 1));
         addParallel(new WallExtend());
-//        addSequentiall(new TurnToBoiler());
+        addSequential(new TurnToBoiler());
         addSequential(new FeederCommand(true));
         //WIN
     }

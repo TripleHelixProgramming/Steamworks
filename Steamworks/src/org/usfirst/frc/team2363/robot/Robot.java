@@ -7,9 +7,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DriverStation;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
@@ -20,8 +17,6 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
-import org.usfirst.frc.team2363.util.PathReader;
 import org.usfirst.frc.team2363.util.Pixy;
 
 /**
@@ -42,7 +37,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Feeder feeder;
 	public static Pixy pixy;
-	public static AHRS ahrs;
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
 	
@@ -60,13 +54,6 @@ public class Robot extends IterativeRobot {
 	  pixy = new Pixy();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
-    
-      // Instantiate the NavMXP Gyro
-      try {
-          ahrs = new AHRS(SPI.Port.kMXP); 
-      } catch (RuntimeException ex ) {
-          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-      }
   }
     
 	/**
@@ -83,7 +70,7 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putNumber("autoturn", Robot.pixy.autoAllign());
+		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
 	}
 
 	/**
@@ -122,7 +109,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new PathFollower(PathReader.getPathSteps("RedHopper1"));
+		autonomousCommand = new PathFollower("RedHopper1");
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

@@ -3,9 +3,12 @@ package org.usfirst.frc.team2363.robot.subsystems;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,9 +20,6 @@ import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.util.DrivetrainMath;
 
-/**
- *
- */
 public class Drivetrain extends Subsystem {
     
     // Put methods for controlling this subsystem
@@ -34,6 +34,8 @@ public class Drivetrain extends Subsystem {
 	// Solenoids
 	private Solenoid Omni = new Solenoid(PCM_0, DROP_DOWN);
 	private DoubleSolenoid shifters = new DoubleSolenoid(PCM_0, SHIFTER_UP, SHIFTER_DOWN);
+	
+	private static AHRS ahrs;
 	
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(rearLeft, rearRight);
@@ -70,11 +72,22 @@ public class Drivetrain extends Subsystem {
 		frontRight.changeControlMode(TalonControlMode.Follower);
 		frontRight.set(rearRight.getDeviceID());
 		frontRight.enableBrakeMode(true);
+		
+	      // Instantiate the NavMXP Gyro
+	      try {
+	          ahrs = new AHRS(SPI.Port.kMXP); 
+	      } catch (RuntimeException ex ) {
+	          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
+	      }
+
 	}
 	
 	public void arcadeDrive(double throttle, double turn) {
-		// drives using speed and turn angle given from controller
 		robotDrive.arcadeDrive(throttle, turn);
+	}
+	
+	public void tankDrive(double left, double right) {
+		robotDrive.tankDrive(left, right, false);
 	}
 	
 	public void deployOmnis() {
@@ -125,6 +138,10 @@ public class Drivetrain extends Subsystem {
 //		rearRight.set((rightSpeed / MAX_RPM) * 100);
 		rearLeft.set(leftSpeed);
 		rearRight.set(-rightSpeed);
+	}
+	
+	public double getAngle() {
+		return ahrs.getAngle();
 	}
 	
 	public void updateSmartDashboard() {
