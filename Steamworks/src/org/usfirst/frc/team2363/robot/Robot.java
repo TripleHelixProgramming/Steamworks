@@ -51,7 +51,6 @@ public class Robot extends IterativeRobot {
 	public static AHRS ahrs;
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
-	public static TurnForAngle turnForAngle;
 	public static PIDShooterCommand pidShooterCommand;
 	
 	// declare SmartDashboard tools
@@ -202,9 +201,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Drivetrain Speed", drivetrain.getRearRight().getSpeed());
 		// Turning
 		SmartDashboard.putNumber("Autoturn", Robot.pixy.autoAllign());
-		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + turnForAngle.getAngle());
+//		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + turnForAngle.getAngle());
 		SmartDashboard.putNumber("Gyro Value", Robot.ahrs.getAngle());
-		SmartDashboard.putData("Gyro ID", turnForAngle.getGyroPID());
+//		SmartDashboard.putData("Gyro ID", turnForAngle.getGyroPID());
 		// Autonomous
 		SmartDashboard.putData("Auto mode", chooser);
 		// Gear Grabber
