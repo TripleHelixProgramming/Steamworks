@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.usfirst.frc.team2363.robot.Robot;
 import org.usfirst.frc.team2363.util.DrivetrainMath;
+import org.usfirst.frc.team2363.util.PathReader;
 import org.usfirst.frc.team2363.util.PathStep;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -19,8 +20,8 @@ public class PathFollower extends Command {
 	private int currentStep;
 	private double startTime;
 
-    public PathFollower(List<PathStep> steps) {
-        this.steps = steps;
+    public PathFollower(String pathName) {
+        this.steps = PathReader.getPathSteps(pathName);
         requires(Robot.drivetrain);
     }
 
