@@ -12,8 +12,8 @@ import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingOperator;
  *The settings for the relay are as follows:
  *kOff: turn the LED off
  *kOn: signal both green and red LEDs
- *kForward: signal the green LED
- *kReverse: signal the red LED
+ *kForward: signal the red LED
+ *kReverse: signal the green LED
  */
 public class LightRing extends Subsystem {
 
@@ -37,14 +37,15 @@ public class LightRing extends Subsystem {
      * Turns the ring to green
      */
     public void green() {
-    	light.set(Relay.Value.kForward);
+    	light.set(Relay.Value.kReverse);
+    	
     }
     
     /**
      * Turns the ring to red
      */
     public void red() {
-    	light.set(Relay.Value.kReverse);
+    	light.set(Relay.Value.kForward);
     }
 
     public void initDefaultCommand() {
