@@ -69,8 +69,8 @@ public class GearGrabber extends Subsystem {
     }
     
     public boolean isOverCurrent() {
-    	//detects if the gear grabber goes over 20 amps to prevent damage to the motor
-    	if (getOutputCurrent() > 20) {
+    	//detects if the gear grabber goes over 30 amps to prevent damage to the motor
+    	if (getOutputCurrent() > 30) {
     		return true;
     	} else {
     		return false;

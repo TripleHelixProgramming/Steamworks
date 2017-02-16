@@ -12,11 +12,13 @@ public class TurnToBoiler extends PIDCommand {
     public TurnToBoiler() {
     	super(0, 0, 0);
         requires(Robot.drivetrain);
+        requires(Robot.lightRing);
         getPIDController().setToleranceBuffer(3);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.lightRing.green();
     	if (Robot.pixy.getTargetAngle().isPresent()) {
     		setSetpoint(Robot.pixy.getTargetAngle().get());
     	}
@@ -33,6 +35,7 @@ public class TurnToBoiler extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.lightRing.off();
     }
 
     // Called when another command which requires one or more of the same

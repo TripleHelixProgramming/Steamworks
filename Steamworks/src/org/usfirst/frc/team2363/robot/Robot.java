@@ -8,9 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2363.robot.commands.autonomous.RedGearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
@@ -66,10 +68,13 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
-		chooser.addObject("TestF", new TestF());
+		chooser.addObject("Pixy Check", new PixyCheck());
+		chooser.addObject("Red Hopper 1", new PathFollower("RedHopper1"));
+		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
-		SmartDashboard.putData("Auto mode", chooser);
+		SmartDashboard.putData("Auto Mode", chooser);
 		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
 	}
 
@@ -108,8 +113,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
-//		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new PathFollower("RedHopper1");
+		autonomousCommand = chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
