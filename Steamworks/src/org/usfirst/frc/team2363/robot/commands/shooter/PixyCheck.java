@@ -1,21 +1,23 @@
-package org.usfirst.frc.team2363.robot.commands.autonomous;
+package org.usfirst.frc.team2363.robot.commands.shooter;
 
-import edu.wpi.first.wpilibj.command.Command;
 import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
+import org.usfirst.frc.team2363.robot.Robot;
+
+import static org.usfirst.frc.team2363.robot.Robot.lightRing;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *  PixyCheck command is used to check that we are receiving data from the Pixy Cam
  */
-public class AutoBoilerSide extends Command {
+public class PixyCheck extends Command {
 
-    public AutoBoilerSide() {
+    public PixyCheck() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(pixy);
-    	setTimeout(50);
+    	this.setTimeout(60);
+    	requires(lightRing);
     }
 
     // Called just before this Command runs the first time
@@ -24,12 +26,13 @@ public class AutoBoilerSide extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	new TurnForAngle(pixy.autoAllign());
+    	lightRing.green();  // Red is really green.
+    	Robot.pixy.getTargetAngle();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

@@ -3,8 +3,11 @@ package org.usfirst.frc.team2363.robot.commands.drivetrain;
 import java.util.List;
 
 import org.usfirst.frc.team2363.robot.Robot;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
+import org.usfirst.frc.team2363.util.PathReader;
 import org.usfirst.frc.team2363.util.PathStep;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,26 +18,40 @@ public class PathFollower extends Command {
 	
 	private final List<PathStep> steps;
 	private int currentStep;
+	private double startTime;
 
-    public PathFollower(List<PathStep> steps) {
-        this.steps = steps;
+    public PathFollower(String pathName) {
+        this.steps = PathReader.getPathSteps(pathName);
         requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.setUpAutoControl();
+    	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double currentTime = Timer.getFPGATimestamp();
+    	if (steps.isEmpty()) {
+    		return;
+    	}
+    	
+    	double currentTime = Timer.getFPGATimestamp() - startTime;
+    	DriverStation.reportError("" + currentTime, false);
+    	
     	while (steps.get(currentStep).getTimestamp() < currentTime) {
     		currentStep++;
+    		if (currentStep >= steps.size()) {
+    			return;
+    		}
     	}
     	
     	if (currentStep < steps.size()) {
-    		Robot.drivetrain.setSpeeds(steps.get(currentStep).getLeftSpeed(), steps.get(currentStep).getRightSpeed());
+    		double leftSpeed = DrivetrainMath.fpsToRpm(steps.get(currentStep).getLeftSpeed(), 4);
+    		double rightSpeed =  DrivetrainMath.fpsToRpm(steps.get(currentStep).getRightSpeed(), 4);
+    		DriverStation.reportError("Found speeds " + leftSpeed + " " + rightSpeed, false);
+    		Robot.drivetrain.setSpeeds(leftSpeed, rightSpeed);
     	}
     }
 

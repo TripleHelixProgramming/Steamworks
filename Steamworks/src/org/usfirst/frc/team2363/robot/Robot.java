@@ -1,4 +1,4 @@
-
+ 
 package org.usfirst.frc.team2363.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -7,21 +7,19 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DriverStation;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 
+import org.usfirst.frc.team2363.robot.commands.autonomous.RedGearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnForAngle;
-import org.usfirst.frc.team2363.util.PathReader;
+import org.usfirst.frc.team2363.util.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -41,7 +39,6 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Feeder feeder;
 	public static Pixy pixy;
-	public static AHRS ahrs;
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
 	
@@ -59,14 +56,6 @@ public class Robot extends IterativeRobot {
 	  pixy = new Pixy();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
-    
-      // Instantiate the NavMXP Gyro
-      try {
-          ahrs = new AHRS(SPI.Port.kMXP); 
-      } catch (RuntimeException ex ) {
-          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-      }
-
   }
     
 	/**
@@ -79,10 +68,14 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
+		chooser.addObject("Pixy Check", new PixyCheck());
+		chooser.addObject("Red Hopper 1", new PathFollower("RedHopper1"));
+		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
-		SmartDashboard.putData("Auto mode", chooser);
-		SmartDashboard.putNumber("autoturn", Robot.pixy.autoAllign());
+		SmartDashboard.putData("Auto Mode", chooser);
+		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
 	}
 
 	/**
@@ -141,6 +134,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		drivetrain.updateSmartDashboard();
 	}
 
 	@Override
@@ -162,6 +156,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
+		drivetrain.updateSmartDashboard();
 	}
 
 	/**

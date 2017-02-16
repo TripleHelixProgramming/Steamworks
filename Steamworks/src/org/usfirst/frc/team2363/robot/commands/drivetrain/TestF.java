@@ -1,34 +1,29 @@
-package org.usfirst.frc.team2363.robot.commands.PixyCam;
+package org.usfirst.frc.team2363.robot.commands.drivetrain;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
+import org.usfirst.frc.team2363.robot.Robot;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class PixyCommand extends Command {
-	
-	int Signature = 1;
-	
-    public PixyCommand() {
+public class TestF extends Command {
+
+    public TestF() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	// needs code from the gearGrabber subsystem
-        requires(pixy);
-      
+        requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drivetrain.setUpAutoControl();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (pixy.isOff()) {
-    			pixy.on();	
-    	} else if (pixy.isOn()) {
-    			pixy.off();
-    	}
+    	Robot.drivetrain.setSpeeds(DrivetrainMath.fpsToRpm(5, 4), DrivetrainMath.fpsToRpm(5, 4) );
+//    	Robot.drivetrain.setSpeeds(100, 100);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -38,10 +33,12 @@ public class PixyCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drivetrain.setUpManualControl();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.drivetrain.setUpManualControl();
     }
 }
