@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2363.robot.commands.shooter;
 
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
+//import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
 import org.usfirst.frc.team2363.robot.Robot;
 

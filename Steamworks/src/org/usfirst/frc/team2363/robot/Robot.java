@@ -19,7 +19,11 @@ import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
+import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
+import org.usfirst.frc.team2363.util.PathReader;
 import org.usfirst.frc.team2363.util.Pixy;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -38,9 +42,10 @@ public class Robot extends IterativeRobot {
 	public static GearGrabber gearGrabber;
 	public static Shooter shooter;
 	public static Feeder feeder;
-	public static Pixy pixy;
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
+	public static PIDShooterCommand pidShooterCommand;
+	public static Pixy pixy;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -53,9 +58,9 @@ public class Robot extends IterativeRobot {
 	  gearGrabber = new GearGrabber();
 	  shooter = new Shooter();
 	  feeder = new Feeder();
-	  pixy = new Pixy();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
+	  pixy = new Pixy();
   }
     
 	/**
@@ -72,10 +77,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Red Hopper 1", new PathFollower("RedHopper1"));
 		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
 		
+		
+		SmartDashboard();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
-		SmartDashboard.putData("Auto Mode", chooser);
-		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
 	}
 
 	/**
@@ -94,9 +99,7 @@ public class Robot extends IterativeRobot {
 
 		shooter.getRPM();  // print RPM to dashboard
     
-		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
-		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
-		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
+		SmartDashboard();
 	}
 
 	/**
@@ -133,6 +136,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
+		SmartDashboard();
+//		Robot.drivetrain.setSpeeds(DrivetrainMath.RPM(5), DrivetrainMath.RPM(5));
 		Scheduler.getInstance().run();
 		drivetrain.updateSmartDashboard();
 	}
@@ -153,9 +158,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
+		SmartDashboard();
 		Scheduler.getInstance().run();
-		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
-		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 		drivetrain.updateSmartDashboard();
 	}
 
@@ -166,5 +170,49 @@ public class Robot extends IterativeRobot {
 	public void testPeriodic() {
 		// brings up a window with the state of the robot parts
 		LiveWindow.run();
+	}
+	
+	public void SmartDashboard() {
+		// Motor Voltages
+		SmartDashboard.putNumber("Shooter Current", shooter.getMotor1Current());
+		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
+		SmartDashboard.putNumber("Feeder Current", feeder.getFeederCurrent());
+		SmartDashboard.putNumber("Front Left Drivetrain Current", drivetrain.getFrontLeft().getOutputCurrent());
+		SmartDashboard.putNumber("Front Right Drivetrain Current", drivetrain.getFrontRight().getOutputCurrent());
+		SmartDashboard.putNumber("Rear Left Drivetrain Current", drivetrain.getRearLeft().getOutputCurrent());
+		SmartDashboard.putNumber("Rear Right Drivetrain Current", drivetrain.getRearRight().getOutputCurrent());
+		SmartDashboard.putNumber("Climber 1 Current", tiltingWall.getMotor1Current());
+		SmartDashboard.putNumber("Climber 2 Current", tiltingWall.getMotor2Current());
+//		SmartDashboard.putNumber("", );
+		// Drivetrain
+		SmartDashboard.putBoolean("Omnis Deployed", drivetrain.getOmniState());
+		SmartDashboard.putString("Drivetrain Gear State", drivetrain.getShifters());
+		SmartDashboard.putNumber("Left Drivetrain Speed", drivetrain.getRearLeft().getSpeed());
+		SmartDashboard.putNumber("Right Drivetrain Speed", drivetrain.getRearRight().getSpeed());
+		// Turning
+//		SmartDashboard.putNumber("Autoturn", Robot.pixy.getTargetAngle());
+//		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + turnForAngle.getAngle());
+//		SmartDashboard.putNumber("Gyro Value", Robot.ahrs.getAngle());
+//		SmartDashboard.putData("Gyro ID", turnForAngle.getGyroPID());
+		// Autonomous
+		SmartDashboard.putData("Auto mode", chooser);
+		// Gear Grabber
+		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
+		// Shooter
+    	SmartDashboard.putNumber("Shooter Error", pidShooterCommand.getPIDControllerError());
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+		// Climber
+		SmartDashboard.putData("Climber State", tiltingWall);
+		SmartDashboard.putNumber("Climber Power", Robot.oi.getClimberPower());
+		// Light Ring
+		SmartDashboard.putData("Light Ring Colour", lightRing);
+    	// Vision Processing
+/*    	SmartDashboard.putNumber("xPosition", pixy.getTargetForSmartdash(pixy.readPixyPacket()).X);
+    	SmartDashboard.putNumber("yPosition", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Y);
+    	SmartDashboard.putNumber("width", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Width);
+    	SmartDashboard.putNumber("height", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Height);
+    	SmartDashboard.putNumber("Raw 5", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Sig);
+    	SmartDashboard.putNumber("area", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Area);*/
 	}
 }

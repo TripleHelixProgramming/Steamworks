@@ -44,6 +44,8 @@ public class Drivetrain extends Subsystem {
 	private static final double GEAR_RATIO = 50.0 / 34.0;
 	private static final int MAX_RPM = 415;
 	
+	public static int SHIFT_VARIABLE = 0;
+	
 	public Drivetrain() {
 		robotDrive.setSafetyEnabled(false);
 		
@@ -148,4 +150,33 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Right Drivetrain RPM", rearRight.get());
 		SmartDashboard.putNumber("Left Drivetrain RPM", rearLeft.get());
 	}
+
+	public CANTalon getRearLeft() {
+		return rearLeft;
+	}
+	
+	public CANTalon getRearRight() {
+		return rearRight;
+	}
+	
+	public CANTalon getFrontLeft() {
+		return frontLeft;
+	}
+	
+	public CANTalon getFrontRight() {
+		return frontRight;
+	}
+
+	public String getShifters() {
+		if (shifters.get() == Value.kForward) {
+			return "High Gear";
+		} else {
+			return "Low Gear";
+		}
+	}
+	
+	public boolean getOmniState() {
+		return Omni.get();
+	}
+	
 }
