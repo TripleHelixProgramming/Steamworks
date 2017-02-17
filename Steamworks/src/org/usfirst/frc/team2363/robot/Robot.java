@@ -27,7 +27,6 @@ import org.usfirst.frc.team2363.util.PathReader;
 
 import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
-import org.usfirst.frc.team2363.robot.commands.autonomous.TestPathFollower;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -199,7 +198,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Drivetrain Speed", drivetrain.getRearLeft().getSpeed());
 		SmartDashboard.putNumber("Right Drivetrain Speed", drivetrain.getRearRight().getSpeed());
 		// Turning
-		SmartDashboard.putNumber("Autoturn", Robot.pixy.autoAllign());
+//		SmartDashboard.putNumber("Autoturn", Robot.pixy.getTargetAngle());
 //		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + turnForAngle.getAngle());
 		SmartDashboard.putNumber("Gyro Value", Robot.ahrs.getAngle());
 //		SmartDashboard.putData("Gyro ID", turnForAngle.getGyroPID());
@@ -217,10 +216,11 @@ public class Robot extends IterativeRobot {
 		// Light Ring
 		SmartDashboard.putData("Light Ring Colour", lightRing);
     	// Vision Processing
-    	SmartDashboard.putNumber("xPosition", pixy.getTarget().X);
-    	SmartDashboard.putNumber("yPosition", pixy.getTarget().Y);
-    	SmartDashboard.putNumber("width", pixy.getTarget().Width);
-    	SmartDashboard.putNumber("height", pixy.getTarget().Height);
-    	SmartDashboard.putNumber("Raw 5", pixy.getTarget().Sig);
+/*    	SmartDashboard.putNumber("xPosition", pixy.getTargetForSmartdash(pixy.readPixyPacket()).X);
+    	SmartDashboard.putNumber("yPosition", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Y);
+    	SmartDashboard.putNumber("width", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Width);
+    	SmartDashboard.putNumber("height", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Height);
+    	SmartDashboard.putNumber("Raw 5", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Sig);
+    	SmartDashboard.putNumber("area", pixy.getTargetForSmartdash(pixy.readPixyPacket()).Area);*/
 	}
 }

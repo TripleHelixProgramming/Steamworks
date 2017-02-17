@@ -6,12 +6,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
+import java.util.Optional;
+
 import org.usfirst.frc.team2363.robot.commands.PixyCam.*;
 
 /**
  *
  */
-public class Pixy extends Subsystem {
+public class Pixy{
 	
 	// declares the different Pixy Cam communication states
     public enum PixyState {
@@ -27,33 +29,8 @@ public class Pixy extends Subsystem {
 		state = PixyState.OFF;
 	}
 	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-    	setDefaultCommand(new NoTargetAcquire());
-    }
-
-	public void on() {
-		PixyPacket Target;
-		
-		state = PixyState.ON;
-		
-    	Target = pixy.readPixyPacket();
-	}
-	
-	public void off() {
-		state = PixyState.OFF;
-	}
-	
-	public boolean isOn() {
-		return (state == PixyState.ON);
-	}
-	
-	public boolean isOff() {
-		return (state == PixyState.OFF);
-	}
-	
 	//This method parses raw data from the I2C port into Pixy Packet's X , Y, Width, Height, Signature.
-	public PixyPacket readPixyPacket(){
+	public Optional<PixyPacket> readPixyPacket(){
 		byte[] pixyValues = new byte[64];
 		pixyValues[0] = (byte) 0b01010101;
 		pixyValues[1] = (byte) 0b10101010;
@@ -94,22 +71,22 @@ public class Pixy extends Subsystem {
 			targetY = packet.Y;
 		}*/
 		
-		return packet;
+		return Optional.of(packet);
 	}
 	
-	public double autoAllign() {
-		PixyPacket target = readPixyPacket();
+	public Optional<Double> getTargetAngle() {
+		Optional<PixyPacket> target = readPixyPacket();
 		
 		double screenWidth = 640;
 		double screenHeight = 400;
 		double horizontalAngle = 75;
 		double verticleAngle = 47;
 	
-		double turnAngle = (target.X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
-		return turnAngle;
+		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
+		return Optional.of(turnAngle);
 	}
 	
-	public PixyPacket getTarget() {
+	public Optional<PixyPacket> getTarget() {
 		return pixy.readPixyPacket();
 	}
 }
