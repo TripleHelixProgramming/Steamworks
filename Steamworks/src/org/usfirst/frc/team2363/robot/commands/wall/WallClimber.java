@@ -1,17 +1,18 @@
-package org.usfirst.frc.team2363.robot.commands.PixyCam;
+package org.usfirst.frc.team2363.robot.commands.wall;
 
 import edu.wpi.first.wpilibj.command.Command;
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
+import static org.usfirst.frc.team2363.robot.Robot.*;
+
+import org.usfirst.frc.team2363.robot.Robot;
 
 /**
  *
  */
-public class NoTargetAcquire extends Command {
+public class WallClimber extends Command {
 
-    public NoTargetAcquire() {
+    public WallClimber() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(pixy);
+        requires(tiltingWall);
     }
 
     // Called just before this Command runs the first time
@@ -20,15 +21,18 @@ public class NoTargetAcquire extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	tiltingWall.extend();
+		tiltingWall.setClimber(Robot.oi.getClimberPower());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return tiltingWall.isClimberStalled();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	new WallClimberStalled();
     }
 
     // Called when another command which requires one or more of the same

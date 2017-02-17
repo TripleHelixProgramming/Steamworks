@@ -1,44 +1,55 @@
 package org.usfirst.frc.team2363.robot.commands.drivetrain;
 
 import org.usfirst.frc.team2363.robot.Robot;
-import org.usfirst.frc.team2363.util.DrivetrainMath;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 
 /**
  *
  */
-public class TestF extends Command {
+public class TurnToBoiler extends PIDCommand {
 
-    public TestF() {
-        // Use requires() here to declare subsystem dependencies
+    public TurnToBoiler() {
+    	super(0, 0, 0);
         requires(Robot.drivetrain);
+        requires(Robot.lightRing);
+        getPIDController().setToleranceBuffer(3);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.setUpAutoControl();
+    	Robot.lightRing.green();
+//    	if (Robot.pixy.getTargetAngle().isPresent()) {
+//   		setSetpoint(Robot.pixy.getTargetAngle().get());
+//    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drivetrain.setSpeeds(DrivetrainMath.fpsToRpm(5, 4), DrivetrainMath.fpsToRpm(5, 4) );
-//    	Robot.drivetrain.setSpeeds(100, 100);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return getPIDController().onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drivetrain.setUpManualControl();
+    	Robot.lightRing.off();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drivetrain.setUpManualControl();
     }
+
+	@Override
+	protected double returnPIDInput() {
+		return Robot.drivetrain.getAngle();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		Robot.drivetrain.tankDrive(output, -output);
+	}
 }

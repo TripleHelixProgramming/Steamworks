@@ -1,19 +1,15 @@
-package org.usfirst.frc.team2363.robot.commands.gearGrabber;
-
-import static org.usfirst.frc.team2363.robot.Robot.gearGrabber;
-
-import org.usfirst.frc.team2363.robot.Robot;
+package org.usfirst.frc.team2363.robot.commands.wall;
 
 import edu.wpi.first.wpilibj.command.Command;
+import static org.usfirst.frc.team2363.robot.Robot.*;
 
 /**
  *
  */
-public class GearGrabberDelivery extends Command {
-		
-    public GearGrabberDelivery() {
-    	// needs code from the gearGrabber subsystem
-        requires(gearGrabber);
+public class WallClimberStalled extends Command {
+
+    public WallClimberStalled() {
+        requires(tiltingWall);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +18,7 @@ public class GearGrabberDelivery extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearGrabber.out();
+    	tiltingWall.setClimber(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

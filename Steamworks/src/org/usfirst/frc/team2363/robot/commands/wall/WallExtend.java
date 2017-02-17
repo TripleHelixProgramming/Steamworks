@@ -1,21 +1,15 @@
-package org.usfirst.frc.team2363.robot.commands.PixyCam;
+package org.usfirst.frc.team2363.robot.commands.wall;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
 import edu.wpi.first.wpilibj.command.Command;
+import static org.usfirst.frc.team2363.robot.Robot.*;
 
 /**
  *
  */
-public class PixyCommand extends Command {
-	
-	int Signature = 1;
-	
-    public PixyCommand() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	// needs code from the gearGrabber subsystem
-        requires(pixy);
-      
+public class WallExtend extends Command {
+
+    public WallExtend() {
+        requires(tiltingWall);
     }
 
     // Called just before this Command runs the first time
@@ -24,11 +18,7 @@ public class PixyCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (pixy.isOff()) {
-    			pixy.on();	
-    	} else if (pixy.isOn()) {
-    			pixy.off();
-    	}
+    	tiltingWall.extend();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,19 +1,23 @@
-package org.usfirst.frc.team2363.robot.commands.gearGrabber;
+package org.usfirst.frc.team2363.robot.commands.shooter;
 
-import static org.usfirst.frc.team2363.robot.Robot.gearGrabber;
+//import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
 import org.usfirst.frc.team2363.robot.Robot;
+
+import static org.usfirst.frc.team2363.robot.Robot.lightRing;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ *  PixyCheck command is used to check that we are receiving data from the Pixy Cam
  */
-public class GearGrabberDelivery extends Command {
-		
-    public GearGrabberDelivery() {
-    	// needs code from the gearGrabber subsystem
-        requires(gearGrabber);
+public class PixyCheck extends Command {
+
+    public PixyCheck() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	this.setTimeout(60);
+    	requires(lightRing);
     }
 
     // Called just before this Command runs the first time
@@ -22,12 +26,13 @@ public class GearGrabberDelivery extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearGrabber.out();
+    	lightRing.green();  // Red is really green.
+//    	Robot.pixy.getTargetAngle();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true

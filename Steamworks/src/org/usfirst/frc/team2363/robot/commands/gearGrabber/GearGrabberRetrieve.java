@@ -13,14 +13,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearGrabberRetrieve extends Command {
 	
-	// declares "on" state
-	private GearGrabberState run;
-	
-	public GearGrabberRetrieve(GearGrabberState run) {
+	public GearGrabberRetrieve() {
 		// needs code from the gearGrabber subsystem
         requires(gearGrabber);
-        // declares "on" state in current instance
-        this.run = run;
     }
 
     // Called just before this Command runs the first time
@@ -43,7 +38,7 @@ public class GearGrabberRetrieve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	// ends if current is over 20 amps
+    	// ends if current is over 30 amps or if the IR sensor sees the gear
         return gearGrabber.isOverCurrent();
     }
 

@@ -1,4 +1,4 @@
-
+ 
 package org.usfirst.frc.team2363.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -7,25 +7,21 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DriverStation;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 
+import org.usfirst.frc.team2363.robot.commands.autonomous.RedGearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
-import org.usfirst.frc.team2363.robot.subsystems.Pixy;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.util.DrivetrainMath;
 import org.usfirst.frc.team2363.util.PathReader;
-
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
 
 
 /**
@@ -45,8 +41,6 @@ public class Robot extends IterativeRobot {
 	public static GearGrabber gearGrabber;
 	public static Shooter shooter;
 	public static Feeder feeder;
-	public static Pixy pixy;
-	public static AHRS ahrs;
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
 	public static PIDShooterCommand pidShooterCommand;
@@ -62,17 +56,8 @@ public class Robot extends IterativeRobot {
 	  gearGrabber = new GearGrabber();
 	  shooter = new Shooter();
 	  feeder = new Feeder();
-	  pixy = new Pixy();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
-    
-      // Instantiate the NavMXP Gyro
-      try {
-          ahrs = new AHRS(SPI.Port.kMXP); 
-      } catch (RuntimeException ex ) {
-          DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
-      }
-
   }
     
 	/**
@@ -85,7 +70,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
-		chooser.addObject("TestF", new TestF());
+		chooser.addObject("Pixy Check", new PixyCheck());
+		chooser.addObject("Red Hopper 1", new PathFollower("RedHopper1"));
+		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
+		
 		
 		SmartDashboard();
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -125,8 +113,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
-//		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new TestF();
+		autonomousCommand = chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -149,6 +136,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard();
 //		Robot.drivetrain.setSpeeds(DrivetrainMath.RPM(5), DrivetrainMath.RPM(5));
 		Scheduler.getInstance().run();
+		drivetrain.updateSmartDashboard();
 	}
 
 	@Override
@@ -169,6 +157,7 @@ public class Robot extends IterativeRobot {
 		// makes sure only one command per subsystems runs at a time
 		SmartDashboard();
 		Scheduler.getInstance().run();
+		drivetrain.updateSmartDashboard();
 	}
 
 	/**
@@ -200,7 +189,7 @@ public class Robot extends IterativeRobot {
 		// Turning
 //		SmartDashboard.putNumber("Autoturn", Robot.pixy.getTargetAngle());
 //		SmartDashboard.putNumber("Turning For Angle", Robot.ahrs.getAngle() + turnForAngle.getAngle());
-		SmartDashboard.putNumber("Gyro Value", Robot.ahrs.getAngle());
+//		SmartDashboard.putNumber("Gyro Value", Robot.ahrs.getAngle());
 //		SmartDashboard.putData("Gyro ID", turnForAngle.getGyroPID());
 		// Autonomous
 		SmartDashboard.putData("Auto mode", chooser);
