@@ -30,8 +30,8 @@ public class Feeder extends Subsystem {
         setDefaultCommand(new FeederCommand(false));
     }
     
-//    public double getFeederCurrent() {
-//    	return motor.getOutputCurrent();
-//    }
+    public double getFeederCurrent() {
+    	return feeder.getOutputCurrent();
+    }
 }
 

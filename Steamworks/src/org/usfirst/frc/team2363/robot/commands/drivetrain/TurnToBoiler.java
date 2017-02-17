@@ -19,9 +19,9 @@ public class TurnToBoiler extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.lightRing.green();
-//    	if (Robot.pixy.getTargetAngle().isPresent()) {
-//   		setSetpoint(Robot.pixy.getTargetAngle().get());
-//    	}
+    	if (Robot.pixy.getTargetAngle().isPresent()) {
+    		setSetpoint(Robot.pixy.getTargetAngle().get());
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run

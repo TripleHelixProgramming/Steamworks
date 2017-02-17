@@ -22,6 +22,7 @@ import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.util.DrivetrainMath;
 import org.usfirst.frc.team2363.util.PathReader;
+import org.usfirst.frc.team2363.util.Pixy;
 
 
 /**
@@ -44,6 +45,7 @@ public class Robot extends IterativeRobot {
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
 	public static PIDShooterCommand pidShooterCommand;
+	public static Pixy pixy;
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -58,6 +60,7 @@ public class Robot extends IterativeRobot {
 	  feeder = new Feeder();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
+	  pixy = new Pixy();
   }
     
 	/**

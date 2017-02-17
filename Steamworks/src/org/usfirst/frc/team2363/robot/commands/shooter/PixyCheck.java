@@ -27,7 +27,7 @@ public class PixyCheck extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	lightRing.green();  // Red is really green.
-//    	Robot.pixy.getTargetAngle();
+    	Robot.pixy.getTargetAngle();
     }
 
     // Make this return true when this Command no longer needs to run execute()
