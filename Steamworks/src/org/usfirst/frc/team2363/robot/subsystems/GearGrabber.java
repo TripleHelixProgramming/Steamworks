@@ -31,7 +31,7 @@ public class GearGrabber extends Subsystem {
     
     public void out() {
     	// sets gear grabber to rotate out at 40% speed
-    	motor.set(0.3);
+    	motor.set(0.4);
     }
     
     public void off() {
@@ -70,7 +70,7 @@ public class GearGrabber extends Subsystem {
     
     public boolean isOverCurrent() {
     	//detects if the gear grabber goes over 30 amps to prevent damage to the motor
-    	if (getOutputCurrent() > 30) {
+    	if (getOutputCurrent() > 20) {
     		return true;
     	} else {
     		return false;

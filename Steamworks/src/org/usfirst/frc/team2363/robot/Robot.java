@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2363.robot.commands.autonomous.RedGearAndHopper;
+import org.usfirst.frc.team2363.robot.commands.autonomous.RedWallToHopper;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToBoiler;
 import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -69,13 +72,16 @@ public class Robot extends IterativeRobot {
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addObject("Pixy Check", new PixyCheck());
-		chooser.addObject("Red Hopper 1", new PathFollower("RedHopper1"));
+		chooser.addObject("Auto Aim", new AutoAim());
+		chooser.addObject("Red Hopper", new PathFollower("RedHopper"));
 		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
+		chooser.addObject("Test Path", new PathFollower("TestDrive"));
+		Robot.drivetrain.resetAngle();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		// allows user to choose autonomous mode from the SmartDashboard
 		SmartDashboard.putData("Auto Mode", chooser);
-		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
+//		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
 	}
 
 	/**
@@ -97,6 +103,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
 		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
+//		SmartDashboard.putString("Target Angle", Robot.pixy.getTargetAngle().isPresent() ? Robot.pixy.getTargetAngle().get().toString() : "No Target");
+
 	}
 
 	/**
@@ -113,7 +121,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
-		autonomousCommand = chooser.getSelected();
+//		autonomousCommand = chooser.getSelected();
+		autonomousCommand = new RedWallToHopper();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -135,6 +144,7 @@ public class Robot extends IterativeRobot {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
 		drivetrain.updateSmartDashboard();
+        SmartDashboard.putNumber("Current Angle", Robot.drivetrain.getAngle());
 	}
 
 	@Override

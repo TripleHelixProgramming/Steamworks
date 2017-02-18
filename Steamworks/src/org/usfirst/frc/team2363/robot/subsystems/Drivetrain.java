@@ -148,4 +148,9 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Right Drivetrain RPM", rearRight.get());
 		SmartDashboard.putNumber("Left Drivetrain RPM", rearLeft.get());
 	}
+
+	public void resetAngle() {
+		ahrs.zeroYaw();
+		
+	}
 }
