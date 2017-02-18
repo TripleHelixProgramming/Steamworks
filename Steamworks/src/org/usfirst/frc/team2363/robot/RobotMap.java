@@ -55,7 +55,7 @@ public class RobotMap {
 
 	//Shooter Subsystem
 	public static final int SHOOTER_TALON = 40;
-	public static final int SHOOTER_ENCODER = 1;
+	public static final int SHOOTER_ENCODER = 0;
 	
 	//Feeder Subsystem
 	public static final int SERIALIZER_TALON = 50;

@@ -3,6 +3,7 @@ package org.usfirst.frc.team2363.robot.commands.shooter;
 import org.usfirst.frc.team2363.robot.Robot;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDShooterCommand extends PIDCommand {
 	
     public PIDShooterCommand() {
-    	super(SmartDashboard.getNumber("Shooter P Value", 0), 0, SmartDashboard.getNumber("Shooter D Value", 0));
+    	super(0, 0, 0);
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooter);
     }
@@ -25,7 +26,7 @@ public class PIDShooterCommand extends PIDCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("Shooter Error", getPIDController().getError());
-    	setSetpoint(SmartDashboard.getNumber("Shooter Setpoint", 0));
+    	setSetpoint(4000);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -47,7 +48,9 @@ public class PIDShooterCommand extends PIDCommand {
 
 	@Override
 	protected double returnPIDInput() {
-		return Robot.shooter.getRPM();
+		double rpm = Robot.shooter.getRPM();
+		DriverStation.reportWarning("Shooter RPM : " + rpm, false);
+		return rpm;
 	}
 
 	@Override
