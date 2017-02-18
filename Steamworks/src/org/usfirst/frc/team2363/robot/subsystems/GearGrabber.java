@@ -31,7 +31,7 @@ public class GearGrabber extends Subsystem {
     
     public void out() {
     	// sets gear grabber to rotate out at 40% speed
-    	motor.set(0.4);
+    	motor.set(0.3);
     }
     
     public void off() {

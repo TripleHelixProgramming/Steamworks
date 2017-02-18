@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class RedGearAndHopper extends CommandGroup {
 
     public RedGearAndHopper() {
-        addSequential(new PathFollower("RedGear"));
+//        addSequential(new PathFollower("RedGear"));
         addParallel(new GearGrabberDelivery());
         addSequential(new WaitCommand(0.5));
         addParallel(new PIDShooterCommand());
         addParallel(new GearGrabberStop());
-        addSequential(new PathFollower("RedFromGearToHopper"));
+//        addSequential(new PathFollower("RedFromGearToHopper"));
         addParallel(new TurnAroundBackWheel(0, 1));
         addParallel(new WallExtend());
         addSequential(new TurnToBoiler());
