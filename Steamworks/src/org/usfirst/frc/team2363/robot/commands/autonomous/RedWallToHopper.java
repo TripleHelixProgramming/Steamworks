@@ -30,8 +30,8 @@ public class RedWallToHopper extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new PathFollower("RedHopper"));
-    	addSequential(new WallExtend(),2);
+    	addSequential(new PathFollower("RedHopper"));
+    	addSequential(new WallExtend(),1);
     	addSequential(new WallTriggerExtend());
     }
 }
