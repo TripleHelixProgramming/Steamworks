@@ -7,10 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearGrabberDelivery extends Command {
-		
-    public GearGrabberDelivery() {
-    	// needs code from the gearGrabber subsystem
+public class GearGrabberDown extends Command {
+
+    public GearGrabberDown() {
         requires(gearGrabber);
     }
 
@@ -20,7 +19,8 @@ public class GearGrabberDelivery extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearGrabber.out();
+    	gearGrabber.off();
+    	gearGrabber.down();
     }
 
     // Make this return true when this Command no longer needs to run execute()

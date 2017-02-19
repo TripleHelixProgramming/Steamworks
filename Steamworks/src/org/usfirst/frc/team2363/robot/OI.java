@@ -13,10 +13,14 @@ import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
+import org.usfirst.frc.team2363.robot.commands.wall.WallExtend;
+import org.usfirst.frc.team2363.robot.commands.wall.WallRetract;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
+import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerRetract;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDownOut;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -58,8 +62,8 @@ public class OI {
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
 		
 		//Fuel Intake
-		//new JoystickButton(operatorController, X).whenPressed(new InsertCommandHere());
-
+		//new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
+		
 		//Drivetrain controls
 		//Turns on Omni Drive
 		new JoystickButton(driverController, L1).whenPressed(new OmniDrive());

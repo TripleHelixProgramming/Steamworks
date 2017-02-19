@@ -1,10 +1,5 @@
 package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 
-import static org.usfirst.frc.team2363.robot.subsystems.GearGrabber.*;
-
-import org.usfirst.frc.team2363.robot.Robot;
-//import org.usfirst.frc.team2363.robot.subsystems.Intake.IntakeState;
-
 import static org.usfirst.frc.team2363.robot.Robot.*;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,8 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearGrabberRetrieve extends Command {
 	
+	private int stalledCount = 0;
+	
 	public GearGrabberRetrieve() {
-		// needs code from the gearGrabber subsystem
         requires(gearGrabber);
     }
 
@@ -24,22 +20,20 @@ public class GearGrabberRetrieve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// turns off the gear grabber if it already has a gear in it
-    /*	if (Robot.gearGrabber.hasGear()) {
-    		gearGrabber.off();
-    		gearGrabber.up();
-    	} else { */
-    		// turns gear grabber inwards
-    		gearGrabber.in();
-    		gearGrabber.down();
-    	// }
-    		
+    	gearGrabber.in();
+    	gearGrabber.down();
+    	
+    	if (gearGrabber.isOverCurrent()) {
+    		stalledCount++;
+    	} else {
+    		stalledCount = 0;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	// ends if current is over 30 amps or if the IR sensor sees the gear
-        return gearGrabber.isOverCurrent();
+        return stalledCount > 5;
     }
 
     // Called once after isFinished returns true

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2363.util;
 
 import java.util.Optional;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -35,6 +36,7 @@ public class Pixy {
 		PixyPacket packet = new PixyPacket();
 		pixyi2c.readOnly(pixyValues, 64);
 		if (pixyValues == null) {
+			SmartDashboard.putString("Target Angle", "No Target");
 			return Optional.empty();
 		}
 		int i = 0;
@@ -70,13 +72,19 @@ public class Pixy {
 		if (!target.isPresent()) {
 			return Optional.empty();
 		}
+		
+		if (target.get().Height == 0 && target.get().Width == 0) {
+			return Optional.empty();
+		}
 
-		double screenWidth = 640;
+		double screenWidth = 320;
 		double screenHeight = 400;
 		double horizontalAngle = 75;
 		double verticleAngle = 47;
 
-		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
+//		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
+		double turnAngle = ((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2);
+		DriverStation.reportError("Turn Angle : " + turnAngle, false);
 		return Optional.of(turnAngle);
 	}
 }
