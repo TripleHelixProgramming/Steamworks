@@ -60,9 +60,8 @@ public class OI {
 		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
-		
-		//Fuel Intake
-		//new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
+		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
+		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
 		
 		//Drivetrain controls
 		//Turns on Omni Drive

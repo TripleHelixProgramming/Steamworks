@@ -15,6 +15,7 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TestF;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToBoiler;
+import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingGreen;
 import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -122,7 +123,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new RedWallToHopper();
+//		autonomousCommand = new RedWallToHopper();
+		autonomousCommand = new PixyCheck();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

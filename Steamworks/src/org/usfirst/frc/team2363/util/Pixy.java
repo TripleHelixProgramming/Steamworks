@@ -83,7 +83,7 @@ public class Pixy {
 		double verticleAngle = 47;
 
 //		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
-		double turnAngle = ((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2);
+		double turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2)) - 13.125;
 		DriverStation.reportError("Turn Angle : " + turnAngle, false);
 		return Optional.of(turnAngle);
 	}
