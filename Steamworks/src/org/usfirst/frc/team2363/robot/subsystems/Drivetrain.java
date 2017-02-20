@@ -151,6 +151,5 @@ public class Drivetrain extends Subsystem {
 
 	public void resetAngle() {
 		ahrs.zeroYaw();
-		
 	}
 }
