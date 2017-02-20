@@ -14,6 +14,8 @@ public class RobotMap {
 	//PS4 Controllers
 	public static final int DRIVER_PORT = 0;
 	public static final int OPERATOR_PORT = 1;
+	public static final int DRIVER_RUMBLE_PORT = 4;
+	public static final int OPERATOR_RUMBLE_PORT =5;
 	
 	//PS4 joystick axis
 	public static final int LEFT_STICK_X = 0;
