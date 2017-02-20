@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2363.robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -30,11 +31,15 @@ public class OI {
 	
 	private Joystick driverController;
 	private Joystick operatorController;
+	private Joystick driverRumble;
+	private Joystick operatorRumble;
 
 	public OI() {
 		//Controllers
 		driverController = new Joystick(DRIVER_PORT);
-		operatorController = new Joystick(OPERATOR_PORT);		
+		operatorController = new Joystick(OPERATOR_PORT);
+		driverRumble = new Joystick(DRIVER_RUMBLE_PORT);
+		operatorRumble = new Joystick(OPERATOR_RUMBLE_PORT);
 		
 		//shooter
 		//Turns on the shooter
@@ -114,5 +119,23 @@ public class OI {
 	  */
 	public int getOeratorPOV() {
 		return operatorController.getPOV();
+	}
+	
+	/**
+	 * Turns on and off the rumble function on the driver and operator controllers
+	 * @param set true to turn on rumble
+	 */
+	public void setControllerRumble(boolean state) {
+		if (state == true) {
+			driverRumble.setRumble(RumbleType.kLeftRumble, 1);
+			driverRumble.setRumble(RumbleType.kRightRumble, 1);
+			operatorRumble.setRumble(RumbleType.kLeftRumble, 1);
+			operatorRumble.setRumble(RumbleType.kRightRumble, 1);
+		} else {
+			driverRumble.setRumble(RumbleType.kLeftRumble, 0);
+			driverRumble.setRumble(RumbleType.kRightRumble, 0);
+			operatorRumble.setRumble(RumbleType.kLeftRumble, 0);
+			operatorRumble.setRumble(RumbleType.kRightRumble, 0);
+		}
 	}
 }
