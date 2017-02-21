@@ -2,6 +2,7 @@ package org.usfirst.frc.team2363.util;
 
 import java.util.Optional;
 
+import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -70,10 +71,7 @@ public class Pixy {
 
 	public Optional<Double> getTargetAngle() {
 		Optional<PixyPacket> target = readPixyPacket();
-		
-		double screenWidth = 320;
-		double horizontalAngle = 75;
-		
+
 		// Running through filters.
 		
 		// Ensure the packet was not null
@@ -100,8 +98,7 @@ public class Pixy {
 			previousPkt.Area = target.get().Area;
 		}
 		
-// 		double  turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2)) - 13.125;
-		double turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2));
+		double turnAngle = (((target.get().X / SCREEN_WIDTH) * HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE / 2));
 		
 		DriverStation.reportError("Turn Angle : " + turnAngle, false);
 		return Optional.of(turnAngle);

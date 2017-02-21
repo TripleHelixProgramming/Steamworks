@@ -14,22 +14,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TurnToBoiler extends PIDCommand {
 	
 	static double previousAngle = 0.0;
+	double offset = 0.0;
 
-    public TurnToBoiler() {
+    public TurnToBoiler(double offset) {
     	super(0.04, 0, 0.002);
         requires(Robot.drivetrain);
         requires(Robot.lightRing);
         requires(Robot.feeder);
         
+        this.offset = offset;
+        
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(.5);
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drivetrain.resetAngle();
     	Robot.lightRing.green();
-    	setSetpoint(0.0);
+    	setSetpoint(offset);
     }
 
     // Called repeatedly when this Command is scheduled to run

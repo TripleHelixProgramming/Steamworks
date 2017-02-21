@@ -29,6 +29,6 @@ public class AutoAim extends CommandGroup {
         // arm.
     	addParallel(new LightRingGreen());
     	addSequential(new WaitCommand(1));
-    	addSequential(new TurnToBoiler());
+    	addSequential(new TurnToBoiler(0.0));
     }
 }

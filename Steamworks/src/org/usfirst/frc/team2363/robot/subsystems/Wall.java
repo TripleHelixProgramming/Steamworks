@@ -60,5 +60,13 @@ public class Wall extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new WallOff());
     }
+    
+    public double getMotor1Current() {
+    	return climberMotor1.getOutputCurrent();
+	}
+ 
+	public double getMotor2Current() {
+		return climberMotor2.getOutputCurrent();
+	}
 }
 

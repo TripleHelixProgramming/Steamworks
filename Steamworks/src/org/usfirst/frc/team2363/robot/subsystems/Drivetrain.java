@@ -144,12 +144,34 @@ public class Drivetrain extends Subsystem {
 		return ahrs.getAngle();
 	}
 	
-	public void updateSmartDashboard() {
-		SmartDashboard.putNumber("Right Drivetrain RPM", rearRight.get());
-		SmartDashboard.putNumber("Left Drivetrain RPM", rearLeft.get());
-	}
-
 	public void resetAngle() {
 		ahrs.zeroYaw();
+	}
+	public CANTalon getRearLeft() {
+		return rearLeft;
+	}
+	
+	public CANTalon getRearRight() {
+		return rearRight;
+	}
+	
+	public CANTalon getFrontLeft() {
+		return frontLeft;
+	}
+	
+	public CANTalon getFrontRight() {
+		return frontRight;
+	}
+
+	public String getShifters() {
+		if (shifters.get() == Value.kForward) {
+			return "High Gear";
+		} else {
+			return "Low Gear";
+		}
+	}
+	
+	public boolean getOmniState() {
+		return Omni.get();
 	}
 }
