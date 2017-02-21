@@ -34,13 +34,11 @@ public class RedWallToHopper extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new PathFollower("BlueHopper"));
-    	addSequential(new TurnToZero());
-    	addSequential(new WallExtend(),1);
-    	addSequential(new WallTriggerExtend());
-    	addSequential(new TurnToBoiler());
-    	addParallel(new PIDShooterCommand());
-    	addSequential(new WaitCommand(2));
-    	addSequential(new FeederCommand(true));
+ //   	addSequential(new PathFollower("BlueHopper"));
+ //   	addSequential(new TurnToZero());
+ //   	addSequential(new WallExtend(),1);
+ //   	addSequential(new WallTriggerExtend());
+ //   	addSequential(new PIDShooterCommand());
+    	addSequential(new TurnToBoiler()); 	
     }
 }

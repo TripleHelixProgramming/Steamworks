@@ -20,7 +20,6 @@ public class PixyCheck extends Command {
     public PixyCheck() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-//    	this.setTimeout(60);
     	requires(lightRing);
     }
 
@@ -41,7 +40,6 @@ public class PixyCheck extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-//        return isTimedOut();
     	return false;
     }
 

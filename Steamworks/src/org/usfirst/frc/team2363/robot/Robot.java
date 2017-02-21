@@ -70,6 +70,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// declare ps4 interface
 		oi = new OI();
+		
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addObject("Pixy Check", new PixyCheck());
@@ -77,6 +78,9 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Red Hopper", new PathFollower("RedHopper"));
 		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
 		chooser.addObject("Test Path", new PathFollower("TestDrive"));
+		
+		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
+		// to trigger the hopper.
 		Robot.drivetrain.resetAngle();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
@@ -124,8 +128,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
-//		autonomousCommand = new RedWallToHopper();
-		autonomousCommand = new PixyCheck();
+		autonomousCommand = new RedWallToHopper();
+//		autonomousCommand = new PixyCheck();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",

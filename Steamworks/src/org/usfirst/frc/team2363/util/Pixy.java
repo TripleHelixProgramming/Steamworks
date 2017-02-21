@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Pixy {
 
 	public static I2C pixyi2c;
+	public static PixyPacket previousPkt = new PixyPacket();
 
 	public Pixy() {
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
@@ -34,6 +35,7 @@ public class Pixy {
 		pixyValues[1] = (byte) 0b10101010;
 
 		PixyPacket packet = new PixyPacket();
+		
 		pixyi2c.readOnly(pixyValues, 64);
 		if (pixyValues == null) {
 			SmartDashboard.putString("Target Angle", "No Target");
@@ -68,22 +70,39 @@ public class Pixy {
 
 	public Optional<Double> getTargetAngle() {
 		Optional<PixyPacket> target = readPixyPacket();
-
+		
+		double screenWidth = 320;
+		double horizontalAngle = 75;
+		
+		// Running through filters.
+		
+		// Ensure the packet was not null
 		if (!target.isPresent()) {
-			return Optional.empty();
+			target = Optional.of(previousPkt);
+			//  return Optional.empty();
+		} 
+		
+		// Height and Width of the target should not be 0
+		if (target.get().Height == 0 && target.get().Width == 0) {
+			target = Optional.of(previousPkt);
+			// return Optional.empty();
 		}
 		
-		if (target.get().Height == 0 && target.get().Width == 0) {
-			return Optional.empty();
+		// X should range 0 - 320
+		if ((target.get().X < 0) || (target.get().X > 320)) {
+			target = Optional.of(previousPkt);
+		} else {
+			previousPkt.X = target.get().X;
+			previousPkt.Y = target.get().Y;
+			previousPkt.Height = target.get().Height;
+			previousPkt.Width = target.get().Width;
+			previousPkt.Sig = target.get().Sig;
+			previousPkt.Area = target.get().Area;
 		}
-
-		double screenWidth = 320;
-		double screenHeight = 400;
-		double horizontalAngle = 75;
-		double verticleAngle = 47;
-
-//		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
-		double turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2)) - 13.125;
+		
+// 		double  turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2)) - 13.125;
+		double turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2));
+		
 		DriverStation.reportError("Turn Angle : " + turnAngle, false);
 		return Optional.of(turnAngle);
 	}
