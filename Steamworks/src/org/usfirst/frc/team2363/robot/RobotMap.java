@@ -11,6 +11,15 @@ public class RobotMap {
 	public static final double HIGH_SPEED_SCALING = 0.55;
 	public static final double LOW_SPEED_SCALING = 0.9;
 	
+	// Pixy Info & Calibration for Field Sides
+	public static final double BLUE_X_OFFSET = 213;		// Set these to calibrate the Pixy Camera for each side of field
+	public static final double RED_X_OFFSET = 139;		// Set these to calibrate the Pixy Camera for each side of field
+	
+	public static final double SCREEN_WIDTH = 320;
+	public static final double HORIZONTAL_ANGLE = 75;
+	public static final double REDSIDE_OFFSET = ((RED_X_OFFSET / SCREEN_WIDTH)* HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE/2);
+	public static final double BLUESIDE_OFFSET = ((BLUE_X_OFFSET / SCREEN_WIDTH)* HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE/2);
+	
 	//PS4 Controllers
 	public static final int DRIVER_PORT = 0;
 	public static final int OPERATOR_PORT = 1;

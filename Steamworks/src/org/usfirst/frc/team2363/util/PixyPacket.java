@@ -8,6 +8,15 @@ public class PixyPacket {
 	public int Sig;
 	public int Area;
 	
+	public PixyPacket() {
+		X = 0;
+		Y = 0;
+		Width = 0;
+		Height = 0;
+		Sig = 0;
+		Area = 0;
+	}
+	
 	public void setX(int x) {
 		X = x;
 	}
