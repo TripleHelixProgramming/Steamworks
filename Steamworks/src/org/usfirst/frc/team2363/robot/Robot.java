@@ -196,7 +196,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
 		
 		// Shooter
-    	SmartDashboard.putNumber("Shooter Error", pidShooterCommand.getPIDControllerError());
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		
 		// Climber

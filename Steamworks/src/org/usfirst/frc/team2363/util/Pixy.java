@@ -14,7 +14,7 @@ public class Pixy {
 
 	public static I2C pixyi2c;
 	public static PixyPacket previousPkt = new PixyPacket();
-
+	
 	public Pixy() {
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
 	}
@@ -64,30 +64,31 @@ public class Pixy {
 		packet.Sig = pixyValues[5];
 		packet.Area = packet.Height * packet.Width;
 
-		UpdateSmartDash(packet);
-
 		return Optional.of(packet);
 	}
 
 	public Optional<Double> getTargetAngle() {
 		Optional<PixyPacket> target = readPixyPacket();
-
-		// Running through filters.
 		
+		// Running through filters.
 		// Ensure the packet was not null
 		if (!target.isPresent()) {
 			target = Optional.of(previousPkt);
-			//  return Optional.empty();
 		} 
 		
 		// Height and Width of the target should not be 0
 		if (target.get().Height == 0 && target.get().Width == 0) {
 			target = Optional.of(previousPkt);
-			// return Optional.empty();
 		}
 		
-		// X should range 0 - 320
-		if ((target.get().X < 0) || (target.get().X > 320)) {
+		// Throw away any packets whose area is an outlier;  May need to decrease further
+		if (target.get().Area > 4000) {
+			target = Optional.of(previousPkt);
+		}
+		
+		// X should range 1 - 320;  No 0's because we were getting sporadic trash packets with X of 0;
+		// The possibility of a valid target at an X of Zero is low.
+		if ((target.get().X <= 0) || (target.get().X > 320)) {
 			target = Optional.of(previousPkt);
 		} else {
 			previousPkt.X = target.get().X;
@@ -95,8 +96,10 @@ public class Pixy {
 			previousPkt.Height = target.get().Height;
 			previousPkt.Width = target.get().Width;
 			previousPkt.Sig = target.get().Sig;
-			previousPkt.Area = target.get().Area;
+			previousPkt.Area = target.get().Area;	
 		}
+		
+		UpdateSmartDash(target.get());
 		
 		double turnAngle = (((target.get().X / SCREEN_WIDTH) * HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE / 2));
 		
