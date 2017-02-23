@@ -13,7 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PIDShooterCommand extends PIDCommand {
 	
     public PIDShooterCommand() {
-    	super(0.003, 0, 0);
+    	super(0.003, 0.000001, 0);
+//    	super(0, 0.000001, 0);
+//    	super(0.003, 0, 0);
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooter);
     }
@@ -26,7 +28,7 @@ public class PIDShooterCommand extends PIDCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("Shooter Error", getPIDController().getError());
-    	setSetpoint(3300);
+    	setSetpoint(3400);
     }
 
     // Make this return true when this Command no longer needs to run execute()
