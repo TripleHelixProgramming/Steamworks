@@ -36,7 +36,6 @@ public class Shooter extends Subsystem {
 			return previousRPM;
 		}
 		previousRPM = currentRPM;
-		SmartDashboard.putNumber("Shooter RPM", previousRPM);
 		return currentRPM;
 	}
 	
@@ -52,6 +51,10 @@ public class Shooter extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    public double getMotor1Current() {
+    	return motor1.getOutputCurrent();
+	}
 }
 
  

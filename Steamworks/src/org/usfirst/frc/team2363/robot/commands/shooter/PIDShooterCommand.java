@@ -14,8 +14,6 @@ public class PIDShooterCommand extends PIDCommand {
 	
     public PIDShooterCommand() {
     	super(0.003, 0.000001, 0);
-//    	super(0, 0.000001, 0);
-//    	super(0.003, 0, 0);
         // Use requires() here to declare subsystem dependencies
         requires(Robot.shooter);
     }
@@ -60,6 +58,10 @@ public class PIDShooterCommand extends PIDCommand {
 		double power = Shooter.getEstimatedPower(getSetpoint()) + output;
 		Robot.shooter.setPower(power);
 		SmartDashboard.putNumber("Shooter Power", power);
-//		Robot.shooter.setPower(1);
 	}
+	
+	public double getPIDControllerError() {
+		return getPIDController().getError();
+	}
+	
 }

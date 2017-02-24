@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
 import org.usfirst.frc.team2363.robot.Robot;
+import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToBoiler;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToZero;
@@ -14,10 +15,10 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class RedWallToHopper extends CommandGroup {
+public class BlueWallToHopper extends CommandGroup {
 
-    public RedWallToHopper() {
-        // Add Commands here:
+    public BlueWallToHopper() {
+        // Add Commands here
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
@@ -34,13 +35,12 @@ public class RedWallToHopper extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new PathFollower("BlueHopper"));
-    	addSequential(new TurnToZero());
-    	addSequential(new WallExtend(),1);
-    	addSequential(new WallTriggerExtend());
-    	addSequential(new TurnToBoiler());
-    	addParallel(new PIDShooterCommand());
-    	addSequential(new WaitCommand(2));
-    	addSequential(new FeederCommand(true));
+ //   	addSequential(new PathFollower("BlueHopper"));
+ //   	addSequential(new TurnToZero());
+ //   	addSequential(new WallExtend(),1);
+ //   	addSequential(new WallTriggerExtend());
+ //   	addSequential(new PIDShooterCommand());
+//    	addSequential(new TurnToBoiler(BLUESIDE_OFFSET));
+    	addSequential(new TurnToBoiler(0.0)); 	
     }
 }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team2363.util;
 
 import java.util.Optional;
 
+import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Pixy {
 
 	public static I2C pixyi2c;
-
+	public static PixyPacket previousPkt = new PixyPacket();
+	
 	public Pixy() {
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
 	}
@@ -34,6 +36,7 @@ public class Pixy {
 		pixyValues[1] = (byte) 0b10101010;
 
 		PixyPacket packet = new PixyPacket();
+		
 		pixyi2c.readOnly(pixyValues, 64);
 		if (pixyValues == null) {
 			SmartDashboard.putString("Target Angle", "No Target");
@@ -61,29 +64,45 @@ public class Pixy {
 		packet.Sig = pixyValues[5];
 		packet.Area = packet.Height * packet.Width;
 
-		UpdateSmartDash(packet);
-
 		return Optional.of(packet);
 	}
 
 	public Optional<Double> getTargetAngle() {
 		Optional<PixyPacket> target = readPixyPacket();
-
+		
+		// Running through filters.
+		// Ensure the packet was not null
 		if (!target.isPresent()) {
-			return Optional.empty();
+			target = Optional.of(previousPkt);
+		} 
+		
+		// Height and Width of the target should not be 0
+		if (target.get().Height == 0 && target.get().Width == 0) {
+			target = Optional.of(previousPkt);
 		}
 		
-		if (target.get().Height == 0 && target.get().Width == 0) {
-			return Optional.empty();
+		// Throw away any packets whose area is an outlier;  May need to decrease further
+		if (target.get().Area > 4000) {
+			target = Optional.of(previousPkt);
 		}
-
-		double screenWidth = 320;
-		double screenHeight = 400;
-		double horizontalAngle = 75;
-		double verticleAngle = 47;
-
-//		double turnAngle = (target.get().X - (screenWidth / 2)) * (horizontalAngle / screenWidth);
-		double turnAngle = (((target.get().X / screenWidth) * horizontalAngle) - (horizontalAngle / 2)) - 13.125;
+		
+		// X should range 1 - 320;  No 0's because we were getting sporadic trash packets with X of 0;
+		// The possibility of a valid target at an X of Zero is low.
+		if ((target.get().X <= 0) || (target.get().X > 320)) {
+			target = Optional.of(previousPkt);
+		} else {
+			previousPkt.X = target.get().X;
+			previousPkt.Y = target.get().Y;
+			previousPkt.Height = target.get().Height;
+			previousPkt.Width = target.get().Width;
+			previousPkt.Sig = target.get().Sig;
+			previousPkt.Area = target.get().Area;	
+		}
+		
+		UpdateSmartDash(target.get());
+		
+		double turnAngle = (((target.get().X / SCREEN_WIDTH) * HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE / 2));
+		
 		DriverStation.reportError("Turn Angle : " + turnAngle, false);
 		return Optional.of(turnAngle);
 	}
