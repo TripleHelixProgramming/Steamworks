@@ -193,7 +193,6 @@ public class Robot extends IterativeRobot {
 		
 		// Gear Grabber
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
-		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
 		
 		// Shooter
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());

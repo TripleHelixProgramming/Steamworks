@@ -22,7 +22,7 @@ public class GearGrabber extends Subsystem {
     private DoubleSolenoid solenoid = new DoubleSolenoid(PCM_0, GEAR_GRABBER_UP_SOLENOID, GEAR_GRABBER_DOWN_SOLENOID);
     
     // Limit Switch
-    private AnalogInput gearLimit = new AnalogInput(GEAR_LIMIT_CHANNEL);
+    private DigitalInput gearLimit = new DigitalInput(GEAR_LIMIT_CHANNEL);
     
     public void in() {
     	// sets gear grabber to rotate in at 50% speed
@@ -57,11 +57,7 @@ public class GearGrabber extends Subsystem {
     
     public boolean hasGear() {
     	// reads if the gear grabber possesses a gear
-    	if (getGearLimit().getValue() > 300) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+    	return gearLimit.get();
     }
     
     public double getOutputCurrent() {
@@ -81,10 +77,5 @@ public class GearGrabber extends Subsystem {
     	// sets the default gear grabber state to off
         setDefaultCommand(new GearGrabberStop());
     }
-
-	public AnalogInput getGearLimit() {
-		return gearLimit;
-	}
-
 }
 
