@@ -102,8 +102,8 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-
 		SmartDashboard();
+		SmartDashboard.putBoolean("Gear Grabber Tape", gearGrabber.hasGear());
 	}
 
 	/**
@@ -193,7 +193,6 @@ public class Robot extends IterativeRobot {
 		
 		// Gear Grabber
 		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
-		SmartDashboard.putNumber("Analog Value", gearGrabber.getGearLimit().getValue());
 		
 		// Shooter
 		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
