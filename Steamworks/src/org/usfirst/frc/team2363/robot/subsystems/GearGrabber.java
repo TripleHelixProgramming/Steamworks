@@ -57,15 +57,18 @@ public class GearGrabber extends Subsystem {
     
     public boolean hasGear() {
     	// reads if the gear grabber possesses a gear
-    	return gearLimit.get();
+    	return !gearLimit.get();
     }
     
     public double getOutputCurrent() {
     	return motor.getOutputCurrent();
     }
     
+    /**
+     * Use to detect if the gear grabber roller is over current
+     * @return true if over 20 amps
+     */
     public boolean isOverCurrent() {
-    	//detects if the gear grabber goes over 30 amps to prevent damage to the motor
     	if (getOutputCurrent() > 20) {
     		return true;
     	} else {
