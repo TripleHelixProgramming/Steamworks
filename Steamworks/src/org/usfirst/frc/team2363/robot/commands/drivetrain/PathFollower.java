@@ -16,17 +16,19 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class PathFollower extends Command {
 	
-	private final List<PathStep> steps;
+	private List<PathStep> steps;
 	private int currentStep;
 	private double startTime;
+	private final String pathName;
 
     public PathFollower(String pathName) {
-        this.steps = PathReader.getPathSteps(pathName);
+    	this.pathName = pathName;
         requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	this.steps = PathReader.getPathSteps(pathName);
     	Robot.drivetrain.setUpAutoControl();
     	startTime = Timer.getFPGATimestamp();
     }

@@ -8,13 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team2363.robot.commands.autonomous.RedGearAndHopper;
-import org.usfirst.frc.team2363.robot.commands.autonomous.BlueWallToHopper;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
+import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
+import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
+import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
-import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingGreen;
-import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
 import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
@@ -22,8 +20,7 @@ import org.usfirst.frc.team2363.robot.subsystems.LightRing;
 import org.usfirst.frc.team2363.robot.subsystems.Shooter;
 import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
-import org.usfirst.frc.team2363.util.DrivetrainMath;
-import org.usfirst.frc.team2363.util.PathReader;
+import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
 import org.usfirst.frc.team2363.util.Pixy;
 
 /**
@@ -75,15 +72,20 @@ public class Robot extends IterativeRobot {
 		
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
-		chooser.addObject("Pixy Check", new PixyCheck());
-		chooser.addObject("Auto Aim", new AutoAim());
-		chooser.addObject("Red Hopper", new PathFollower("RedHopper"));
-		chooser.addObject("Red Gear & Hopper", new RedGearAndHopper());	
+		chooser.addDefault("Pixy Calibrate", new PixyCheck());
+		chooser.addObject("COORDINATE THIS ONE", new PathFollower("BlueHopper"));
+		chooser.addObject("Center Gear", new GearGroup("CenterGear"));
+		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.REDSIDE_OFFSET));
+		chooser.addObject("Red Loader Gear", new GearGroup("RedLoaderGear"));
+		chooser.addObject("Red Boiler Gear", new GearGroup("RedBoilerGear"));
+		chooser.addObject("Red Key Gear Hopper", new GearAndHopper("RedKeyGearHopper", RobotMap.REDSIDE_OFFSET));
+		chooser.addObject("Blue Boiler Hopper", new WallToHopper("BlueBoilerHopper", RobotMap.BLUESIDE_OFFSET));
+		chooser.addObject("Blue Loader Gear", new GearGroup("BlueLoaderGear"));
+		chooser.addObject("Blue Boiler Gear", new GearGroup("BlueBoilerGear"));
+		chooser.addObject("Blue Key Gear Hopper", new GearAndHopper("BlueKeyGearHopper", RobotMap.BLUESIDE_OFFSET));
 		
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
-		Robot.drivetrain.resetAngle();
-		
 		SmartDashboard();
 		
 	}
@@ -119,9 +121,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		Robot.drivetrain.resetAngle();
 		// reads the selected autonomous mode from SmartDashboard
-//		autonomousCommand = chooser.getSelected();
-		autonomousCommand = new BlueWallToHopper();
+		autonomousCommand = chooser.getSelected();
 //		autonomousCommand = new PixyCheck();
 
 		// schedule the autonomous command (example)
