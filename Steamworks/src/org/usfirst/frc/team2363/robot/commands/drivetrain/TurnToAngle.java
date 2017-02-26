@@ -1,28 +1,27 @@
 package org.usfirst.frc.team2363.robot.commands.drivetrain;
 
-import java.util.Optional;
-
 import org.usfirst.frc.team2363.robot.Robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.PIDCommand;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class TurnToZero extends PIDCommand {
+public class TurnToAngle extends PIDCommand {
 
-    public TurnToZero() {
-    	super(0.04, 0, 0.002);
+    public TurnToAngle(double angle) {
+    	super(0.04, 0.001, 0.002);
         requires(Robot.drivetrain);
+        requires(Robot.lightRing);
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(1);
+        setSetpoint(angle);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     		setSetpoint(0);
+    		Robot.lightRing.both();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,7 +35,7 @@ public class TurnToZero extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {    
-    	
+    	Robot.lightRing.green();
     }
 
     // Called when another command which requires one or more of the same

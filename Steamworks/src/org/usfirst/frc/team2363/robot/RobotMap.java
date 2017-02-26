@@ -13,7 +13,7 @@ public class RobotMap {
 	
 	// Pixy Info & Calibration for Field Sides
 	public static final double BLUE_X_OFFSET = 213;		// Set these to calibrate the Pixy Camera for each side of field
-	public static final double RED_X_OFFSET = 139;		// Set these to calibrate the Pixy Camera for each side of field
+	public static final double RED_X_OFFSET = 44;		// Set these to calibrate the Pixy Camera for each side of field
 	
 	public static final double SCREEN_WIDTH = 320;
 	public static final double HORIZONTAL_ANGLE = 75;

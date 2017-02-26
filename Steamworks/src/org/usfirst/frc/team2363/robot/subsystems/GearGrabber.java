@@ -21,7 +21,7 @@ public class GearGrabber extends Subsystem {
     private CANTalon motor = new CANTalon(GEAR_GRABBER_TALON);
     
     private DoubleSolenoid solenoid = new DoubleSolenoid(PCM_0, GEAR_GRABBER_UP_SOLENOID, GEAR_GRABBER_DOWN_SOLENOID);
-	private Solenoid plate = new Solenoid(PCM_0, GEAR_GRABBER_PLATE);
+	//private Solenoid plate = new Solenoid(PCM_1, GEAR_GRABBER_PLATE);
     
     // Limit Switch
     private DigitalInput gearLimit = new DigitalInput(GEAR_LIMIT_CHANNEL);
@@ -41,14 +41,14 @@ public class GearGrabber extends Subsystem {
     	motor.set(0);
     }
     
-    public void plate_up() {
-    	plate.set(false);
-    }
-   
-    public void plate_down() {
-    	plate.set(true);
-    }
-    
+//    public void plate_up() {
+//    	plate.set(false);
+//    }
+//   
+//    public void plate_down() {
+//    	plate.set(true);
+//    }
+//    
     public void up() {
     	solenoid.set(Value.kForward);
     }

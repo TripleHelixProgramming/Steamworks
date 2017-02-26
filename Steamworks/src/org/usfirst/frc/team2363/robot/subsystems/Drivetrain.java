@@ -136,8 +136,8 @@ public class Drivetrain extends Subsystem {
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
 //		rearLeft.set(-(leftSpeed / MAX_RPM) * 100);
 //		rearRight.set((rightSpeed / MAX_RPM) * 100);
-		rearLeft.set(leftSpeed);
-		rearRight.set(-rightSpeed);
+		rearLeft.set(-leftSpeed);
+		rearRight.set(rightSpeed);
 	}
 	
 	public double getAngle() {

@@ -12,7 +12,7 @@ public class GearGroup extends CommandGroup {
 
     public GearGroup(String firstPath) {
         addSequential(new PathFollower(firstPath));
-        addSequential(new GearGrabberDelivery(), 1);
+        addParallel(new GearGrabberDelivery());
         addSequential(new PathFollower("ReverseGear"));
     }
 }

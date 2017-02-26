@@ -73,8 +73,8 @@ public class Robot extends IterativeRobot {
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addDefault("Pixy Calibrate", new PixyCheck());
-		chooser.addObject("COORDINATE THIS ONE", new PathFollower("BlueHopper"));
-		chooser.addObject("Center Gear", new GearGroup("CenterGear"));
+		chooser.addObject("CONFIG", new PathFollower("TestDrive"));
+		chooser.addObject("Center Gear", new GearGroup("Center"));
 		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.REDSIDE_OFFSET));
 		chooser.addObject("Red Loader Gear", new GearGroup("RedLoaderGear"));
 		chooser.addObject("Red Boiler Gear", new GearGroup("RedBoilerGear"));

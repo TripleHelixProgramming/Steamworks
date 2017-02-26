@@ -2,6 +2,8 @@ package org.usfirst.frc.team2363.robot.subsystems;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
+
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 
@@ -32,7 +34,7 @@ public class Shooter extends Subsystem {
 		
 		double currentRPM = Math.abs(60/encoder.getPeriod());
 //		if (currentRPM > Shooter.MAX_SPEED * 2) {
-		if (Math.abs(currentRPM - previousRPM) > 2000) {
+		if (Math.abs(currentRPM - previousRPM) > 1000) {
 			return previousRPM;
 		}
 		previousRPM = currentRPM;
@@ -49,7 +51,7 @@ public class Shooter extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new StopShooter());
     }
     
     public double getMotor1Current() {
