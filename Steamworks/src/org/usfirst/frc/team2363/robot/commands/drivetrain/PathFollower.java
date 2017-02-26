@@ -31,6 +31,7 @@ public class PathFollower extends Command {
     	this.steps = PathReader.getPathSteps(pathName);
     	Robot.drivetrain.setUpAutoControl();
     	startTime = Timer.getFPGATimestamp();
+    	currentStep = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run

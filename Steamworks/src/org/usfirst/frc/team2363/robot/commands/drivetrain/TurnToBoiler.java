@@ -41,11 +41,11 @@ public class TurnToBoiler extends PIDCommand {
     	if (getPIDController().onTarget()) {
     		SmartDashboard.putBoolean("Target Acquired", true);
     		DriverStation.reportError("Target Acquired : Turning Feeder ON", false);
-    		//  Robot.feeder.on();
+    		Robot.feeder.on();
     	} else {
     		SmartDashboard.putBoolean("Target Acquired", false);
     		DriverStation.reportError("Acquiring Target : Feeder OFF", false);
-    		//  Robot.feeder.off();;
+    		Robot.feeder.off();;
     	}
     }
 

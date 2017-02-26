@@ -1,8 +1,9 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
+import org.usfirst.frc.team2363.robot.Robot;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToBoiler;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToZero;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToAngle;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
@@ -29,7 +30,7 @@ public class GearAndHopper extends CommandGroup {
     private class PathSequence extends CommandGroup {
     	public PathSequence(String path, double cameraOffset) {
     		addSequential(new PathFollower(path));
-    		addSequential(new TurnToZero());
+    		addSequential(new TurnToAngle(180));
     		addSequential(new WallExtend(), 1);
         	addSequential(new WallTriggerExtend());
             addSequential(new TurnToBoiler(cameraOffset));
