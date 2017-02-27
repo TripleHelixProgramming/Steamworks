@@ -1,43 +1,36 @@
 package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
 import edu.wpi.first.wpilibj.command.Command;
+import static org.usfirst.frc.team2363.robot.Robot.*;
 
 /**
  *
  */
-public class GearGrabberRetrieve extends Command {
-	
-	private int stalledCount = 0;
-	
-	public GearGrabberRetrieve() {
-        requires(gearGrabber);
+public class RumbleFor2Sec extends Command {
+
+    public RumbleFor2Sec() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(2);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearGrabber.in();
-    	gearGrabber.down();
-    	
-    	if (gearGrabber.isOverCurrent()) {
-    		stalledCount++;
-    	} else {
-    		stalledCount = 0;
-    	}
+    	oi.setControllerRumble(true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stalledCount > 5 || gearGrabber.hasGear();
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	new RumbleFor2Sec();
+    	oi.setControllerRumble(false);
     }
 
     // Called when another command which requires one or more of the same
@@ -45,5 +38,3 @@ public class GearGrabberRetrieve extends Command {
     protected void interrupted() {
     }
 }
-
-

@@ -23,7 +23,6 @@ public class GearGrabberDelivery extends Command {
 //    	gearGrabber.off();
 //   	gearGrabber.plate_down();
     	gearGrabber.out();
-    	oi.setControllerRumble(false);
     }
 
     // Make this return true when this Command no longer needs to run execute()
