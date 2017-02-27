@@ -1,13 +1,7 @@
 package org.usfirst.frc.team2363.robot.commands.shooter;
 
-import static org.usfirst.frc.team2363.robot.Robot.pixy;
-
-import java.util.Optional;
-
 import org.usfirst.frc.team2363.robot.Robot;
-
 import static org.usfirst.frc.team2363.robot.Robot.lightRing;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,10 +24,11 @@ public class PixyCheck extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	lightRing.green();  // Red is really green.
-    	Optional<Double> targetAngle = Robot.pixy.getTargetAngle();
-    	if (targetAngle.isPresent()) {
-    		SmartDashboard.putString("Target Angle", "" + targetAngle);
+    	int targetX = Robot.pixy.getTargetX();
+    	if (targetX != -1) {
+    		SmartDashboard.putString("Calibrate X:", "" + targetX);
     	} else {
+    		SmartDashboard.putString("Calibrate X:", "No Target Found");
     		DriverStation.reportError("No Target Found", false);
     	}
     }

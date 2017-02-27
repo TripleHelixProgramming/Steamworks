@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2363.robot.commands.drivetrain;
 
+import org.usfirst.frc.team2363.robot.RobotMap;
 import org.usfirst.frc.team2363.robot.commands.lightRing.LightRingGreen;
+import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -29,6 +31,7 @@ public class AutoAim extends CommandGroup {
         // arm.
     	addParallel(new LightRingGreen());
     	addSequential(new WaitCommand(1));
-    	addSequential(new TurnToBoiler(0.0));
+    	addParallel(new PIDShooterCommand());
+    	addSequential(new TurnToX(RobotMap.RED_X_OFFSET));
     }
 }

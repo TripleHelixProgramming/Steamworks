@@ -1,9 +1,6 @@
 package org.usfirst.frc.team2363.robot.commands.drivetrain;
 
-import java.util.Optional;
-
 import org.usfirst.frc.team2363.robot.Robot;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,21 +8,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class TurnToBoiler extends PIDCommand {
+public class TurnToX extends PIDCommand {
 	
-	static double previousAngle = 0.0;
-	double offset = 0.0;
+	static int previousX;
+	static int targetX;
+	int offset = 0;
 
-    public TurnToBoiler(double offset) {
-    	super(0.04, 0, 0.002);
+    public TurnToX(int offset) {
+    	super(0.015, 0.0015, 0.0015);
         requires(Robot.drivetrain);
         requires(Robot.lightRing);
         requires(Robot.feeder);
         
         this.offset = offset;
+        previousX = offset;
+        targetX = offset;
         
         getPIDController().setToleranceBuffer(10);
-        getPIDController().setAbsoluteTolerance(.5);
+        getPIDController().setAbsoluteTolerance(5);
     }
     
     // Called just before this Command runs the first time
@@ -39,11 +39,13 @@ public class TurnToBoiler extends PIDCommand {
     protected void execute() {
     	SmartDashboard.putNumber("Aiming Error", getPIDController().getError());
     	if (getPIDController().onTarget()) {
-    		SmartDashboard.putBoolean("Target Acquired", true);
+    		SmartDashboard.putBoolean("Target Aquired", true);
+			SmartDashboard.putNumber("Turn To X", previousX);
     		DriverStation.reportError("Target Acquired : Turning Feeder ON", false);
     		Robot.feeder.on();
     	} else {
     		SmartDashboard.putBoolean("Target Acquired", false);
+			SmartDashboard.putNumber("Turn To X", previousX);
     		DriverStation.reportError("Acquiring Target : Feeder OFF", false);
     		Robot.feeder.off();;
     	}
@@ -51,7 +53,6 @@ public class TurnToBoiler extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        // return getPIDController().onTarget();
     	return false;
     }
 
@@ -67,28 +68,24 @@ public class TurnToBoiler extends PIDCommand {
 
 	@Override
 	protected double returnPIDInput() {
-	
-		Optional<Double> targetAngle = Robot.pixy.getTargetAngle();
 		
-		if (targetAngle.isPresent()) {
-			previousAngle = targetAngle.get();
-			SmartDashboard.putNumber("Turn Angle", previousAngle);
-			DriverStation.reportError("Target Angle :" + previousAngle, false);
-			return targetAngle.get();
+		targetX = Robot.pixy.getTargetX();
+		
+		if (targetX != -1) {
+			previousX = targetX;
+			SmartDashboard.putNumber("Turn To X", targetX);
+			DriverStation.reportError("Target To X :" + targetX, false);
+			return targetX;
 		} else {
+			SmartDashboard.putNumber("Turn To X", previousX);
 			DriverStation.reportError("No Target Found: Using previous angle", false);
-			return previousAngle;
+			return previousX;
 		}
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		if (output > .3) {
-			Robot.drivetrain.tankDrive(.3, -.3);
-		} else if(output < -.3) {
-			Robot.drivetrain.tankDrive(-.3, .3);
-		} else {
-			Robot.drivetrain.tankDrive(output, -output);
-		}
+		SmartDashboard.putNumber("Aiming Error", output);
+		Robot.drivetrain.tankDrive(output, -output);
 	}
 }

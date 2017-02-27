@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
 import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
@@ -73,16 +74,17 @@ public class Robot extends IterativeRobot {
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addDefault("Pixy Calibrate", new PixyCheck());
+		chooser.addDefault("Auto Aim", new AutoAim());
 		chooser.addObject("CONFIG", new PathFollower("TestDrive"));
 		chooser.addObject("Center Gear", new GearGroup("Center"));
-		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.REDSIDE_OFFSET));
+		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET));
 		chooser.addObject("Red Loader Gear", new GearGroup("RedLoaderGear"));
 		chooser.addObject("Red Boiler Gear", new GearGroup("RedBoilerGear"));
-		chooser.addObject("Red Key Gear Hopper", new GearAndHopper("RedKeyGearHopper", RobotMap.REDSIDE_OFFSET));
-		chooser.addObject("Blue Boiler Hopper", new WallToHopper("BlueBoilerHopper", RobotMap.BLUESIDE_OFFSET));
+		chooser.addObject("Red Key Gear Hopper", new GearAndHopper("RedKeyGearHopper", RobotMap.RED_X_OFFSET));
+		chooser.addObject("Blue Boiler Hopper", new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET));
 		chooser.addObject("Blue Loader Gear", new GearGroup("BlueLoaderGear"));
 		chooser.addObject("Blue Boiler Gear", new GearGroup("BlueBoilerGear"));
-		chooser.addObject("Blue Key Gear Hopper", new GearAndHopper("BlueKeyGearHopper", RobotMap.BLUESIDE_OFFSET));
+		chooser.addObject("Blue Key Gear Hopper", new GearAndHopper("BlueKeyGearHopper", RobotMap.BLUE_X_OFFSET));
 		
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.

@@ -15,6 +15,7 @@ public class TurnToAngle extends PIDCommand {
         requires(Robot.lightRing);
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(1);
+        getPIDController().setContinuous(true);
         setSetpoint(angle);
     }
 
@@ -50,7 +51,7 @@ public class TurnToAngle extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
-			Robot.drivetrain.tankDrive(-output, output);
+			Robot.drivetrain.tankDrive(output, -output);
 	}
 }
 
