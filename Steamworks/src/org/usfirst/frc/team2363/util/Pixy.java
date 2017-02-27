@@ -2,6 +2,8 @@ package org.usfirst.frc.team2363.util;
 
 import java.util.Optional;
 
+import org.usfirst.frc.team2363.robot.RobotMap;
+
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
@@ -14,8 +16,15 @@ public class Pixy {
 
 	public static I2C pixyi2c;
 	public static PixyPacket previousPkt = new PixyPacket();
+	public int targetX;
 	
 	public Pixy() {
+		
+		// Must initialize previous packet the very first time Pixy() is run. 
+		previousPkt.X = RobotMap.RED_X_OFFSET;
+		previousPkt.Width = 35;
+		previousPkt.Height = 6;
+		
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
 	}
 
@@ -67,30 +76,40 @@ public class Pixy {
 		return Optional.of(packet);
 	}
 
-	public Optional<Double> getTargetAngle() {
+	public int getTargetX() {
 		Optional<PixyPacket> target = readPixyPacket();
-		
+
 		// Running through filters.
 		// Ensure the packet was not null
 		if (!target.isPresent()) {
 			target = Optional.of(previousPkt);
+			return -1;
 		} 
 		
 		// Height and Width of the target should not be 0
 		if (target.get().Height == 0 && target.get().Width == 0) {
 			target = Optional.of(previousPkt);
+			return -1;
 		}
 		
 		// Throw away any packets whose area is an outlier;  May need to decrease further
 		if (target.get().Area > 4000) {
 			target = Optional.of(previousPkt);
+			return -1;
 		}
 		
 		// X should range 1 - 320;  No 0's because we were getting sporadic trash packets with X of 0;
 		// The possibility of a valid target at an X of Zero is low.
 		if ((target.get().X <= 0) || (target.get().X > 320)) {
 			target = Optional.of(previousPkt);
+			return -1;
+		}
+		
+		if (Math.abs(target.get().X - previousPkt.X) > 50){
+			target = Optional.of(previousPkt);
+			return -1;
 		} else {
+			targetX =  target.get().X;
 			previousPkt.X = target.get().X;
 			previousPkt.Y = target.get().Y;
 			previousPkt.Height = target.get().Height;
@@ -101,10 +120,8 @@ public class Pixy {
 		
 		UpdateSmartDash(target.get());
 		
-		double turnAngle = (((target.get().X / SCREEN_WIDTH) * HORIZONTAL_ANGLE) - (HORIZONTAL_ANGLE / 2));
-		
-		DriverStation.reportError("Turn Angle : " + turnAngle, false);
-		return Optional.of(turnAngle);
+		DriverStation.reportError("Turn To X : " + targetX, false);
+		return targetX;
 	}
 }
 
