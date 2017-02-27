@@ -24,6 +24,7 @@ public class Pixy {
 		previousPkt.X = RobotMap.RED_X_OFFSET;
 		previousPkt.Width = 35;
 		previousPkt.Height = 6;
+		previousPkt.Area = 210;
 		
 		pixyi2c = new I2C(I2C.Port.kOnboard, 0x54);
 	}
