@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class WallClimberGroup extends CommandGroup {
 
     public WallClimberGroup() {
-        addSequential(new BringGearGrabberUp(), 2);
+        addSequential(new BringGearGrabberUp(),.5);
         addSequential(new WallClimber());
     }
 }

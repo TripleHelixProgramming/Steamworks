@@ -17,7 +17,7 @@ public class WallToHopper extends CommandGroup {
     public WallToHopper(String path, int cameraOffset) {
     	addParallel(new PIDShooterCommand());
     	addSequential(new PathFollower(path));
-    	addSequential(new TurnToAngle(0));
+//    	addSequential(new TurnToAngle(0));
     	addSequential(new WallExtend(), 1);
     	addSequential(new WallTriggerExtend(), 1);
     	addSequential(new TurnToX(cameraOffset));

@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.ShiftCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
@@ -66,6 +67,7 @@ public class OI {
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
 		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
 		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim());
 		
 		//Drivetrain controls
 		//Turns on Omni Drive

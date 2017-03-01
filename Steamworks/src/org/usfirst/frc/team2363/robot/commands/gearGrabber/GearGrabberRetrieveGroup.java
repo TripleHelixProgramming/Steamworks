@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GearGrabberRetrieveGroup extends CommandGroup {
 
     public GearGrabberRetrieveGroup() {
-        addSequential(new BringWallUp(), 2);
+        addSequential(new BringWallUp(), .5);
         addSequential(new GearGrabberRetrieve());
     }
 }

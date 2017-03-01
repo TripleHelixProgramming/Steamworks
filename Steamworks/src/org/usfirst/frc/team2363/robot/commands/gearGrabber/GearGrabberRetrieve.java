@@ -20,8 +20,9 @@ public class GearGrabberRetrieve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	gearGrabber.in();
+    	
     	gearGrabber.down();
+    	gearGrabber.in();
     	
     	if (gearGrabber.isOverCurrent()) {
     		stalledCount++;
