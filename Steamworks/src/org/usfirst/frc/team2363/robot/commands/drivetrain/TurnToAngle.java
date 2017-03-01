@@ -13,15 +13,19 @@ public class TurnToAngle extends PIDCommand {
     	super(0.04, 0.001, 0.002);
         requires(Robot.drivetrain);
         requires(Robot.lightRing);
+        
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(1);
-//        getPIDController().setContinuous(true);
+        getPIDController().setContinuous(true);
+        getPIDController().setContinuous(true);
+        getPIDController().setInputRange(-180, 180);
+        getPIDController().setOutputRange(-.3, .3);
+        
         setSetpoint(angle);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		setSetpoint(0);
     		Robot.lightRing.both();
     }
 

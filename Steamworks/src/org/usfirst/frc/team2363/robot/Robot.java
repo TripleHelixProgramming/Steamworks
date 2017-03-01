@@ -74,7 +74,8 @@ public class Robot extends IterativeRobot {
 		// sets the default autonomous mode
 		chooser.addDefault("Default Auto", new TractionDrive());
 		chooser.addDefault("Pixy Calibrate", new PixyCheck());
-		chooser.addDefault("Auto Aim", new AutoAim());
+		chooser.addDefault("Red Auto Aim", new AutoAim(RobotMap.RED_X_OFFSET));
+		chooser.addDefault("Blue Auto Aim", new AutoAim(RobotMap.BLUE_X_OFFSET));
 		chooser.addObject("CONFIG", new PathFollower("TestDrive"));
 		chooser.addObject("Center Gear", new GearGroup("Center"));
 		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET));

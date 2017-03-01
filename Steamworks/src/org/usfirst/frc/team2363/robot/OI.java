@@ -67,7 +67,8 @@ public class OI {
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
 		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
 		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
-		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim());
+		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
+		new JoystickButton(operatorController, SHARE).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		
 		//Drivetrain controls
 		//Turns on Omni Drive

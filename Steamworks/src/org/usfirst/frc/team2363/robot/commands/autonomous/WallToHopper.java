@@ -17,10 +17,13 @@ public class WallToHopper extends CommandGroup {
     public WallToHopper(String path, int cameraOffset) {
     	addParallel(new PIDShooterCommand());
     	addSequential(new PathFollower(path));
-//    	addSequential(new TurnToAngle(0));
+    	addSequential(new TurnToAngle(0));
     	addSequential(new WallExtend(), 1);
     	addSequential(new WallTriggerExtend(), 1);
     	addSequential(new TurnToX(cameraOffset));
-//    	addSequential(new FeederCommand(true));          // Uncomment this line if not using Pixy Cam to Aim TurnToX()
+    	
+    	//  The following commands will only run if the Pixy finds NO TARGET continuously
+    	addSequential(new TurnToAngle(0));
+    	addSequential(new FeederCommand(true)); 
     }
 }

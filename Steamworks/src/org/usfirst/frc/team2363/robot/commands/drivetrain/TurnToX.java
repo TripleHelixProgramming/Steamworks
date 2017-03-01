@@ -12,11 +12,14 @@ public class TurnToX extends PIDCommand {
 	
 	static int previousX;
 	static int targetX;
+	static int noTargetCount;
+	static int NO_TARGET_THRESHHOLD = 4;
 	int offset = 0;
 
     public TurnToX(int offset) {
-//    	super(0.015, 0.0015, 0.0015);
-    	super(0.01, 0.001, 0.001);
+//    	super(0.015, 0.0015, 0.0015);		//	Practice Robot PID Values
+    	super(0.01, 0.001, 0.001);			//	Competition Robot PID Values
+    	
         requires(Robot.drivetrain);
         requires(Robot.lightRing);
         requires(Robot.feeder);
@@ -24,6 +27,7 @@ public class TurnToX extends PIDCommand {
         this.offset = offset;
         previousX = offset;
         targetX = offset;
+        noTargetCount = 0;
         
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(5);
@@ -31,7 +35,6 @@ public class TurnToX extends PIDCommand {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivetrain.resetAngle();
     	Robot.lightRing.green();
     	setSetpoint(offset);
     }
@@ -40,21 +43,23 @@ public class TurnToX extends PIDCommand {
     protected void execute() {
     	SmartDashboard.putNumber("Aiming Error", getPIDController().getError());
     	if (getPIDController().onTarget()) {
-    		SmartDashboard.putBoolean("Target Aquired", true);
-			SmartDashboard.putNumber("Turn To X", previousX);
+    		SmartDashboard.putBoolean("Target Aquired: ", true);
     		DriverStation.reportError("Target Acquired : Turning Feeder ON", false);
     		Robot.feeder.on();
     	} else {
-    		SmartDashboard.putBoolean("Target Acquired", false);
-			SmartDashboard.putNumber("Turn To X", previousX);
+    		SmartDashboard.putBoolean("Target Acquired: ", false);
     		DriverStation.reportError("Acquiring Target : Feeder OFF", false);
     		Robot.feeder.off();;
     	}
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
+    	//  This command should only finished, if it is continually finding NO TARGET
+    	if (noTargetCount == NO_TARGET_THRESHHOLD) {
+    		DriverStation.reportError("REVERTING TO TURN TO ZERO SHOOTING!! ", false);
+    		
+    	}
+    	return noTargetCount == NO_TARGET_THRESHHOLD;
     }
 
     // Called once after isFinished returns true
@@ -74,19 +79,21 @@ public class TurnToX extends PIDCommand {
 		
 		if (targetX != -1) {
 			previousX = targetX;
-			SmartDashboard.putNumber("Turn To X", targetX);
-			DriverStation.reportError("Target To X :" + targetX, false);
+			noTargetCount = 0;
+			SmartDashboard.putString("Target X: ", "" + targetX);
+			DriverStation.reportError("Target X :" + targetX, false);
 			return targetX;
 		} else {
-			SmartDashboard.putNumber("Turn To X", previousX);
-			DriverStation.reportError("No Target Found: Using previous angle", false);
+			noTargetCount++;
+			SmartDashboard.putString("Target X: ", "Using previous X = " + previousX);
+			DriverStation.reportError("NO TARGET: Using previous X = " + previousX, false);
 			return previousX;
 		}
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		SmartDashboard.putNumber("Aiming Error", output);
+		SmartDashboard.putNumber("TurnToX Motor Output: ", output);
 		Robot.drivetrain.tankDrive(output, -output);
 	}
 }
