@@ -1,44 +1,37 @@
-package org.usfirst.frc.team2363.robot.commands.gearGrabber;
+package org.usfirst.frc.team2363.robot.commands.wall;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
+import org.usfirst.frc.team2363.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GearGrabberRetrieve extends Command {
+public class BringWallUp extends Command {
 	
-	private int stalledCount = 0;
-	
-	public GearGrabberRetrieve() {
-        requires(gearGrabber);
+	private boolean isAlreadyUp;
+
+    public BringWallUp() {
+        requires(Robot.tiltingWall);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	isAlreadyUp = Robot.tiltingWall.isRetracted();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	gearGrabber.down();
-    	gearGrabber.in();
-    	
-    	if (gearGrabber.isOverCurrent()) {
-    		stalledCount++;
-    	} else {
-    		stalledCount = 0;
-    	}
+    	Robot.tiltingWall.off();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stalledCount > 5 || gearGrabber.hasGear();
+        return isAlreadyUp;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	oi.setControllerRumble(true);
     }
 
     // Called when another command which requires one or more of the same
@@ -46,5 +39,3 @@ public class GearGrabberRetrieve extends Command {
     protected void interrupted() {
     }
 }
-
-

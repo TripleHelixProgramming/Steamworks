@@ -1,17 +1,16 @@
 package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
+import org.usfirst.frc.team2363.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GearGrabberRetrieve extends Command {
+public class BringGearGrabberUp extends Command {
 	
-	private int stalledCount = 0;
-	
-	public GearGrabberRetrieve() {
-        requires(gearGrabber);
+    public BringGearGrabberUp() {
+        requires(Robot.gearGrabber);
     }
 
     // Called just before this Command runs the first time
@@ -20,25 +19,17 @@ public class GearGrabberRetrieve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	gearGrabber.down();
-    	gearGrabber.in();
-    	
-    	if (gearGrabber.isOverCurrent()) {
-    		stalledCount++;
-    	} else {
-    		stalledCount = 0;
-    	}
+    	Robot.gearGrabber.off();
+    	Robot.gearGrabber.up();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stalledCount > 5 || gearGrabber.hasGear();
+        return Robot.gearGrabber.isUp();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	oi.setControllerRumble(true);
     }
 
     // Called when another command which requires one or more of the same
@@ -46,5 +37,3 @@ public class GearGrabberRetrieve extends Command {
     protected void interrupted() {
     }
 }
-
-

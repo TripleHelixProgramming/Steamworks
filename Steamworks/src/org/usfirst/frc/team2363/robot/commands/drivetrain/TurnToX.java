@@ -15,7 +15,8 @@ public class TurnToX extends PIDCommand {
 	int offset = 0;
 
     public TurnToX(int offset) {
-    	super(0.015, 0.0015, 0.0015);
+//    	super(0.015, 0.0015, 0.0015);
+    	super(0.01, 0.001, 0.001);
         requires(Robot.drivetrain);
         requires(Robot.lightRing);
         requires(Robot.feeder);

@@ -26,7 +26,7 @@ public class PIDShooterCommand extends PIDCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("Shooter Error", getPIDController().getError());
-    	setSetpoint(3375);
+    	setSetpoint(3400);
 }
 
     // Make this return true when this Command no longer needs to run execute()

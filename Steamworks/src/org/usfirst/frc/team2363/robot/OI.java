@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.ShiftCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
@@ -14,9 +15,11 @@ import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
+import org.usfirst.frc.team2363.robot.commands.wall.WallClimberGroup;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerRetract;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 
@@ -51,9 +54,9 @@ public class OI {
 		
 		//gear grabber
 		//Sucks in the gear while square is being held
-		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieve());
+		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieveGroup());
 		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieve());
+		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieveGroup());
 		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
 		//Pushes out the gear while circle is being held
 		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery());
@@ -64,6 +67,7 @@ public class OI {
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
 		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
 		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim());
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
@@ -76,7 +80,7 @@ public class OI {
 		new JoystickButton(driverController, R2).whenPressed(new ShiftCommand(true));
 		
 		//Climber activate
-		new JoystickButton(operatorController, R3).toggleWhenPressed(new WallClimber());
+		new JoystickButton(operatorController, R3).toggleWhenPressed(new WallClimberGroup());
 		
 		//Hopper Trigger actuate
 		new JoystickButton(operatorController, TRIANGLE).toggleWhenPressed(new WallTriggerExtend());
