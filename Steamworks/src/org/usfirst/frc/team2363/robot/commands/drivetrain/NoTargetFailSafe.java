@@ -11,6 +11,8 @@ public class NoTargetFailSafe extends TurnToAngle {
 
 	public NoTargetFailSafe(double angle) {
 		super(angle);
+		
+		requires(Robot.feeder);
 	}
 
 	@Override
