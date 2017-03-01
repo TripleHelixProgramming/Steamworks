@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
-import org.usfirst.frc.team2363.robot.Robot;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.NoTargetFailSafe;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToAngle;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToX;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
@@ -21,8 +22,7 @@ public class GearAndHopper extends CommandGroup {
     	addParallel(new PathSequence(path, cameraOffset));
         addSequential(new WaitCommand(2.5));
         addSequential(new GearGrabberDelivery(), 2);
-        addParallel(new GearGrabberStop());
-        addSequential(new WaitCommand(2.5));	
+        addParallel(new GearGrabberStop());	
         addParallel(new PIDShooterCommand());
    
         //WIN
@@ -34,6 +34,9 @@ public class GearAndHopper extends CommandGroup {
     		addSequential(new WallExtend(), 1);
         	addSequential(new WallTriggerExtend());
         	addSequential(new TurnToX(cameraOffset));
+        	
+        	//   NO TARGET fall back for vision processing
+        	addSequential(new NoTargetFailSafe(0));
     	}
     }
 }

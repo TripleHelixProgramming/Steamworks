@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class TurnToX extends PIDCommand {
 	
-	static int previousX;
-	static int targetX;
-	static int noTargetCount;
-	static int NO_TARGET_THRESHHOLD = 4;
+	int previousX;
+	int targetX;
+	int noTargetCount;
+	int NO_TARGET_THRESHHOLD = 10;
 	int offset = 0;
 
     public TurnToX(int offset) {
@@ -27,7 +27,7 @@ public class TurnToX extends PIDCommand {
         this.offset = offset;
         previousX = offset;
         targetX = offset;
-        noTargetCount = 0;
+        
         
         getPIDController().setToleranceBuffer(10);
         getPIDController().setAbsoluteTolerance(5);
@@ -36,6 +36,7 @@ public class TurnToX extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.lightRing.green();
+    	noTargetCount = 0;
     	setSetpoint(offset);
     }
 
@@ -55,11 +56,11 @@ public class TurnToX extends PIDCommand {
 
     protected boolean isFinished() {
     	//  This command should only finished, if it is continually finding NO TARGET
-    	if (noTargetCount == NO_TARGET_THRESHHOLD) {
+    	if (noTargetCount > NO_TARGET_THRESHHOLD) {
     		DriverStation.reportError("REVERTING TO TURN TO ZERO SHOOTING!! ", false);
     		
     	}
-    	return noTargetCount == NO_TARGET_THRESHHOLD;
+    	return noTargetCount > NO_TARGET_THRESHHOLD;
     }
 
     // Called once after isFinished returns true

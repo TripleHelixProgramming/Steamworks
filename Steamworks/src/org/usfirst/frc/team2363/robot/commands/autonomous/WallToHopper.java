@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2363.robot.commands.autonomous;
 
+import org.usfirst.frc.team2363.robot.commands.drivetrain.NoTargetFailSafe;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToX;
-import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TurnToAngle;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.wall.WallExtend;
@@ -22,8 +22,7 @@ public class WallToHopper extends CommandGroup {
     	addSequential(new WallTriggerExtend(), 1);
     	addSequential(new TurnToX(cameraOffset));
     	
-    	//  The following commands will only run if the Pixy finds NO TARGET continuously
-    	addSequential(new TurnToAngle(0));
-    	addSequential(new FeederCommand(true)); 
+    	//   NO TARGET fall back for vision processing
+    	addSequential(new NoTargetFailSafe(0));
     }
 }
