@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
@@ -173,5 +172,13 @@ public class Drivetrain extends Subsystem {
 	
 	public boolean getOmniState() {
 		return Omni.get();
+	}
+	
+	public double getLeftError() {
+		return rearLeft.getError();
+	}
+	
+	public double getRightError() {
+		return rearRight.getError();
 	}
 }

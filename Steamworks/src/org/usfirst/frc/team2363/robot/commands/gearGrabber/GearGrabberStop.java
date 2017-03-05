@@ -20,7 +20,7 @@ public class GearGrabberStop extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	gearGrabber.off();
-//    	gearGrabber.plate_up();
+    	gearGrabber.plate_up();
     	gearGrabber.up();
     }
 

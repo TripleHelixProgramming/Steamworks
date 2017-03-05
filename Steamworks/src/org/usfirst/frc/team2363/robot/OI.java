@@ -1,11 +1,13 @@
 package org.usfirst.frc.team2363.robot;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.ShiftCommand;
@@ -41,7 +43,7 @@ public class OI {
 		driverRumble = new Joystick(DRIVER_RUMBLE_PORT);
 		operatorRumble = new Joystick(OPERATOR_RUMBLE_PORT);
 		
-		//shooter
+		//shooterI
 		//Turns on the shooter
 		new JoystickButton(operatorController, R1).whenPressed(new PIDShooterCommand());
 		//Turns off the shooter
@@ -65,23 +67,28 @@ public class OI {
 		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
-		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
-		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+//		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
+//		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
+		} else {
+			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
+		}
 		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
-		new JoystickButton(operatorController, SHARE).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
+//		new JoystickButton(operatorController, SHARE).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
-		new JoystickButton(driverController, L1).whenPressed(new OmniDrive());
+		new JoystickButton(driverController, R1).whenPressed(new OmniDrive());
 		//Turns on Traction Drive
-		new JoystickButton(driverController, R1).whenPressed(new TractionDrive());
+		new JoystickButton(driverController, R2).whenPressed(new TractionDrive());
 		//Low gear
-		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
+		new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(true));
 		//High gear
-		new JoystickButton(driverController, R2).whenPressed(new ShiftCommand(true));
+		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
 		
 		//Climber activate
-		new JoystickButton(operatorController, R3).toggleWhenPressed(new WallClimberGroup());
+		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
 		//Hopper Trigger actuate
 		new JoystickButton(operatorController, TRIANGLE).toggleWhenPressed(new WallTriggerExtend());
@@ -89,7 +96,7 @@ public class OI {
 	
 	// omni wheels
 	public boolean isOmnisDeployed() {
-		return(driverController.getRawButton(L1) == true);
+		return(driverController.getRawButton(R1) == true);
 	}
 	
 	// speed

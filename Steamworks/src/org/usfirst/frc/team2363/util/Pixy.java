@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.usfirst.frc.team2363.robot.RobotMap;
 
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -84,8 +83,11 @@ public class Pixy {
 		// Ensure the packet was not null
 		if (!target.isPresent()) {
 			target = Optional.of(previousPkt);
+			DriverStation.reportError("NO TARGET: bad connection", true);
 			return -1;
 		} 
+		
+		UpdateSmartDash(target.get());
 		
 		// Height and Width of the target should not be 0
 		if (target.get().Height == 0 && target.get().Width == 0) {
@@ -119,7 +121,7 @@ public class Pixy {
 			previousPkt.Area = target.get().Area;	
 		}
 		
-		UpdateSmartDash(target.get());
+//		UpdateSmartDash(target.get());
 		
 		DriverStation.reportError("Turn To X : " + targetX, false);
 		return targetX;
