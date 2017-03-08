@@ -76,7 +76,8 @@ public class RobotMap {
 	public static final int DROP_DOWN = 3;
 	public static final int GEAR_GRABBER_UP_SOLENOID = 2;
 	public static final int GEAR_GRABBER_DOWN_SOLENOID = 5;
-	public static final int GEAR_GRABBER_PLATE = 0;
+	public static final int PLATE_UP_SOLENOID = 0;
+	public static final int PLATE_DOWN_SOLENOID = 7;
 	public static final int SHIFTER_UP = 1; //unknown if ports are reversed
 	public static final int SHIFTER_DOWN = 6; //^^^
 	public static final int WALL_RETRACT_SOLENOID = 0;

@@ -1,6 +1,8 @@
  
 package org.usfirst.frc.team2363.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -46,6 +48,11 @@ public class Robot extends IterativeRobot {
 	public static Wall tiltingWall;
 	public static PIDShooterCommand pidShooterCommand;
 	
+	private final DigitalInput autoBoilerGear = new DigitalInput(2);
+	private final DigitalInput autoLoaderGear = new DigitalInput(3);
+	private final DigitalInput autoBoilerHopper = new DigitalInput(4);
+	private final DigitalInput autoCenter = new DigitalInput(5);
+	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -72,19 +79,20 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		// sets the default autonomous mode
-		chooser.addDefault("Default Auto", new TractionDrive());
-		chooser.addDefault("Pixy Calibrate", new PixyCheck());
-		chooser.addDefault("Auto Aim", new AutoAim());
-		chooser.addObject("CONFIG", new PathFollower("TestDrive"));
-		chooser.addObject("Center Gear", new GearGroup("Center"));
-		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET));
-		chooser.addObject("Red Loader Gear", new GearGroup("RedLoaderGear"));
-		chooser.addObject("Red Boiler Gear", new GearGroup("RedBoilerGear"));
-		chooser.addObject("Red Key Gear Hopper", new GearAndHopper("RedKeyGearHopper", RobotMap.RED_X_OFFSET));
-		chooser.addObject("Blue Boiler Hopper", new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET));
-		chooser.addObject("Blue Loader Gear", new GearGroup("BlueLoaderGear"));
-		chooser.addObject("Blue Boiler Gear", new GearGroup("BlueBoilerGear"));
-		chooser.addObject("Blue Key Gear Hopper", new GearAndHopper("BlueKeyGearHopper", RobotMap.BLUE_X_OFFSET));
+//		chooser.addDefault("Default Auto", new TractionDrive());
+//		chooser.addDefault("Pixy Calibrate", new PixyCheck());
+//		chooser.addDefault("Red Auto Aim", new AutoAim(RobotMap.RED_X_OFFSET));
+//		chooser.addDefault("Blue Auto Aim", new AutoAim(RobotMap.BLUE_X_OFFSET));
+//		chooser.addObject("CONFIG", new PathFollower("TestDrive"));
+//		chooser.addObject("Center Gear", new GearGroup("Center"));
+//		chooser.addObject("Red Boiler Hopper", new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET));
+//		chooser.addObject("Red Loader Gear", new GearGroup("RedLoaderGear"));
+//		chooser.addObject("Red Boiler Gear", new GearGroup("RedBoilerGear"));
+//		chooser.addObject("Red Key Gear Hopper", new GearAndHopper("RedKeyGearHopper", RobotMap.RED_X_OFFSET));
+//		chooser.addObject("Blue Boiler Hopper", new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET));
+//		chooser.addObject("Blue Loader Gear", new GearGroup("BlueLoaderGear"));
+//		chooser.addObject("Blue Boiler Gear", new GearGroup("BlueBoilerGear"));
+//		chooser.addObject("Blue Key Gear Hopper", new GearAndHopper("BlueKeyGearHopper", RobotMap.BLUE_X_OFFSET));
 		
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
@@ -108,6 +116,18 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard();
 		SmartDashboard.putBoolean("Gear Grabber Tape", gearGrabber.hasGear());
+		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
+		
+		
+		if (!autoBoilerGear.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
+		} else if (!autoLoaderGear.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
+		} else if (!autoBoilerHopper.get()){
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Boiler Hopper");
+		} else {
+			SmartDashboard.putString("Selected Auto", "Center Gear");
+		}
 	}
 
 	/**
@@ -124,10 +144,50 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		Robot.drivetrain.resetAngle();
+		Robot.drivetrain.shiftDown();
 		// reads the selected autonomous mode from SmartDashboard
-		autonomousCommand = chooser.getSelected();
+//		autonomousCommand = chooser.getSelected();
 //		autonomousCommand = new PixyCheck();
-
+//		autonomousCommand = new GearGroup("RedLoaderGear");
+//		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+//			autonomousCommand = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
+//		} else {
+//			autonomousCommand = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
+//		}
+		
+		GearGroup blueBoilerGear = new GearGroup("BlueBoilerGear");
+		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
+		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
+		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
+		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
+		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
+		
+		if (!autoBoilerGear.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
+			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+				autonomousCommand = blueBoilerGear;
+			} else {
+				autonomousCommand = redBoilerGear;
+			}
+		} else if (!autoLoaderGear.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
+			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+				autonomousCommand = blueLoaderGear;
+			} else {
+				autonomousCommand = redLoaderGear;
+			}
+		} else if (!autoBoilerHopper.get()){
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Boiler Hopper");
+			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+				autonomousCommand = blueBoilerHopper;
+			} else {
+				autonomousCommand = redBoilerHopper;
+			}
+		} else {
+			SmartDashboard.putString("Selected Auto", "Center Gear");
+			autonomousCommand = new GearGroup("Center");
+		}
+		
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
@@ -140,7 +200,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		
+		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
 		SmartDashboard();
 	}
 
@@ -152,6 +212,8 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+
+		Robot.drivetrain.shiftUp();
 	}
 
 	/**
@@ -176,37 +238,37 @@ public class Robot extends IterativeRobot {
 	
 	public void SmartDashboard() {
 		// Motor Voltages
-		SmartDashboard.putNumber("Shooter Current", shooter.getMotor1Current());
-		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
-		SmartDashboard.putNumber("Feeder Current", feeder.getFeederCurrent());
-		SmartDashboard.putNumber("Front Left Drivetrain Current", drivetrain.getFrontLeft().getOutputCurrent());
-		SmartDashboard.putNumber("Front Right Drivetrain Current", drivetrain.getFrontRight().getOutputCurrent());
-		SmartDashboard.putNumber("Rear Left Drivetrain Current", drivetrain.getRearLeft().getOutputCurrent());
-		SmartDashboard.putNumber("Rear Right Drivetrain Current", drivetrain.getRearRight().getOutputCurrent());
-		SmartDashboard.putNumber("Climber 1 Current", tiltingWall.getMotor1Current());
-		SmartDashboard.putNumber("Climber 2 Current", tiltingWall.getMotor2Current());
+//		SmartDashboard.putNumber("Shooter Current", shooter.getMotor1Current());
+//		SmartDashboard.putNumber("Gear Grabber Current", gearGrabber.getOutputCurrent());
+//		SmartDashboard.putNumber("Feeder Current", feeder.getFeederCurrent());
+//		SmartDashboard.putNumber("Front Left Drivetrain Current", drivetrain.getFrontLeft().getOutputCurrent());
+//		SmartDashboard.putNumber("Front Right Drivetrain Current", drivetrain.getFrontRight().getOutputCurrent());
+//		SmartDashboard.putNumber("Rear Left Drivetrain Current", drivetrain.getRearLeft().getOutputCurrent());
+//		SmartDashboard.putNumber("Rear Right Drivetrain Current", drivetrain.getRearRight().getOutputCurrent());
+//		SmartDashboard.putNumber("Climber 1 Current", tiltingWall.getMotor1Current());
+//		SmartDashboard.putNumber("Climber 2 Current", tiltingWall.getMotor2Current());
 
 		// Drivetrain
-		SmartDashboard.putBoolean("Omnis Deployed", drivetrain.getOmniState());
-		SmartDashboard.putString("Drivetrain Gear State", drivetrain.getShifters());
-		SmartDashboard.putNumber("Left Drivetrain Speed", drivetrain.getRearLeft().getSpeed());
-		SmartDashboard.putNumber("Right Drivetrain Speed", drivetrain.getRearRight().getSpeed());
+//		SmartDashboard.putBoolean("Omnis Deployed", drivetrain.getOmniState());
+//		SmartDashboard.putString("Drivetrain Gear State", drivetrain.getShifters());
+//		SmartDashboard.putNumber("Left Drivetrain Speed", drivetrain.getRearLeft().getSpeed());
+//		SmartDashboard.putNumber("Right Drivetrain Speed", drivetrain.getRearRight().getSpeed());
 
 		// Autonomous
-		SmartDashboard.putData("Auto mode", chooser);
+//		SmartDashboard.putData("Auto mode", chooser);
 		
 		// Gear Grabber
-		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
+//		SmartDashboard.putBoolean("Has Gear", gearGrabber.hasGear());
 		
 		// Shooter
-		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+//		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 		
 		// Climber
-		SmartDashboard.putData("Climber State", tiltingWall);
-		SmartDashboard.putNumber("Climber Power", Robot.oi.getClimberPower());
+//		SmartDashboard.putData("Climber State", tiltingWall);
+//		SmartDashboard.putNumber("Climber Power", Robot.oi.getClimberPower());
 		
 		// Light Ring
-		SmartDashboard.putData("Light Ring Colour", lightRing);
+//		SmartDashboard.putData("Light Ring Colour", lightRing);
 		
 	}
 }

@@ -1,10 +1,8 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
@@ -21,7 +19,7 @@ public class GearGrabber extends Subsystem {
     private CANTalon motor = new CANTalon(GEAR_GRABBER_TALON);
     
     private DoubleSolenoid solenoid = new DoubleSolenoid(PCM_0, GEAR_GRABBER_UP_SOLENOID, GEAR_GRABBER_DOWN_SOLENOID);
-	//private Solenoid plate = new Solenoid(PCM_1, GEAR_GRABBER_PLATE);
+	private DoubleSolenoid plate = new DoubleSolenoid(PCM_1, PLATE_UP_SOLENOID, PLATE_DOWN_SOLENOID);
     
     // Limit Switch
     private DigitalInput gearLimit = new DigitalInput(GEAR_LIMIT_CHANNEL);
@@ -41,14 +39,14 @@ public class GearGrabber extends Subsystem {
     	motor.set(0);
     }
     
-//    public void plate_up() {
-//    	plate.set(false);
-//    }
-//   
-//    public void plate_down() {
-//    	plate.set(true);
-//    }
-//    
+    public void plate_up() {
+    	plate.set(Value.kForward);
+    }
+   
+    public void plate_down() {
+    	plate.set(Value.kReverse);
+    }
+    
     public void up() {
     	solenoid.set(Value.kForward);
     }
@@ -90,5 +88,6 @@ public class GearGrabber extends Subsystem {
     	// sets the default gear grabber state to off
         setDefaultCommand(new GearGrabberStop());
     }
+    
 }
 

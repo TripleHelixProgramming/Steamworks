@@ -7,9 +7,9 @@ import org.usfirst.frc.team2363.util.DrivetrainMath;
 import org.usfirst.frc.team2363.util.PathReader;
 import org.usfirst.frc.team2363.util.PathStep;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -20,6 +20,7 @@ public class PathFollower extends Command {
 	private int currentStep;
 	private double startTime;
 	private final String pathName;
+	private double errorTotal;
 
     public PathFollower(String pathName) {
     	this.pathName = pathName;
@@ -32,6 +33,7 @@ public class PathFollower extends Command {
     	Robot.drivetrain.setUpAutoControl();
     	startTime = Timer.getFPGATimestamp();
     	currentStep = 0;
+    	errorTotal = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,8 +43,6 @@ public class PathFollower extends Command {
     	}
     	
     	double currentTime = Timer.getFPGATimestamp() - startTime;
-    	DriverStation.reportError("" + currentTime, false);
-    	
     	while (steps.get(currentStep).getTimestamp() < currentTime) {
     		currentStep++;
     		if (currentStep >= steps.size()) {
@@ -53,9 +53,11 @@ public class PathFollower extends Command {
     	if (currentStep < steps.size()) {
     		double leftSpeed = DrivetrainMath.fpsToRpm(steps.get(currentStep).getLeftSpeed(), 4);
     		double rightSpeed =  DrivetrainMath.fpsToRpm(steps.get(currentStep).getRightSpeed(), 4);
-    		DriverStation.reportError("Found speeds " + leftSpeed + " " + rightSpeed, false);
     		Robot.drivetrain.setSpeeds(leftSpeed, rightSpeed);
     	}
+    	
+    	SmartDashboard.putNumber("Left Error", Robot.drivetrain.getLeftError());
+    	SmartDashboard.putNumber("Right Error", Robot.drivetrain.getRightError());
     }
 
     // Make this return true when this Command no longer needs to run execute()

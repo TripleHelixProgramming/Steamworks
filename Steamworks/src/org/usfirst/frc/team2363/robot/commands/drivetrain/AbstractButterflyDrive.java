@@ -18,13 +18,13 @@ public abstract class AbstractButterflyDrive extends Command {
 
 	@Override
 	protected void execute() {
-		// retracts the omniwheels opposite of the ones deployed
-		if (oi.isOmnisDeployed()) {
-			drivetrain.deployOmnis();
-		} else {
-			// colson drive (no omniwheels)
-			defaultDrive();
-		}
+//		// retracts the omniwheels opposite of the ones deployed
+//		if (oi.isOmnisDeployed()) {
+//			drivetrain.deployOmnis();
+//		} else {
+//			// colson drive (no omniwheels)
+//			defaultDrive();
+//		}
 		
 		// reads speed and turn angle when driving
 		drivetrain.arcadeDrive(oi.getThrottle(), oi.getTurn());

@@ -38,7 +38,7 @@ public class Wall extends Subsystem {
 	}
 	
 	public boolean isRetracted() {
-		return wallSolenoid.get() ==Value.kReverse;
+		return wallSolenoid.get() == Value.kReverse;
 	}
 	
 	public void triggerRetract() {
