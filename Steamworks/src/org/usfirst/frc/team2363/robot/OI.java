@@ -60,6 +60,7 @@ public class OI {
 		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieveGroup());
 		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
+		
 		//Pushes out the gear while circle is being held
 		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(operatorController, CIRCLE).whenReleased(new GearGrabberStop());
@@ -67,15 +68,12 @@ public class OI {
 		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
-//		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
-//		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+
 		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		} else {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
 		}
-		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
-//		new JoystickButton(operatorController, SHARE).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
