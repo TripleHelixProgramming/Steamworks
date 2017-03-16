@@ -24,6 +24,7 @@ import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDownOut;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -88,8 +89,9 @@ public class OI {
 		//Climber activate
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
-		//Hopper Trigger actuate
-		new JoystickButton(operatorController, TRIANGLE).toggleWhenPressed(new WallTriggerExtend());
+		//Trial Gear Grabber button for plate down and grabber down
+		new JoystickButton(operatorController, TRIANGLE).whenPressed(new GearGrabberDownOut());
+		new JoystickButton(operatorController, TRIANGLE).whenReleased(new GearGrabberStop());
 	}
 	
 	// omni wheels

@@ -161,8 +161,10 @@ public class Robot extends IterativeRobot {
 		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
 		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
 		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
+		GearGroup centerGear = new GearGroup("Center");
 		GearAndHopper blueGearHopper = new GearAndHopper("BlueBoilerGear", "BlueGearHopper", RobotMap.BLUE_X_OFFSET);
 		GearAndHopper redGearHopper = new GearAndHopper("RedBoilerGear", "RedGearHopper", RobotMap.RED_X_OFFSET);
+		PathFollower testDrive = new PathFollower("TestDrive");
 //		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
 //		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 		
@@ -189,7 +191,9 @@ public class Robot extends IterativeRobot {
 			}
 		} else {
 			SmartDashboard.putString("Selected Auto", "Center Gear");
-			autonomousCommand = new GearGroup("Center");
+			autonomousCommand = centerGear;
+//			SmartDashboard.putString("Selected Auto", "Test Drive");
+//			autonomousCommand = testDrive;
 		}
 		
 		// schedule the autonomous command (example)
