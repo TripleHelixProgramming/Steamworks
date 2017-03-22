@@ -90,8 +90,8 @@ public class OI {
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
 		//Trial Gear Grabber button for plate down and grabber down
-		new JoystickButton(operatorController, TRIANGLE).whenPressed(new GearGrabberDownOut());
-		new JoystickButton(operatorController, TRIANGLE).whenReleased(new GearGrabberStop());
+//		new JoystickButton(operatorController, TRIANGLE).whenPressed(new GearGrabberDownOut());
+//		new JoystickButton(operatorController, TRIANGLE).whenReleased(new GearGrabberStop());
 	}
 	
 	// omni wheels

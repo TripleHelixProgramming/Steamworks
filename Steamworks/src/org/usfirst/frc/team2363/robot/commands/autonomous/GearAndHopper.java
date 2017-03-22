@@ -9,6 +9,7 @@ import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.wall.WallExtend;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -21,16 +22,20 @@ public class GearAndHopper extends CommandGroup {
         // Follow path and deliver gear
     	addSequential(new PathFollower(path1));
         addParallel(new GearGrabberDelivery());
-        addSequential(new WaitCommand(1));
+        addSequential(new WaitCommand(.5));
         
         // Spin Shooter Up head to the Hopper
         addParallel(new PIDShooterCommand());
-        addSequential(new PathFollower(path2));
-		addSequential(new WallExtend(), 1);     // Trigger the Hopper with the wall.
+//		addParallel(new WallExtend());
+        addSequential(new PathFollower(path2));     // Trigger the Hopper with the wall.
 		
 //    	addSequential(new TurnToX(cameraOffset));
     	
     	//   NO TARGET fall back for vision processing
-    	addSequential(new NoTargetFailSafe(90));
+    	if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+    		addSequential(new NoTargetFailSafe(90));
+    	} else {
+    		addSequential(new NoTargetFailSafe(-90));
+    	}
 	} 
 }

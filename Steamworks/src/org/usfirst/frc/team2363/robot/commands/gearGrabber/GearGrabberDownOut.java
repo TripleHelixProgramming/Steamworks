@@ -28,7 +28,7 @@ public class GearGrabberDownOut extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new BringWallUp(), .5);
-    	addParallel(new GearGrabberDelivery());
+    	addSequential(new GearGrabberDelivery(), .5);
 //    	addSequential(new WaitCommand(0.4));
     	addSequential(new GearGrabberDown());
     }

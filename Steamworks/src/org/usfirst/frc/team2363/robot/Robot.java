@@ -142,6 +142,7 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
+	
 	public void autonomousInit() {
 		
 		Robot.drivetrain.resetAngle();        // Reset the gyro.  This position is 0 for TurnToAngle(0);

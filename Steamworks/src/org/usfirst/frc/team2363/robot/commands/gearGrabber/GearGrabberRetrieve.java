@@ -31,7 +31,7 @@ public class GearGrabberRetrieve extends Command {
     	}
     	
     	if (gearGrabber.hasGear()) {
-    		new RumbleFor2Sec().start();
+//    		new RumbleFor2Sec().start();
     		gearGrabber.off();
     	} else {
     		gearGrabber.in();
@@ -45,6 +45,7 @@ public class GearGrabberRetrieve extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        new RumbleFor2Sec().start();
     }
 
     // Called when another command which requires one or more of the same

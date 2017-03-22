@@ -11,7 +11,7 @@ public class GearGrabberRetrieveGroup extends CommandGroup {
 
     public GearGrabberRetrieveGroup() {
         addSequential(new BringWallUp(), .5);
-        addSequential(new GearGrabberDownOut(), .5);
+//        addSequential(new GearGrabberDownOut(), .5);
         addSequential(new GearGrabberRetrieve());
         addSequential(new GearGrabberDown());
     }
