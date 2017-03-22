@@ -50,7 +50,7 @@ public class Robot extends IterativeRobot {
 	
 	private final DigitalInput autoBoilerGear = new DigitalInput(2);
 	private final DigitalInput autoLoaderGear = new DigitalInput(3);
-	private final DigitalInput autoBoilerHopper = new DigitalInput(4);
+	private final DigitalInput autoGearHopper = new DigitalInput(4);
 	private final DigitalInput autoCenter = new DigitalInput(5);
 	
 	// declare SmartDashboard tools
@@ -123,8 +123,8 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
 		} else if (!autoLoaderGear.get()) {
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
-		} else if (!autoBoilerHopper.get()){
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Boiler Hopper");
+		} else if (!autoGearHopper.get()){
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
 		} else {
 			SmartDashboard.putString("Selected Auto", "Center Gear");
 		}
@@ -142,9 +142,12 @@ public class Robot extends IterativeRobot {
 	 * to the switch structure below with additional strings & commands.
 	 */
 	@Override
+	
 	public void autonomousInit() {
-		Robot.drivetrain.resetAngle();
-		Robot.drivetrain.shiftDown();
+		
+		Robot.drivetrain.resetAngle();        // Reset the gyro.  This position is 0 for TurnToAngle(0);
+		Robot.drivetrain.shiftDown();         // Low gear for autonomous
+		
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
 //		autonomousCommand = new PixyCheck();
@@ -159,8 +162,12 @@ public class Robot extends IterativeRobot {
 		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
 		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
 		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
-		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
-		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
+		GearGroup centerGear = new GearGroup("Center");
+		GearAndHopper blueGearHopper = new GearAndHopper("BlueBoilerGear", "BlueGearHopper", RobotMap.BLUE_X_OFFSET);
+		GearAndHopper redGearHopper = new GearAndHopper("RedBoilerGear", "RedGearHopper", RobotMap.RED_X_OFFSET);
+		PathFollower testDrive = new PathFollower("TestDrive");
+//		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
+//		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 		
 		if (!autoBoilerGear.get()) {
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
@@ -176,16 +183,18 @@ public class Robot extends IterativeRobot {
 			} else {
 				autonomousCommand = redLoaderGear;
 			}
-		} else if (!autoBoilerHopper.get()){
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Boiler Hopper");
+		} else if (!autoGearHopper.get()){
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
 			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueBoilerHopper;
+				autonomousCommand = blueGearHopper;
 			} else {
-				autonomousCommand = redBoilerHopper;
+				autonomousCommand = redGearHopper;
 			}
 		} else {
 			SmartDashboard.putString("Selected Auto", "Center Gear");
-			autonomousCommand = new GearGroup("Center");
+			autonomousCommand = centerGear;
+//			SmartDashboard.putString("Selected Auto", "Test Drive");
+//			autonomousCommand = testDrive;
 		}
 		
 		// schedule the autonomous command (example)
@@ -213,7 +222,7 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
-		Robot.drivetrain.shiftUp();
+		Robot.drivetrain.shiftUp();      // High gear for Teleop
 	}
 
 	/**

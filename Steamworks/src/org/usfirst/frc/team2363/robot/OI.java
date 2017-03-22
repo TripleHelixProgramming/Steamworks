@@ -24,6 +24,7 @@ import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDownOut;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -60,6 +61,7 @@ public class OI {
 		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieveGroup());
 		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
+		
 		//Pushes out the gear while circle is being held
 		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(operatorController, CIRCLE).whenReleased(new GearGrabberStop());
@@ -67,15 +69,12 @@ public class OI {
 		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
 		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
-//		new JoystickButton(operatorController, X).whenPressed(new WallTriggerExtend());
-//		new JoystickButton(operatorController, X).whenReleased(new WallTriggerRetract());
+
 		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		} else {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
 		}
-		new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
-//		new JoystickButton(operatorController, SHARE).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
@@ -90,8 +89,9 @@ public class OI {
 		//Climber activate
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
-		//Hopper Trigger actuate
-		new JoystickButton(operatorController, TRIANGLE).toggleWhenPressed(new WallTriggerExtend());
+		//Trial Gear Grabber button for plate down and grabber down
+//		new JoystickButton(operatorController, TRIANGLE).whenPressed(new GearGrabberDownOut());
+//		new JoystickButton(operatorController, TRIANGLE).whenReleased(new GearGrabberStop());
 	}
 	
 	// omni wheels

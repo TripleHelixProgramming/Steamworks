@@ -9,6 +9,7 @@ import com.ctre.CANTalon.FeedbackDevice;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -37,6 +38,7 @@ public class Shooter extends Subsystem {
 			return previousRPM;
 		}
 		previousRPM = currentRPM;
+		SmartDashboard.putNumber("Shooter RPM", currentRPM);
 		return currentRPM;
 	}
 	

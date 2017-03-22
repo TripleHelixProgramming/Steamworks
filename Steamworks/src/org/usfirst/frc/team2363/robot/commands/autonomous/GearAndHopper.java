@@ -8,8 +8,8 @@ import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.wall.WallExtend;
-import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -18,25 +18,24 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
  */
 public class GearAndHopper extends CommandGroup {
 
-    public GearAndHopper(String path, int cameraOffset) {
-    	addParallel(new PathSequence(path, cameraOffset));
-        addSequential(new WaitCommand(2.5));
-        addSequential(new GearGrabberDelivery(), 2);
-        addParallel(new GearGrabberStop());	
+    public GearAndHopper(String path1, String path2, int cameraOffset) {
+        // Follow path and deliver gear
+    	addSequential(new PathFollower(path1));
+        addParallel(new GearGrabberDelivery());
+        addSequential(new WaitCommand(.5));
+        
+        // Spin Shooter Up head to the Hopper
         addParallel(new PIDShooterCommand());
-   
-        //WIN
-    }
-    
-    private class PathSequence extends CommandGroup {
-    	public PathSequence(String path, int cameraOffset) {
-    		addSequential(new PathFollower(path));
-    		addSequential(new WallExtend(), 1);
-        	addSequential(new WallTriggerExtend());
-        	addSequential(new TurnToX(cameraOffset));
-        	
-        	//   NO TARGET fall back for vision processing
-        	addSequential(new NoTargetFailSafe(0));
+//		addParallel(new WallExtend());
+        addSequential(new PathFollower(path2));     // Trigger the Hopper with the wall.
+		
+//    	addSequential(new TurnToX(cameraOffset));
+    	
+    	//   NO TARGET fall back for vision processing
+    	if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+    		addSequential(new NoTargetFailSafe(90));
+    	} else {
+    		addSequential(new NoTargetFailSafe(-90));
     	}
-    }
+	} 
 }

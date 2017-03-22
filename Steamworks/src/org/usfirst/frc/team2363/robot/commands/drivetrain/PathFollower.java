@@ -21,6 +21,7 @@ public class PathFollower extends Command {
 	private double startTime;
 	private final String pathName;
 	private double errorTotal;
+	private double WHEEL_DIAMETER = 4;
 
     public PathFollower(String pathName) {
     	this.pathName = pathName;
@@ -51,8 +52,8 @@ public class PathFollower extends Command {
     	}
     	
     	if (currentStep < steps.size()) {
-    		double leftSpeed = DrivetrainMath.fpsToRpm(steps.get(currentStep).getLeftSpeed(), 4);
-    		double rightSpeed =  DrivetrainMath.fpsToRpm(steps.get(currentStep).getRightSpeed(), 4);
+    		double leftSpeed = DrivetrainMath.fpsToRpm(steps.get(currentStep).getLeftSpeed(), WHEEL_DIAMETER);
+    		double rightSpeed =  DrivetrainMath.fpsToRpm(steps.get(currentStep).getRightSpeed(), WHEEL_DIAMETER);
     		Robot.drivetrain.setSpeeds(leftSpeed, rightSpeed);
     	}
     	

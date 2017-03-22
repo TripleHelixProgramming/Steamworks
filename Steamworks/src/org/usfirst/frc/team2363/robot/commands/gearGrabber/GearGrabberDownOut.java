@@ -1,4 +1,6 @@
 package org.usfirst.frc.team2363.robot.commands.gearGrabber;
+import org.usfirst.frc.team2363.robot.commands.wall.BringWallUp;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -25,7 +27,8 @@ public class GearGrabberDownOut extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new GearGrabberDelivery());
+    	addSequential(new BringWallUp(), .5);
+    	addSequential(new GearGrabberDelivery(), .5);
 //    	addSequential(new WaitCommand(0.4));
     	addSequential(new GearGrabberDown());
     }
