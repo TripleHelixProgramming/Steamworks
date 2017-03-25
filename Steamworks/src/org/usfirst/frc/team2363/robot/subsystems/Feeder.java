@@ -2,6 +2,7 @@ package org.usfirst.frc.team2363.robot.subsystems;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
@@ -14,15 +15,18 @@ public class Feeder extends Subsystem {
 
 	CANTalon feeder = new CANTalon(FEEDER_TALON);
 	CANTalon serializer = new CANTalon(SERIALIZER_TALON);
+	Talon feeder2 = new Talon(0);
 	
 	public void on() {
-		feeder.set(-0.65);
-		serializer.set(0.5);
+		feeder.set(-1);
+		serializer.set(.5);
+		feeder2.set(1);
 	}
 	
 	public void off() {
 		feeder.set(0);
 		serializer.set(0);
+		feeder2.set(0);
 	}
 	
     public void initDefaultCommand() {
