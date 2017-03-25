@@ -26,7 +26,7 @@ public class PIDShooterCommand extends PIDCommand {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	SmartDashboard.putNumber("Shooter Error", getPIDController().getError());
-    	setSetpoint(3600);
+    	setSetpoint(3125);
 }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -48,14 +48,15 @@ public class PIDShooterCommand extends PIDCommand {
 
 	@Override
 	protected double returnPIDInput() {
-		double rpm = Robot.shooter.getRPM();
+		double rpm = Math.min(Robot.shooter.getRPM(), Shooter.MAX_SPEED);
 		DriverStation.reportWarning("Shooter RPM : " + rpm, false);
 		return rpm;
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-		double power = Shooter.getEstimatedPower(getSetpoint()) + output;
+		double power = Math.max(0, Shooter.getEstimatedPower(getSetpoint()) + output);
+//		double power = 1;
 		Robot.shooter.setPower(power);
 		SmartDashboard.putNumber("Shooter Power", power);
 	}
