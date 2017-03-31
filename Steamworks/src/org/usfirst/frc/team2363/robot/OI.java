@@ -15,6 +15,7 @@ import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
+import org.usfirst.frc.team2363.robot.commands.shooter.ShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimberGroup;
@@ -46,7 +47,7 @@ public class OI {
 		
 		//shooterI
 		//Turns on the shooter
-		new JoystickButton(operatorController, R1).whenPressed(new PIDShooterCommand());
+		new JoystickButton(operatorController, R1).whenPressed(new ShooterCommand()); 
 		//Turns off the shooter
 		new JoystickButton(operatorController, L1).whenPressed(new StopShooter());
 		//Turns on the shooter feeder while square is being held

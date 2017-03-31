@@ -3,9 +3,11 @@ package org.usfirst.frc.team2363.robot.subsystems;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
+import org.usfirst.frc.team2363.util.DrivetrainMath;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,37 +19,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter extends Subsystem {
 
 	private CANTalon motor1 = new CANTalon(SHOOTER_TALON);
-	private Counter encoder = new Counter(SHOOTER_ENCODER);
-	
+
 	public static final double MAX_SPEED = 6100;
-	private double previousRPM;
+	public static int ENC_TICKS = 3;
 	
 	public Shooter() {
-		motor1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		motor1.changeControlMode(TalonControlMode.Speed);
+		motor1.setF(3.15);
+		motor1.setP(40);
+		motor1.setI(0.01);
+		motor1.setIZone(100);
+		motor1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		motor1.configEncoderCodesPerRev(ENC_TICKS);
+		motor1.enableBrakeMode(false);
+		motor1.enableControl();
+	}
+	
+	public void start() {
+		motor1.enable();
+	}
+	
+	public void stop() {
+		motor1.disable();
 	}
 	
 	public double getRPM() {
-		if (encoder.getStopped()) {
-			previousRPM = 0;
-			return 0;
-		}
-		
-		double currentRPM = Math.abs(60/encoder.getPeriod());
-//		if (currentRPM > Shooter.MAX_SPEED * 2) {
-		if (Math.abs(currentRPM - previousRPM) > 1100) {
-			return previousRPM;
-		}
-		previousRPM = currentRPM;
-		SmartDashboard.putNumber("Shooter RPM", currentRPM);
-		return currentRPM;
+		return motor1.get() * 0.458333;
+	}
+	
+	public double getError() {
+		return motor1.getClosedLoopError();
 	}
 	
 	public void setPower(double d) {
-		motor1.set(d);
-	}
-	
-	public static double getEstimatedPower(double targetSpeed) {
-		return targetSpeed / MAX_SPEED;
+		motor1.set(d * 2.18);
 	}
 
     public void initDefaultCommand() {

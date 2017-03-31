@@ -72,6 +72,7 @@ public class RobotMap {
 	//Feeder Subsystem
 	public static final int SERIALIZER_TALON = 50;
 	public static final int FEEDER_TALON = 51;
+	public static final int FEEDER2_TALON = 52;
 
 	//Solenoids
 	public static final int DROP_DOWN = 3;
