@@ -117,6 +117,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard();
 		SmartDashboard.putBoolean("Gear Grabber Tape", gearGrabber.hasGear());
 		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
+		SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
+
 		
 		
 		if (!autoBoilerGear.get()) {

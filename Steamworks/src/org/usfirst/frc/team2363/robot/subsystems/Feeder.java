@@ -15,7 +15,7 @@ public class Feeder extends Subsystem {
 
 	CANTalon feeder = new CANTalon(FEEDER_TALON);
 	CANTalon serializer = new CANTalon(SERIALIZER_TALON);
-	Talon feeder2 = new Talon(0);
+	CANTalon feeder2 = new CANTalon(FEEDER2_TALON);
 	
 	public void on() {
 		feeder.set(-1);
