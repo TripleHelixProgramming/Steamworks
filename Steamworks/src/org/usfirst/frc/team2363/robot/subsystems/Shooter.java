@@ -26,7 +26,7 @@ public class Shooter extends Subsystem {
 	public Shooter() {
 		motor1.changeControlMode(TalonControlMode.Speed);
 		motor1.setF(3.15);
-		motor1.setP(40);
+		motor1.setP(60);
 		motor1.setI(0.01);
 		motor1.setIZone(100);
 		motor1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -53,6 +53,10 @@ public class Shooter extends Subsystem {
 	
 	public void setPower(double d) {
 		motor1.set(d * 2.18);
+	}
+	
+	public double getPowerPercent() {
+		return motor1.getOutputVoltage();
 	}
 
     public void initDefaultCommand() {

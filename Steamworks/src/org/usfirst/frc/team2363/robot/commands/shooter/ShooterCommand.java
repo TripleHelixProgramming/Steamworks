@@ -26,6 +26,7 @@ public class ShooterCommand extends Command {
     protected void execute() {
 		SmartDashboard.putNumber("Shooter RPM", Robot.shooter.getRPM());
 		SmartDashboard.putNumber("Shooter Error", Robot.shooter.getError());
+		SmartDashboard.putNumber("Shooter Power", Robot.shooter.getPowerPercent());
 
     }
 

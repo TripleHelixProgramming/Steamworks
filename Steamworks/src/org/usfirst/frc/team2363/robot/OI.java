@@ -17,6 +17,7 @@ import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.ShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
+import org.usfirst.frc.team2363.robot.commands.wall.HopperJuggle;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimberGroup;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
@@ -53,6 +54,7 @@ public class OI {
 		//Turns on the shooter feeder while square is being held
 		new JoystickButton(operatorController, R2).whenPressed(new FeederCommand(true));
 		new JoystickButton(operatorController, R2).whenReleased(new FeederCommand(false));
+		new JoystickButton(operatorController, R2).whileHeld(new HopperJuggle());
 		//Aiming
 		//new JoystickButton(ps4Controller, PS).whenPressed(new InsertCommandHere());
 		
