@@ -11,4 +11,4 @@ public class HopperJuggle extends CommandGroup {
    		addSequential(new WallRetract(), 0.55);
 		addSequential(new WallExtend(), 0.75);
     }
-}
+ }

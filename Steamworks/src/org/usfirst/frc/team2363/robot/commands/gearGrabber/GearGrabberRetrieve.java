@@ -2,6 +2,7 @@ package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 
 import static org.usfirst.frc.team2363.robot.Robot.*;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  *
@@ -10,6 +11,7 @@ public class GearGrabberRetrieve extends Command {
 	
 	private int stalledCount = 0;
 	private int limitCount = 0;
+	Command rumbleCommand = new RumbleFor2Sec();
 	
 	public GearGrabberRetrieve() {
         requires(gearGrabber);
@@ -21,7 +23,7 @@ public class GearGrabberRetrieve extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	gearGrabber.plate_up();
     	gearGrabber.down();
     	
     	if (gearGrabber.isOverCurrent()) {
@@ -31,8 +33,10 @@ public class GearGrabberRetrieve extends Command {
     	}
     	
     	if (gearGrabber.hasGear()) {
-//    		new RumbleFor2Sec().start();
-    		gearGrabber.off();
+    		if (!rumbleCommand.isRunning()) {
+    			rumbleCommand.start();
+    		}
+    		gearGrabber.coast();
     	} else {
     		gearGrabber.in();
     	}
@@ -40,12 +44,14 @@ public class GearGrabberRetrieve extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return stalledCount > 50 || gearGrabber.hasGear();
+        return stalledCount > 50;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        new RumbleFor2Sec().start();
+    	if (!rumbleCommand.isRunning()) {
+			rumbleCommand.start();
+		}
     }
 
     // Called when another command which requires one or more of the same

@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStopGroup;
 
 import com.ctre.CANTalon;
 
@@ -29,9 +30,13 @@ public class GearGrabber extends Subsystem {
     	motor.set(-0.75);
     }
     
+    public void coast() {
+    	motor.set(-0.10);
+	}
+    
     public void out() {
     	// sets gear grabber to rotate out at 40% speed
-    	motor.set(0.75);
+    	motor.set(0.20);
     }
     
     public void off() {
@@ -86,8 +91,7 @@ public class GearGrabber extends Subsystem {
 
     public void initDefaultCommand() {
     	// sets the default gear grabber state to off
-        setDefaultCommand(new GearGrabberStop());
+        setDefaultCommand(new GearGrabberStopGroup());
     }
-    
 }
 
