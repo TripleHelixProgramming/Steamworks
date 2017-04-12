@@ -19,7 +19,7 @@ public class ShooterCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.shooter.start();
-    	Robot.shooter.setPower(3125);
+    	Robot.shooter.setPower(2875);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
 	public static Wall tiltingWall;
 	public static PIDShooterCommand pidShooterCommand;
 	
-	private final DigitalInput autoBoilerGear = new DigitalInput(2);
+	private final DigitalInput autoBoilerHopper = new DigitalInput(2);
 	private final DigitalInput autoLoaderGear = new DigitalInput(3);
 	private final DigitalInput autoGearHopper = new DigitalInput(4);
 	private final DigitalInput autoCenter = new DigitalInput(5);
@@ -121,8 +121,8 @@ public class Robot extends IterativeRobot {
 
 		
 		
-		if (!autoBoilerGear.get()) {
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
+		if (!autoBoilerHopper.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Hopper");
 		} else if (!autoLoaderGear.get()) {
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
 		} else if (!autoGearHopper.get()){
@@ -160,8 +160,10 @@ public class Robot extends IterativeRobot {
 //			autonomousCommand = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 //		}
 		
-		GearGroup blueBoilerGear = new GearGroup("BlueBoilerGear");
-		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
+		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper");
+		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper");
+//		GearGroup blueBoilerGear = new GearGroup("BlueBoilerGear");
+//		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
 		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
 		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
 		GearGroup centerGear = new GearGroup("Center");
@@ -171,12 +173,12 @@ public class Robot extends IterativeRobot {
 //		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
 //		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 		
-		if (!autoBoilerGear.get()) {
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Gear");
+		if (!autoBoilerHopper.get()) {
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Hopper");
 			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueBoilerGear;
+				autonomousCommand = blueBoilerHopper;
 			} else {
-				autonomousCommand = redBoilerGear;
+				autonomousCommand = redBoilerHopper;
 			}
 		} else if (!autoLoaderGear.get()) {
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
