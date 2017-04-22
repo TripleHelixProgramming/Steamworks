@@ -1,6 +1,7 @@
  
 package org.usfirst.frc.team2363.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -99,7 +100,7 @@ public class Robot extends IterativeRobot {
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
 		SmartDashboard();
-		
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
