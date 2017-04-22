@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
+import org.usfirst.frc.team2363.robot.commands.autonomous.KeyToGear;
 import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
@@ -51,7 +52,8 @@ public class Robot extends IterativeRobot {
 	private final DigitalInput autoBoilerHopper = new DigitalInput(2);
 	private final DigitalInput autoLoaderGear = new DigitalInput(3);
 	private final DigitalInput autoGearHopper = new DigitalInput(4);
-	private final DigitalInput autoCenter = new DigitalInput(5);
+//	private final DigitalInput autoCenter = new DigitalInput(5);
+	private final DigitalInput autoKeyGear = new DigitalInput(5);
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -128,7 +130,8 @@ public class Robot extends IterativeRobot {
 		} else if (!autoGearHopper.get()){
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
 		} else {
-			SmartDashboard.putString("Selected Auto", "Center Gear");
+//			SmartDashboard.putString("Selected Auto", "Center Gear");
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
 		}
 	}
 
@@ -162,8 +165,12 @@ public class Robot extends IterativeRobot {
 		
 		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper");
 		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper");
+		
+		KeyToGear blueKeyGear = new KeyToGear("BlueKeyGear");
+		KeyToGear redKeyGear = new KeyToGear("RedKeyGear");
+		
 //		GearGroup blueBoilerGear = new GearGroup("BlueBoilerGear");
-//		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
+		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
 		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
 		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
 		GearGroup centerGear = new GearGroup("Center");
@@ -195,8 +202,14 @@ public class Robot extends IterativeRobot {
 				autonomousCommand = redGearHopper;
 			}
 		} else {
-			SmartDashboard.putString("Selected Auto", "Center Gear");
-			autonomousCommand = centerGear;
+			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
+			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+				autonomousCommand = blueKeyGear;
+			} else {
+				autonomousCommand = redKeyGear;
+			}
+//			SmartDashboard.putString("Selected Auto", "Center Gear");
+//			autonomousCommand = centerGear;
 //			SmartDashboard.putString("Selected Auto", "Test Drive");
 //			autonomousCommand = testDrive;
 		}
