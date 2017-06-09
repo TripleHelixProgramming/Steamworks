@@ -3,6 +3,7 @@ package org.usfirst.frc.team2363.robot.subsystems;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
+import com.ctre.CANTalon.TrajectoryPoint;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -154,11 +155,11 @@ public class Drivetrain extends Subsystem {
 		return rearRight;
 	}
 	
-	public CANTalon getFrontLeft() {
+	public CANTalon getLeft() {
 		return frontLeft;
 	}
 	
-	public CANTalon getFrontRight() {
+	public CANTalon getRight() {
 		return frontRight;
 	}
 
