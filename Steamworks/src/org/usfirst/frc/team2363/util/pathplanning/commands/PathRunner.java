@@ -20,6 +20,7 @@ public class PathRunner extends Command {
 	
 	private final String pathName;
 	private boolean run;
+	private boolean isFinished;
 	
     public PathRunner(String pathName) {
         requires(Robot.drivetrain);
@@ -31,9 +32,9 @@ public class PathRunner extends Command {
     	run = true;
     	BoTHTrajectory path = SrxPathReader.importSrxTrajectory(pathName);
     	new ProfileLoader(Robot.drivetrain.getLeft(), 
-    			SrxPathReader.getTrajectoryPoints(path.getTrajectory().getLeftProfile())).run();
+    			SrxPathReader.getTrajectoryPoints(path.getTrajectory().getLeftProfile())).start();
     	new ProfileLoader(Robot.drivetrain.getRight(), 
-    			SrxPathReader.getTrajectoryPoints(path.getTrajectory().getRightProfile())).run();
+    			SrxPathReader.getTrajectoryPoints(path.getTrajectory().getRightProfile())).start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,7 +43,7 @@ public class PathRunner extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isFinished;
     }
 
     // Called once after isFinished returns true
@@ -56,11 +57,10 @@ public class PathRunner extends Command {
     	run = false;
     }
     
-    private class ProfileLoader implements Runnable {
+    private class ProfileLoader extends Thread {
     	
     	private final CANTalon talon;
     	private final List<TrajectoryPoint> points;
-    	private boolean isFirstPoint = true;
     	private boolean started = false;
     	
     	public ProfileLoader(CANTalon talon, List<TrajectoryPoint> points) {
@@ -79,38 +79,37 @@ public class PathRunner extends Command {
 			while (run && !points.isEmpty()) {
 				//start the profile
 				talon.getMotionProfileStatus(status);
-				
-				if (!started && status.topBufferCnt > 5) {
+				int bufferCount = status.topBufferCnt;
+				if (!started && bufferCount > 5) {
 					talon.set(CANTalon.SetValueMotionProfile.Enable.value);
+					started = true;
 				}
 				
 				if (!talon.isMotionProfileTopLevelBufferFull()) {
 					//set next point to send
 					TrajectoryPoint point = points.remove(0);
-					//set if this is the first point
-					point.zeroPos = isFirstPoint;
-					//set if this is the last point
-					if (points.isEmpty()) {
-						point.isLastPoint = true;
-					}
-					
 					//send the point
 					talon.pushMotionProfileTrajectory(point);
 					talon.processMotionProfileBuffer();
 					
-					//after sending the first point set this the first point value to false
-					isFirstPoint = false;
-					
-					//sleep for 10ms
-					try {
-						Thread.sleep(5);
-					} catch (InterruptedException e) {
-						run = false;
+					if (bufferCount <= 5)  {
+						continue;
 					}
 				}
-				//finish the motion profile
-				talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+					
+				//sleep for 10ms
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException e) {
+					run = false;
+				}
 			}
+			while (run && status.topBufferRem > 0) {
+				talon.getMotionProfileStatus(status);
+			}
+			//finish the motion profile
+			talon.set(CANTalon.SetValueMotionProfile.Disable.value);
+			isFinished = true;
 		}
     }
 }

@@ -18,6 +18,10 @@ public class SrxPathReader {
 			trajectoryPoint.timeDurMs = point.getDt();
 			trajectoryPoints.add(trajectoryPoint);
 		}
+		if (!trajectoryPoints.isEmpty()) {
+			trajectoryPoints.get(0).zeroPos = true;
+			trajectoryPoints.get(trajectoryPoints.size() - 1).isLastPoint = true;
+		}
 		return trajectoryPoints;
 	}
 
