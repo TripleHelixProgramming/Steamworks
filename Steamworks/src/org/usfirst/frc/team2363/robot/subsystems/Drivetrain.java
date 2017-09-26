@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static org.usfirst.frc.team2363.robot.RobotMap.*;
 
+import org.usfirst.frc.team2363.robot.Robot;
 //  import org.usfirst.frc.team2363.robot.commands.drivetrain.JoystickDrive;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
 import org.usfirst.frc.team2363.util.DrivetrainMath;
@@ -25,9 +27,13 @@ public class Drivetrain extends Subsystem {
     // here. Call these from Commands.
 	
 	//  Talons
+	//  Talons
 	private CANTalon frontLeft = new CANTalon(FRONT_LEFT_TALON_ID);
-	private CANTalon frontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
+	private CANTalon middleLeft = new CANTalon(MIDDLE_LEFT_TALON_ID);
 	private CANTalon rearLeft = new CANTalon(REAR_LEFT_TALON_ID);
+	
+	private CANTalon frontRight = new CANTalon(FRONT_RIGHT_TALON_ID);
+	private CANTalon middleRight = new CANTalon(MIDDLE_RIGHT_TALON_ID);
 	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
@@ -37,41 +43,59 @@ public class Drivetrain extends Subsystem {
 	private static AHRS ahrs;
 	
 	// Drivetrain
-	private RobotDrive robotDrive = new RobotDrive(rearLeft, rearRight);
+	private RobotDrive robotDrive = new RobotDrive(frontLeft, frontRight);
 	
 	private static final int ENCODER_TICKS = 120;
 	private static final double GEAR_RATIO = 50.0 / 34.0;
 	private static final int MAX_RPM = 415;
 	
 	public Drivetrain() {
+		
+		Robot.LOG.addSource("LEFT1", frontLeft, f -> ((CANTalon)(f)).getOutputCurrent());
+		Robot.LOG.addSource("LEFT2", middleLeft, f -> ((CANTalon)(f)).getOutputCurrent());
+		Robot.LOG.addSource("LEFT3", rearLeft, f -> ((CANTalon)(f)).getOutputCurrent());
+		
+		Robot.LOG.addSource("RIGHT1", frontRight, f -> ((CANTalon)(f)).getOutputCurrent());
+		Robot.LOG.addSource("RIGHT2", middleRight, f -> ((CANTalon)(f)).getOutputCurrent());
+		Robot.LOG.addSource("RIGHT3", rearRight, f -> ((CANTalon)(f)).getOutputCurrent());
+		
 		robotDrive.setSafetyEnabled(false);
 		
-		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
-//		rearLeft.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
-		rearLeft.setF(0.79);
-		rearLeft.setP(1);
-		rearLeft.setD(0.001);
-		rearLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rearLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
-		rearLeft.reverseSensor(true);
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontLeft.setVoltageRampRate(30);
+//		frontLeft.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
+//		frontLeft.setF(0.79);
+//		frontLeft.setP(1);
+// 		frontLeft.setD(0.001);
+//		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//		frontLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
+//		frontLeft.reverseSensor(true);
 		
-		rearRight.changeControlMode(TalonControlMode.PercentVbus);
-//		rearRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
-		rearRight.setF(0.79);
-		rearRight.setP(1);
-		rearRight.setD(0.001);
-		rearRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		rearRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
-		rearRight.reverseSensor(true);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.setVoltageRampRate(30);
+//		frontRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
+//		frontRight.setF(0.79);
+//		frontRight.setP(1);
+//		frontRight.setD(0.001);
+//		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+//		frontRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
+//		frontRight.reverseSensor(true);
 		
-		frontLeft.changeControlMode(TalonControlMode.Follower);
-		frontLeft.set(rearLeft.getDeviceID());
-		frontLeft.enableBrakeMode(true);
+		middleLeft.changeControlMode(TalonControlMode.Follower);
+		middleLeft.set(frontLeft.getDeviceID());
+//		middleLeft.enableBrakeMode(true);
 		
-		frontRight.changeControlMode(TalonControlMode.Follower);
-		frontRight.set(rearRight.getDeviceID());
-		frontRight.enableBrakeMode(true);
+		middleRight.changeControlMode(TalonControlMode.Follower);
+		middleRight.set(frontRight.getDeviceID());
+//		middleRight.enableBrakeMode(true);
 		
+		rearLeft.changeControlMode(TalonControlMode.Follower);
+		rearLeft.set(frontLeft.getDeviceID());
+		rearLeft.enableBrakeMode(true);
+		
+		rearRight.changeControlMode(TalonControlMode.Follower);
+		rearRight.set(frontRight.getDeviceID());
+		rearRight.enableBrakeMode(true);
 	      // Instantiate the NavMXP Gyro
 	      try {
 	          ahrs = new AHRS(SPI.Port.kMXP); 
@@ -83,6 +107,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void arcadeDrive(double throttle, double turn) {
 		robotDrive.arcadeDrive(throttle, turn);
+		SmartDashboard.putNumber("R1", frontRight.getOutputCurrent());
+		SmartDashboard.putNumber("R2", middleRight.getOutputCurrent());
+		SmartDashboard.putNumber("R3", rearRight.getOutputCurrent());
+		SmartDashboard.putNumber("L1", frontLeft.getOutputCurrent());
+		SmartDashboard.putNumber("L2", middleLeft.getOutputCurrent());
+		SmartDashboard.putNumber("L3", rearLeft.getOutputCurrent());
 	}
 	
 	public void tankDrive(double left, double right) {
@@ -108,8 +138,8 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void driveMotors(double lSpeed, double rSpeed) {
-		rearLeft.set(lSpeed);
-		rearRight.set(rSpeed);
+		frontLeft.set(lSpeed);
+		frontRight.set(rSpeed);
 	}
 	
 	@Override
@@ -119,24 +149,24 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setUpAutoControl() {
-		rearLeft.changeControlMode(TalonControlMode.Speed);
-		rearRight.changeControlMode(TalonControlMode.Speed);
-		rearLeft.enableBrakeMode(true);
-		rearRight.enableBrakeMode(true);
+		frontLeft.changeControlMode(TalonControlMode.Speed);
+		frontRight.changeControlMode(TalonControlMode.Speed);
+		frontLeft.enableBrakeMode(true);
+		frontRight.enableBrakeMode(true);
 	}
 	
 	public void setUpManualControl() {
-		rearLeft.changeControlMode(TalonControlMode.PercentVbus);
-		rearRight.changeControlMode(TalonControlMode.PercentVbus);
-		rearLeft.enableBrakeMode(false);
-		rearRight.enableBrakeMode(false);
+		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
+		frontRight.changeControlMode(TalonControlMode.PercentVbus);
+		frontLeft.enableBrakeMode(false);
+		frontRight.enableBrakeMode(false);
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
 //		rearLeft.set(-(leftSpeed / MAX_RPM) * 100);
 //		rearRight.set((rightSpeed / MAX_RPM) * 100);
-		rearLeft.set(-leftSpeed);
-		rearRight.set(rightSpeed);
+		frontLeft.set(-leftSpeed);
+		frontRight.set(rightSpeed);
 	}
 	
 	public double getAngle() {
@@ -175,10 +205,10 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public double getLeftError() {
-		return rearLeft.getError();
+		return frontLeft.getError();
 	}
 	
 	public double getRightError() {
-		return rearRight.getError();
+		return frontRight.getError();
 	}
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.iif.th.util.logger.HelixLogger;
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
 import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
 import org.usfirst.frc.team2363.robot.commands.autonomous.KeyToGear;
@@ -59,9 +60,13 @@ public class Robot extends IterativeRobot {
 	// declare SmartDashboard tools
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	public static HelixLogger LOG;
 
   public Robot() {
       
+	  LOG = new HelixLogger();
+  
     	// declare subsystems
 	  drivetrain = new Drivetrain();
 	  gearGrabber = new GearGrabber();
@@ -227,6 +232,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
+		LOG.saveLogs();
+		
 		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
 		SmartDashboard();
 	}
@@ -250,7 +257,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		
+		LOG.saveLogs();
 		SmartDashboard();
 	}
 
