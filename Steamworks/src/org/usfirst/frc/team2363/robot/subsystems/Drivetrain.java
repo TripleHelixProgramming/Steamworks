@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem {
 	private CANTalon rearRight = new CANTalon(REAR_RIGHT_TALON_ID);
 	
 	// Solenoids
-	private Solenoid Omni = new Solenoid(PCM_0, DROP_DOWN);
+//	private Solenoid Omni = new Solenoid(PCM_0, DROP_DOWN);
 	private DoubleSolenoid shifters = new DoubleSolenoid(PCM_0, SHIFTER_UP, SHIFTER_DOWN);
 	
 	private static AHRS ahrs;
@@ -91,12 +91,12 @@ public class Drivetrain extends Subsystem {
 	
 	public void deployOmnis() {
 		// deploy front & back Omni wheels
-		Omni.set(true);
+//		Omni.set(true);
 	}
 	
 	public void retractOmnis() {
 		// retract front & back Omni wheels
-		Omni.set(false);
+//		Omni.set(false);
 	}
 	
 	public void shiftUp() {
@@ -170,9 +170,9 @@ public class Drivetrain extends Subsystem {
 		}
 	}
 	
-	public boolean getOmniState() {
-		return Omni.get();
-	}
+//	public boolean getOmniState() {
+//		return Omni.get();
+//	}
 	
 	public double getLeftError() {
 		return rearLeft.getError();

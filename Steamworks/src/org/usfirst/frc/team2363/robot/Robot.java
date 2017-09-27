@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
 		SmartDashboard();
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**

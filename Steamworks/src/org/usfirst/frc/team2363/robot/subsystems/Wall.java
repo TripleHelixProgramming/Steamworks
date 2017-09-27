@@ -16,7 +16,7 @@ public class Wall extends Subsystem {
 
 	private int stalledCurrent = 41;
 	private DoubleSolenoid wallSolenoid = new DoubleSolenoid(PCM_0, WALL_EXTEND_SOLENOID, WALL_RETRACT_SOLENOID);
- 	private Solenoid triggerSolenoid = new Solenoid(PCM_0, WALL_TRIGGER_SOLENOID);
+// 	private Solenoid triggerSolenoid = new Solenoid(PCM_0, WALL_TRIGGER_SOLENOID);
 
 	private CANTalon climberMotor1 = new CANTalon(CLIMBER_MOTOR_LEFT);
 	private CANTalon climberMotor2 = new CANTalon(CLIMBER_MOTOR_RIGHT);
@@ -34,7 +34,7 @@ public class Wall extends Subsystem {
 	}
 	
 	public void triggerExtend() {
-		triggerSolenoid.set(true);
+//		triggerSolenoid.set(true);
 	}
 	
 	public boolean isRetracted() {
@@ -42,7 +42,7 @@ public class Wall extends Subsystem {
 	}
 	
 	public void triggerRetract() {
-		triggerSolenoid.set(false);
+//		triggerSolenoid.set(false);
 	}
 	
 	public void setClimber(double power) {
@@ -51,7 +51,7 @@ public class Wall extends Subsystem {
 	}
 	
 	public void off() {
-		triggerRetract();
+//		triggerRetract();
 		retract();
 	}
 	

@@ -81,9 +81,9 @@ public class OI {
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
-		new JoystickButton(driverController, R1).whenPressed(new OmniDrive());
+//		new JoystickButton(driverController, R1).whenPressed(new OmniDrive());
 		//Turns on Traction Drive
-		new JoystickButton(driverController, R2).whenPressed(new TractionDrive());
+//		new JoystickButton(driverController, R2).whenPressed(new TractionDrive());
 		//Low gear
 		new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(true));
 		//High gear

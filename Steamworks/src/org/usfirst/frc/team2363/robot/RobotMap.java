@@ -75,16 +75,16 @@ public class RobotMap {
 	public static final int FEEDER2_TALON = 52;
 
 	//Solenoids
-	public static final int DROP_DOWN = 3;
+//	public static final int DROP_DOWN = 3;
 	public static final int GEAR_GRABBER_UP_SOLENOID = 2;
 	public static final int GEAR_GRABBER_DOWN_SOLENOID = 5;
-	public static final int PLATE_UP_SOLENOID = 0;
-	public static final int PLATE_DOWN_SOLENOID = 7;
+	public static final int PLATE_UP_SOLENOID = 7;
+	public static final int PLATE_DOWN_SOLENOID = 0;
 	public static final int SHIFTER_UP = 1; //unknown if ports are reversed
 	public static final int SHIFTER_DOWN = 6; //^^^
-	public static final int WALL_RETRACT_SOLENOID = 0;
-	public static final int WALL_EXTEND_SOLENOID = 7;
-	public static final int WALL_TRIGGER_SOLENOID = 4;
+	public static final int WALL_RETRACT_SOLENOID = 4;
+	public static final int WALL_EXTEND_SOLENOID = 3;
+//	public static final int WALL_TRIGGER_SOLENOID = 4;
 	
 	//LED Ring relay port
 	public static final int LIGHT_RING_RELAY = 0;
