@@ -1,4 +1,5 @@
- 
+
+
 package org.usfirst.frc.team2363.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -60,14 +61,12 @@ public class Robot extends IterativeRobot {
 	// declare SmartDashboard tools
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	
 	public static HelixLogger LOG;
-
+	
   public Robot() {
       
-	  LOG = new HelixLogger();
-  
     	// declare subsystems
+	  LOG = new HelixLogger();
 	  drivetrain = new Drivetrain();
 	  gearGrabber = new GearGrabber();
 	  shooter = new Shooter();
@@ -105,7 +104,7 @@ public class Robot extends IterativeRobot {
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
 		SmartDashboard();
-		CameraServer.getInstance().startAutomaticCapture();
+//		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -232,8 +231,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		LOG.saveLogs();
-		
 		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
 		SmartDashboard();
 	}
@@ -257,7 +254,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		LOG.saveLogs();
+		
 		SmartDashboard();
 	}
 

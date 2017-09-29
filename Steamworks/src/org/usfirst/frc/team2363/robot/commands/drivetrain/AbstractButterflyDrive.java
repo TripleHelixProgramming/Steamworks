@@ -27,7 +27,7 @@ public abstract class AbstractButterflyDrive extends Command {
 //		}
 		
 		// reads speed and turn angle when driving
-		drivetrain.arcadeDrive(oi.getThrottle(), oi.getTurn());
+		drivetrain.arcadeDrive(-oi.getThrottle(), -oi.getTurn());
 	}
 	
 	abstract protected void defaultDrive();
