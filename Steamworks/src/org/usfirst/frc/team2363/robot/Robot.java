@@ -2,7 +2,22 @@
 
 package org.usfirst.frc.team2363.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
+import org.iif.th.util.logger.HelixLogger;
+import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
+import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
+import org.usfirst.frc.team2363.robot.commands.autonomous.KeyToGear;
+import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
+import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
+import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
+import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team2363.robot.subsystems.Feeder;
+import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
+import org.usfirst.frc.team2363.robot.subsystems.LightRing;
+import org.usfirst.frc.team2363.robot.subsystems.Shooter;
+import org.usfirst.frc.team2363.robot.subsystems.Wall;
+import org.usfirst.frc.team2363.util.Pixy;
+import org.usfirst.frc.team2363.util.pathplanning.commands.PathRunner;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -11,24 +26,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import org.iif.th.util.logger.HelixLogger;
-import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
-import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
-import org.usfirst.frc.team2363.robot.commands.autonomous.KeyToGear;
-import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
-import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team2363.robot.subsystems.Feeder;
-import org.usfirst.frc.team2363.robot.subsystems.GearGrabber;
-import org.usfirst.frc.team2363.robot.subsystems.LightRing;
-import org.usfirst.frc.team2363.robot.subsystems.Shooter;
-import org.usfirst.frc.team2363.robot.subsystems.Wall;
-import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
-import org.usfirst.frc.team2363.robot.commands.shooter.PixyCheck;
-import org.usfirst.frc.team2363.util.Pixy;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -218,7 +215,7 @@ public class Robot extends IterativeRobot {
 //			SmartDashboard.putString("Selected Auto", "Test Drive");
 //			autonomousCommand = testDrive;
 		}
-		
+		autonomousCommand = new PathRunner("scaling_calibration");
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();

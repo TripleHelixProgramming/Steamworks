@@ -45,9 +45,9 @@ public class Drivetrain extends Subsystem {
 	// Drivetrain
 	private RobotDrive robotDrive = new RobotDrive(frontLeft, frontRight);
 	
-	private static final int ENCODER_TICKS = 120;
-	private static final double GEAR_RATIO = 50.0 / 34.0;
-	private static final int MAX_RPM = 415;
+	private static final int ENCODER_TICKS = 4096;
+	private static final double GEAR_RATIO = 1;
+	private static final int MAX_RPM = 735;
 	
 	public Drivetrain() {
 		
@@ -64,22 +64,22 @@ public class Drivetrain extends Subsystem {
 		frontLeft.changeControlMode(TalonControlMode.PercentVbus);
 		frontLeft.setVoltageRampRate(30);
 //		frontLeft.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
-//		frontLeft.setF(0.79);
+		frontLeft.setF(0.20388);
 //		frontLeft.setP(1);
 // 		frontLeft.setD(0.001);
-//		frontLeft.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		frontLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
+		frontLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		frontLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
 //		frontLeft.reverseSensor(true);
 		
 		frontRight.changeControlMode(TalonControlMode.PercentVbus);
 		frontRight.setVoltageRampRate(30);
 //		frontRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
-//		frontRight.setF(0.79);
+		frontRight.setF(0.20388);
 //		frontRight.setP(1);
 //		frontRight.setD(0.001);
-//		frontRight.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-//		frontRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
-//		frontRight.reverseSensor(true);
+		frontRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+		frontRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
+		frontRight.reverseSensor(true);
 		
 		middleLeft.changeControlMode(TalonControlMode.Follower);
 		middleLeft.set(frontLeft.getDeviceID());
@@ -149,10 +149,9 @@ public class Drivetrain extends Subsystem {
 	}
 	
 	public void setUpAutoControl() {
-		frontLeft.changeControlMode(TalonControlMode.Speed);
-		frontRight.changeControlMode(TalonControlMode.Speed);
 		frontLeft.enableBrakeMode(true);
 		frontRight.enableBrakeMode(true);
+		frontRight.reverseOutput(true);
 	}
 	
 	public void setUpManualControl() {
@@ -160,6 +159,7 @@ public class Drivetrain extends Subsystem {
 		frontRight.changeControlMode(TalonControlMode.PercentVbus);
 		frontLeft.enableBrakeMode(false);
 		frontRight.enableBrakeMode(false);
+		frontRight.reverseOutput(false);
 	}
 	
 	public void setSpeeds(double leftSpeed, double rightSpeed) {
@@ -176,19 +176,12 @@ public class Drivetrain extends Subsystem {
 	public void resetAngle() {
 		ahrs.zeroYaw();
 	}
-	public CANTalon getRearLeft() {
-		return rearLeft;
-	}
 	
-	public CANTalon getRearRight() {
-		return rearRight;
-	}
-	
-	public CANTalon getFrontLeft() {
+	public CANTalon getLeft() {
 		return frontLeft;
 	}
 	
-	public CANTalon getFrontRight() {
+	public CANTalon getRight() {
 		return frontRight;
 	}
 
