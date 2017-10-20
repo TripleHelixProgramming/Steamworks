@@ -65,7 +65,7 @@ public class Drivetrain extends Subsystem {
 		frontLeft.setVoltageRampRate(30);
 //		frontLeft.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
 		frontLeft.setF(0.20388);
-//		frontLeft.setP(1);
+		frontLeft.setP(0.05);
 // 		frontLeft.setD(0.001);
 		frontLeft.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		frontLeft.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
@@ -75,7 +75,7 @@ public class Drivetrain extends Subsystem {
 		frontRight.setVoltageRampRate(30);
 //		frontRight.setF(DrivetrainMath.fGain(ENCODER_TICKS, GEAR_RATIO, MAX_RPM));
 		frontRight.setF(0.20388);
-//		frontRight.setP(1);
+		frontRight.setP(0.05);
 //		frontRight.setD(0.001);
 		frontRight.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
 		frontRight.configEncoderCodesPerRev(DrivetrainMath.ticksPerWheelRotation(ENCODER_TICKS, GEAR_RATIO));
@@ -83,11 +83,11 @@ public class Drivetrain extends Subsystem {
 		
 		middleLeft.changeControlMode(TalonControlMode.Follower);
 		middleLeft.set(frontLeft.getDeviceID());
-//		middleLeft.enableBrakeMode(true);
+		middleLeft.enableBrakeMode(true);
 		
 		middleRight.changeControlMode(TalonControlMode.Follower);
 		middleRight.set(frontRight.getDeviceID());
-//		middleRight.enableBrakeMode(true);
+		middleRight.enableBrakeMode(true);
 		
 		rearLeft.changeControlMode(TalonControlMode.Follower);
 		rearLeft.set(frontLeft.getDeviceID());

@@ -3,11 +3,6 @@
 package org.usfirst.frc.team2363.robot;
 
 import org.iif.th.util.logger.HelixLogger;
-import org.usfirst.frc.team2363.robot.commands.autonomous.GearAndHopper;
-import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
-import org.usfirst.frc.team2363.robot.commands.autonomous.KeyToGear;
-import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.PathFollower;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -165,57 +160,57 @@ public class Robot extends IterativeRobot {
 //			autonomousCommand = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 //		}
 		
-		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper");
-		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper");
-		
-		KeyToGear blueKeyGear = new KeyToGear("BlueKeyGear");
-		KeyToGear redKeyGear = new KeyToGear("RedKeyGear");
+//		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper");
+//		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper");
+//		
+//		KeyToGear blueKeyGear = new KeyToGear("BlueKeyGear");
+//		KeyToGear redKeyGear = new KeyToGear("RedKeyGear");
 		
 //		GearGroup blueBoilerGear = new GearGroup("BlueBoilerGear");
-		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
-		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
-		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
-		GearGroup centerGear = new GearGroup("Center");
-		GearAndHopper blueGearHopper = new GearAndHopper("BlueBoilerGear", "BlueGearHopper", RobotMap.BLUE_X_OFFSET);
-		GearAndHopper redGearHopper = new GearAndHopper("RedBoilerGear", "RedGearHopper", RobotMap.RED_X_OFFSET);
-		PathFollower testDrive = new PathFollower("TestDrive");
+//		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
+//		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
+//		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
+//		GearGroup centerGear = new GearGroup("Center");
+//		GearAndHopper blueGearHopper = new GearAndHopper("BlueBoilerGear", "BlueGearHopper", RobotMap.BLUE_X_OFFSET);
+//		GearAndHopper redGearHopper = new GearAndHopper("RedBoilerGear", "RedGearHopper", RobotMap.RED_X_OFFSET);
+//		PathFollower testDrive = new PathFollower("TestDrive");
 //		WallToHopper blueBoilerHopper = new WallToHopper("BlueBoilerHopper", RobotMap.BLUE_X_OFFSET);
 //		WallToHopper redBoilerHopper = new WallToHopper("RedBoilerHopper", RobotMap.RED_X_OFFSET);
 		
-		if (!autoBoilerHopper.get()) {
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Hopper");
-			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueBoilerHopper;
-			} else {
-				autonomousCommand = redBoilerHopper;
-			}
-		} else if (!autoLoaderGear.get()) {
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
-			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueLoaderGear;
-			} else {
-				autonomousCommand = redLoaderGear;
-			}
-		} else if (!autoGearHopper.get()){
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
-			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueGearHopper;
-			} else {
-				autonomousCommand = redGearHopper;
-			}
-		} else {
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
-			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
-				autonomousCommand = blueKeyGear;
-			} else {
-				autonomousCommand = redKeyGear;
-			}
+//		if (!autoBoilerHopper.get()) {
+//			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + "  Boiler Hopper");
+//			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+//				autonomousCommand = blueBoilerHopper;
+//			} else {
+//				autonomousCommand = redBoilerHopper;
+//			}
+//		} else if (!autoLoaderGear.get()) {
+//			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name () + " Loader Gear");
+//			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+//				autonomousCommand = blueLoaderGear;
+//			} else {
+//				autonomousCommand = redLoaderGear;
+//			}
+//		} else if (!autoGearHopper.get()){
+//			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
+//			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+//				autonomousCommand = blueGearHopper;
+//			} else {
+//				autonomousCommand = redGearHopper;
+//			}
+//		} else {
+//			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
+//			if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
+//				autonomousCommand = blueKeyGear;
+//			} else {
+//				autonomousCommand = redKeyGear;
+//			}
 //			SmartDashboard.putString("Selected Auto", "Center Gear");
 //			autonomousCommand = centerGear;
 //			SmartDashboard.putString("Selected Auto", "Test Drive");
 //			autonomousCommand = testDrive;
-		}
-		autonomousCommand = new PathRunner("scaling_calibration");
+//		}
+//		autonomousCommand = new PathRunner("scaling_calibration");
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
