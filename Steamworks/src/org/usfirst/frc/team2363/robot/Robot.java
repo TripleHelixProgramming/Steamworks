@@ -3,6 +3,7 @@
 package org.usfirst.frc.team2363.robot;
 
 import org.iif.th.util.logger.HelixLogger;
+import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -13,6 +14,7 @@ import org.usfirst.frc.team2363.robot.subsystems.Wall;
 import org.usfirst.frc.team2363.util.Pixy;
 import org.usfirst.frc.team2363.util.pathplanning.commands.PathRunner;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -47,8 +49,8 @@ public class Robot extends IterativeRobot {
 	private final DigitalInput autoBoilerHopper = new DigitalInput(2);
 	private final DigitalInput autoLoaderGear = new DigitalInput(3);
 	private final DigitalInput autoGearHopper = new DigitalInput(4);
-//	private final DigitalInput autoCenter = new DigitalInput(5);
-	private final DigitalInput autoKeyGear = new DigitalInput(5);
+	private final DigitalInput autoCenter = new DigitalInput(5);
+//	private final DigitalInput autoKeyGear = new DigitalInput(5);
 	
 	// declare SmartDashboard tools
 	Command autonomousCommand;
@@ -96,7 +98,7 @@ public class Robot extends IterativeRobot {
 		// Set the start heading as zero.  Later TurnToZero is used to return to this heading.
 		// to trigger the hopper.
 		SmartDashboard();
-//		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -127,8 +129,8 @@ public class Robot extends IterativeRobot {
 		} else if (!autoGearHopper.get()){
 			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Gear Hopper");
 		} else {
-//			SmartDashboard.putString("Selected Auto", "Center Gear");
-			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
+			SmartDashboard.putString("Selected Auto", "Center Gear");
+//			SmartDashboard.putString("Selected Auto", DriverStation.getInstance().getAlliance().name() + " Key Gear");
 		}
 	}
 
@@ -170,7 +172,7 @@ public class Robot extends IterativeRobot {
 //		GearGroup redBoilerGear = new GearGroup("RedBoilerGear");
 //		GearGroup blueLoaderGear = new GearGroup("BlueLoaderGear");
 //		GearGroup redLoaderGear = new GearGroup("RedLoaderGear");
-//		GearGroup centerGear = new GearGroup("Center");
+	//	GearGroup centerGear = new GearGroup("centerGear");
 //		GearAndHopper blueGearHopper = new GearAndHopper("BlueBoilerGear", "BlueGearHopper", RobotMap.BLUE_X_OFFSET);
 //		GearAndHopper redGearHopper = new GearAndHopper("RedBoilerGear", "RedGearHopper", RobotMap.RED_X_OFFSET);
 //		PathFollower testDrive = new PathFollower("TestDrive");
@@ -205,13 +207,14 @@ public class Robot extends IterativeRobot {
 //			} else {
 //				autonomousCommand = redKeyGear;
 //			}
-//			SmartDashboard.putString("Selected Auto", "Center Gear");
+			SmartDashboard.putString("Selected Auto", "Center Gear");
 //			autonomousCommand = centerGear;
 //			SmartDashboard.putString("Selected Auto", "Test Drive");
 //			autonomousCommand = testDrive;
 //		}
-//		autonomousCommand = new PathRunner("scaling_calibration");
+		autonomousCommand = new PathRunner("scaling_calibration");
 		// schedule the autonomous command (example)
+//		autonomousCommand = centerGear;
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -223,7 +226,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// makes sure only one command per subsystems runs at a time
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
+//		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
 		SmartDashboard();
 	}
 

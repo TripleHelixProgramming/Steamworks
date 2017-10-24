@@ -13,9 +13,9 @@ public class GearGroup extends CommandGroup {
 
     public GearGroup(String firstPath) {
         addSequential(new PathRunner(firstPath));
-        addParallel(new GearGrabberDelivery());
+//        addParallel(new GearGrabberDelivery());
 //      addParallel(new GearGrabberDownOut());
-        addSequential(new WaitCommand(.5));
-        addSequential(new PathRunner("ReverseGear"));
+//        addSequential(new WaitCommand(.5));
+//        addSequential(new PathRunner("ReverseGear"));
     }
 }

@@ -112,6 +112,14 @@ public class OI {
 		return driverController.getRawAxis(RIGHT_STICK_X) * getTurnScaling(getThrottle());
 	}
 	
+	public double getTurnNew() {
+		if (driverController.getRawAxis(RIGHT_STICK_X) >= 0) {
+			return Math.pow(driverController.getRawAxis(RIGHT_STICK_X), 1.5);
+		} else {
+			return -(Math.pow(Math.abs(driverController.getRawAxis(RIGHT_STICK_X)), 1.5));
+		}
+	}
+	
 	public static double getTurnScaling(double x) {
 		return -Math.abs(LOW_SPEED_SCALING - HIGH_SPEED_SCALING) * Math.abs(x) + LOW_SPEED_SCALING;
 	}
