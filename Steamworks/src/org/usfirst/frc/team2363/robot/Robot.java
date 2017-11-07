@@ -3,7 +3,6 @@
 package org.usfirst.frc.team2363.robot;
 
 import org.iif.th.util.logger.HelixLogger;
-import org.usfirst.frc.team2363.robot.commands.autonomous.GearGroup;
 import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
 import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team2363.robot.subsystems.Feeder;
@@ -15,9 +14,11 @@ import org.usfirst.frc.team2363.util.Pixy;
 import org.usfirst.frc.team2363.util.pathplanning.commands.PathRunner;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -45,6 +46,9 @@ public class Robot extends IterativeRobot {
 	public static LightRing lightRing;
 	public static Wall tiltingWall;
 	public static PIDShooterCommand pidShooterCommand;
+	private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+	private final Compressor compressor = new Compressor();
+	
 	
 	private final DigitalInput autoBoilerHopper = new DigitalInput(2);
 	private final DigitalInput autoLoaderGear = new DigitalInput(3);
@@ -68,6 +72,8 @@ public class Robot extends IterativeRobot {
 	  pixy = new Pixy();
 	  lightRing = new LightRing();
 	  tiltingWall = new Wall();
+	  LOG.addSource("Total Current", pdp, f -> "" + ((PowerDistributionPanel)f).getTotalCurrent());
+	  LOG.addSource("Compressor State", compressor, f -> "" + ((Compressor)f).enabled());
   }
     
 	/**
@@ -99,6 +105,7 @@ public class Robot extends IterativeRobot {
 		// to trigger the hopper.
 		SmartDashboard();
 		CameraServer.getInstance().startAutomaticCapture();
+		PowerDistributionPanel pdb = new PowerDistributionPanel();
 	}
 
 	/**
@@ -228,6 +235,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 //		SmartDashboard.putNumber("Robot heading", drivetrain.getAngle());
 		SmartDashboard();
+		LOG.saveLogs();
 	}
 
 	@Override
@@ -251,6 +259,7 @@ public class Robot extends IterativeRobot {
 		Scheduler.getInstance().run();
 		
 		SmartDashboard();
+		LOG.saveLogs();
 	}
 
 	/**

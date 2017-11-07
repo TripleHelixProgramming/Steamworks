@@ -22,6 +22,9 @@ import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimberGroup;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
 import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerRetract;
+
+import com.ctre.CANTalon;
+
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
 import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
@@ -92,6 +95,11 @@ public class OI {
 		//Climber activate
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
+		Robot.LOG.addSource("Raw Throttle", driverController, f -> "" + ((Joystick)f).getRawAxis(LEFT_STICK_Y));
+		Robot.LOG.addSource("Raw Turn", driverController, f -> "" + ((Joystick)f).getRawAxis(RIGHT_STICK_X));
+		Robot.LOG.addSource("Scaled Throttle", this, f -> "" + ((OI)f).getThrottle() * Math.abs(((OI)f).getThrottle()));
+		Robot.LOG.addSource("Scaled Turn", this, f -> "" + ((OI)f).getTurn() * Math.abs(((OI)f).getTurn()));
+		
 		//Trial Gear Grabber button for plate down and grabber down
 //		new JoystickButton(operatorController, TRIANGLE).whenPressed(new GearGrabberDownOut());
 //		new JoystickButton(operatorController, TRIANGLE).whenReleased(new GearGrabberStop());
@@ -110,14 +118,6 @@ public class OI {
 	// turn angle
 	public double getTurn() {
 		return driverController.getRawAxis(RIGHT_STICK_X) * getTurnScaling(getThrottle());
-	}
-	
-	public double getTurnNew() {
-		if (driverController.getRawAxis(RIGHT_STICK_X) >= 0) {
-			return Math.pow(driverController.getRawAxis(RIGHT_STICK_X), 1.5);
-		} else {
-			return -(Math.pow(Math.abs(driverController.getRawAxis(RIGHT_STICK_X)), 1.5));
-		}
 	}
 	
 	public static double getTurnScaling(double x) {

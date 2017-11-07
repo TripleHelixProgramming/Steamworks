@@ -19,7 +19,7 @@ public class HelixLogger {
 	private boolean savedTitles;
 	
 	public HelixLogger() {
-		file = Paths.get("/home/lvuser/Log0.txt");
+		file = Paths.get("/home/lvuser/Log0.csv");
 		try {
 			cleanUpFiles();
 			Files.createFile(file);
@@ -28,18 +28,21 @@ public class HelixLogger {
 		}
 	}
 	
-	public void addSource(String name, Object source, Function<Object, Double> f) {
+	public void addSource(String name, Object source, Function<Object, String> f) {
 		dataSources.add(new LogSource(name, source, f));
 	}
 	
 	public void saveLogs() {
+//		if (!DriverStation.getInstance().isFMSAttached()) {
+//			return;
+//		}
 		try {
 			if (!savedTitles) {
 				saveTitles();
 				savedTitles = true;
 			}
 			StringBuilder data = new StringBuilder();
-			data.append(Instant.now().toString()).append("\t");
+			data.append(Instant.now().toString()).append(",");
 			data.append(getValues());
 			Files.write(file, Collections.singletonList(data.toString()), StandardOpenOption.APPEND);
 		} catch (Exception e) {
@@ -49,31 +52,31 @@ public class HelixLogger {
 	
 	private void saveTitles() throws IOException {
 		StringBuilder titles = new StringBuilder();
-		titles.append("Timestamp\t");
-		titles.append(dataSources.stream().map(t -> t.name).collect(Collectors.joining("\t"))).append("\t");
+		titles.append("Timestamp,");
+		titles.append(dataSources.stream().map(t -> t.name).collect(Collectors.joining(","))).append(",");
 		Files.write(file, Collections.singletonList(titles.toString()), StandardOpenOption.APPEND);
 	}
 	
 	private void cleanUpFiles() throws IOException {
-		Files.deleteIfExists(Paths.get("/home/lvuser/Log4.txt"));
+		Files.deleteIfExists(Paths.get("/home/lvuser/Log4.csv"));
 		for (int i = 3; i >= 0; i--) {
-			Path oldFile = Paths.get("/home/lvuser/Log" + i + ".txt");
+			Path oldFile = Paths.get("/home/lvuser/Log" + i + ".csv");
 			if (Files.exists(oldFile)) {
-				Files.move(oldFile, oldFile.resolveSibling("/home/lvuser/Log" + (i + 1) + ".txt"));
+				Files.move(oldFile, oldFile.resolveSibling("/home/lvuser/Log" + (i + 1) + ".csv"));
 			}
 		}
 	}
 	
 	private String getValues() {
-		return dataSources.stream().map(s -> s.callback.apply(s.source).toString()).collect(Collectors.joining("\t"));
+		return dataSources.stream().map(s -> s.callback.apply(s.source).toString()).collect(Collectors.joining(","));
 	}
 	
 	private class LogSource {
 		private final String name;
 		private final Object source;
-		private final Function<Object, Double> callback;
+		private final Function<Object, String> callback;
 		
-		public LogSource(String name, Object source, Function<Object, Double> callback) {
+		public LogSource(String name, Object source, Function<Object, String> callback) {
 			this.name = name;
 			this.source = source;
 			this.callback = callback;
