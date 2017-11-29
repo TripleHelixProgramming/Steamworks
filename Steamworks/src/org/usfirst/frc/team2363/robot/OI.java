@@ -63,18 +63,18 @@ public class OI {
 		
 		//gear grabber
 		//Sucks in the gear while square is being held
-		new JoystickButton(operatorController, SQUARE).whenPressed(new GearGrabberRetrieveGroup());
-		new JoystickButton(operatorController, SQUARE).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, SHARE).whenPressed(new GearGrabberRetrieveGroup());
-		new JoystickButton(driverController, SHARE).whenReleased(new GearGrabberStop());
+		new JoystickButton(operatorController, X).whenPressed(new GearGrabberRetrieveGroup());
+		new JoystickButton(operatorController, X).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, XBOX_LOGO_LEFT).whenPressed(new GearGrabberRetrieveGroup());
+		new JoystickButton(driverController, XBOX_LOGO_LEFT).whenReleased(new GearGrabberStop());
 		
 		//Pushes out the gear while circle is being held
 		new JoystickButton(operatorController, CIRCLE).whenPressed(new GearGrabberDelivery());
 		new JoystickButton(operatorController, CIRCLE).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, OPTIONS).whenPressed(new GearGrabberDelivery());
-		new JoystickButton(driverController, OPTIONS).whenReleased(new GearGrabberStop());
-		new JoystickButton(driverController, CIRCLE).whenPressed(new GearGrabberDelivery());
-		new JoystickButton(driverController, CIRCLE).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, XBOX_LOGO_RIGHT).whenPressed(new GearGrabberDelivery());
+		new JoystickButton(driverController, XBOX_LOGO_RIGHT).whenReleased(new GearGrabberStop());
+		new JoystickButton(driverController, XBOX_B).whenPressed(new GearGrabberDelivery());
+		new JoystickButton(driverController, XBOX_B).whenReleased(new GearGrabberStop());
 
 		if (DriverStation.getInstance().getAlliance() == DriverStation.Alliance.Blue) {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(BLUE_X_OFFSET));
@@ -84,19 +84,19 @@ public class OI {
 		
 		//Drivetrain controls
 		//Turns on Omni Drive
-		new JoystickButton(driverController, R1).whenPressed(new OmniDrive());
+		new JoystickButton(driverController, XBOX_RB).whenPressed(new OmniDrive());
 		//Turns on Traction Drive
-		new JoystickButton(driverController, R2).whenPressed(new TractionDrive());
-		//Low gear
-		new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(true));
-		//High gear
-		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
+		new JoystickButton(driverController, XBOX_LB).whenPressed(new TractionDrive());
+//		//Low gear
+//		new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(true));
+//		//High gear
+//		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
 		
 		//Climber activate
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
-		Robot.LOG.addSource("Raw Throttle", driverController, f -> "" + ((Joystick)f).getRawAxis(LEFT_STICK_Y));
-		Robot.LOG.addSource("Raw Turn", driverController, f -> "" + ((Joystick)f).getRawAxis(RIGHT_STICK_X));
+		Robot.LOG.addSource("Raw Throttle", driverController, f -> "" + ((Joystick)f).getRawAxis(XBOX_LEFT_STICK_Y));
+		Robot.LOG.addSource("Raw Turn", driverController, f -> "" + ((Joystick)f).getRawAxis(XBOX_RIGHT_STICK_X));
 		Robot.LOG.addSource("Scaled Throttle", this, f -> "" + ((OI)f).getThrottle() * Math.abs(((OI)f).getThrottle()));
 		Robot.LOG.addSource("Scaled Turn", this, f -> "" + ((OI)f).getTurn() * Math.abs(((OI)f).getTurn()));
 		
@@ -107,17 +107,17 @@ public class OI {
 	
 	// omni wheels
 	public boolean isOmnisDeployed() {
-		return(driverController.getRawButton(R1) == true);
+		return(driverController.getRawButton(XBOX_RB) == true);
 	}
 	
 	// speed
 	public double getThrottle () {
-		return driverController.getRawAxis(LEFT_STICK_Y);
+		return driverController.getRawAxis(XBOX_LEFT_TRIGGER) - driverController.getRawAxis(XBOX_RIGHT_TRIGGER);
 	}
 	
 	// turn angle
 	public double getTurn() {
-		return driverController.getRawAxis(RIGHT_STICK_X) * getTurnScaling(getThrottle());
+		return driverController.getRawAxis(XBOX_RIGHT_STICK_X) * getTurnScaling(getThrottle());
 	}
 	
 	public static double getTurnScaling(double x) {
@@ -147,13 +147,13 @@ public class OI {
 	 */
 	public void setControllerRumble(boolean state) {
 		if (state == true) {
-			driverRumble.setRumble(RumbleType.kLeftRumble, 1);
-			driverRumble.setRumble(RumbleType.kRightRumble, 1);
+			driverController.setRumble(RumbleType.kLeftRumble, 1);
+			driverController.setRumble(RumbleType.kRightRumble, 1);
 			operatorRumble.setRumble(RumbleType.kLeftRumble, 1);
 			operatorRumble.setRumble(RumbleType.kRightRumble, 1);
 		} else {
-			driverRumble.setRumble(RumbleType.kLeftRumble, 0);
-			driverRumble.setRumble(RumbleType.kRightRumble, 0);
+			driverController.setRumble(RumbleType.kLeftRumble, 0);
+			driverController.setRumble(RumbleType.kRightRumble, 0);
 			operatorRumble.setRumble(RumbleType.kLeftRumble, 0);
 			operatorRumble.setRumble(RumbleType.kRightRumble, 0);
 		}
