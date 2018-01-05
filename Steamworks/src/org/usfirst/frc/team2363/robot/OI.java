@@ -1,35 +1,44 @@
 package org.usfirst.frc.team2363.robot;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import static org.usfirst.frc.team2363.robot.RobotMap.BLUE_X_OFFSET;
+import static org.usfirst.frc.team2363.robot.RobotMap.CIRCLE;
+import static org.usfirst.frc.team2363.robot.RobotMap.DRIVER_PORT;
+import static org.usfirst.frc.team2363.robot.RobotMap.DRIVER_RUMBLE_PORT;
+import static org.usfirst.frc.team2363.robot.RobotMap.HIGH_SPEED_SCALING;
+import static org.usfirst.frc.team2363.robot.RobotMap.L1;
+import static org.usfirst.frc.team2363.robot.RobotMap.LOW_SPEED_SCALING;
+import static org.usfirst.frc.team2363.robot.RobotMap.OPERATOR_PORT;
+import static org.usfirst.frc.team2363.robot.RobotMap.OPERATOR_RUMBLE_PORT;
+import static org.usfirst.frc.team2363.robot.RobotMap.OPTIONS;
+import static org.usfirst.frc.team2363.robot.RobotMap.R1;
+import static org.usfirst.frc.team2363.robot.RobotMap.R2;
+import static org.usfirst.frc.team2363.robot.RobotMap.RED_X_OFFSET;
+import static org.usfirst.frc.team2363.robot.RobotMap.RIGHT_STICK_Y;
+import static org.usfirst.frc.team2363.robot.RobotMap.X;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_B;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_LEFT_STICK_Y;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_LEFT_TRIGGER;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_LOGO_LEFT;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_LOGO_RIGHT;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_RB;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_RIGHT_STICK_X;
+import static org.usfirst.frc.team2363.robot.RobotMap.XBOX_RIGHT_TRIGGER;
 
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
-
-import org.usfirst.frc.team2363.robot.commands.autonomous.WallToHopper;
 import org.usfirst.frc.team2363.robot.commands.drivetrain.AutoAim;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.OmniDrive;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.ShiftCommand;
-import org.usfirst.frc.team2363.robot.commands.drivetrain.TractionDrive;
-
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
-import org.usfirst.frc.team2363.robot.commands.shooter.PIDShooterCommand;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
 import org.usfirst.frc.team2363.robot.commands.shooter.ShooterCommand;
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
 import org.usfirst.frc.team2363.robot.commands.wall.HopperJuggle;
-import org.usfirst.frc.team2363.robot.commands.wall.WallClimber;
 import org.usfirst.frc.team2363.robot.commands.wall.WallClimberGroup;
-import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerExtend;
-import org.usfirst.frc.team2363.robot.commands.wall.WallTriggerRetract;
+import org.usfirst.frc.team2363.robot.subsystems.Drivetrain;
 
-import com.ctre.CANTalon;
-
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieve;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberRetrieveGroup;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDelivery;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberDownOut;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -82,16 +91,6 @@ public class OI {
 			new JoystickButton(operatorController, OPTIONS).toggleWhenPressed(new AutoAim(RED_X_OFFSET));
 		}
 		
-		//Drivetrain controls
-		//Turns on Omni Drive
-		new JoystickButton(driverController, XBOX_RB).whenPressed(new OmniDrive());
-		//Turns on Traction Drive
-		new JoystickButton(driverController, XBOX_LB).whenPressed(new TractionDrive());
-//		//Low gear
-//		new JoystickButton(driverController, L1).whenPressed(new ShiftCommand(true));
-//		//High gear
-//		new JoystickButton(driverController, L2).whenPressed(new ShiftCommand(false));
-		
 		//Climber activate
 		new JoystickButton(operatorController, X).toggleWhenPressed(new WallClimberGroup());
 		
@@ -117,7 +116,11 @@ public class OI {
 	
 	// turn angle
 	public double getTurn() {
-		return driverController.getRawAxis(XBOX_RIGHT_STICK_X) * getTurnScaling(getThrottle());
+		return driverController.getRawAxis(XBOX_RIGHT_STICK_X) * getTurnScaling(getFullSpeedPercentage());
+	}
+	
+	public double getFullSpeedPercentage() {
+		return Math.min(1, Robot.drivetrain.getAverageSpeed() / Drivetrain.MAX_RPM);
 	}
 	
 	public static double getTurnScaling(double x) {

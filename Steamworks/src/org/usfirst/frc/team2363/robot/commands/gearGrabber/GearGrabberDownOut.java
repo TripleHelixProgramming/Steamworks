@@ -2,7 +2,6 @@ package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 import org.usfirst.frc.team2363.robot.commands.wall.BringWallUp;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
 
 /**

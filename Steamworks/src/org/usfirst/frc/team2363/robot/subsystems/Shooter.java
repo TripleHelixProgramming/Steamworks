@@ -1,17 +1,14 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
+import static org.usfirst.frc.team2363.robot.RobotMap.SHOOTER_TALON;
 
 import org.usfirst.frc.team2363.robot.commands.shooter.StopShooter;
-import org.usfirst.frc.team2363.util.DrivetrainMath;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.TalonControlMode;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *

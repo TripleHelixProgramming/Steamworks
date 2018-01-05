@@ -47,10 +47,6 @@ public class Pixy {
 		PixyPacket packet = new PixyPacket();
 		
 		pixyi2c.readOnly(pixyValues, 64);
-		if (pixyValues == null) {
-			SmartDashboard.putString("Target Angle", "No Target");
-			return Optional.empty();
-		}
 		int i = 0;
 		while (!(pixyValues[i] == 85 && pixyValues[i + 1] == -86) && i < 50) {
 			i++;

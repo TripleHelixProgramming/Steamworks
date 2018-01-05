@@ -7,32 +7,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftCommand extends Command {
+public class JoystickDrive extends Command {
 
-	private boolean shiftUp;
-	
-    public ShiftCommand(boolean shiftUp) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.shiftUp = shiftUp;
+    public JoystickDrive() {
+        requires(Robot.drivetrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (shiftUp) {
-    		Robot.drivetrain.shiftUp();
-    	} else {
-    		Robot.drivetrain.shiftDown();
-    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.drivetrain.arcadeDrive(Robot.oi.getThrottle(), Robot.oi.getTurn());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

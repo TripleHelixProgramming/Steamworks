@@ -1,12 +1,14 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
+import static org.usfirst.frc.team2363.robot.RobotMap.FEEDER2_TALON;
+import static org.usfirst.frc.team2363.robot.RobotMap.FEEDER_TALON;
+import static org.usfirst.frc.team2363.robot.RobotMap.SERIALIZER_TALON;
 
 import org.usfirst.frc.team2363.robot.commands.feeder.FeederCommand;
+
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *

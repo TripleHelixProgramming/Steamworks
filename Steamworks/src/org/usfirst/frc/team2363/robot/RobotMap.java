@@ -9,8 +9,8 @@ package org.usfirst.frc.team2363.robot;
  */
 public class RobotMap {
 	
-	public static final double HIGH_SPEED_SCALING = 0.55;
-	public static final double LOW_SPEED_SCALING = 0.9;
+	public static final double HIGH_SPEED_SCALING = 0.5;
+	public static final double LOW_SPEED_SCALING = 0.75;
 	
 	// Pixy Info & Calibration for Field Sides
 	public static final int BLUE_X_OFFSET = 213;		// Set these to calibrate the Pixy Camera for each side of field

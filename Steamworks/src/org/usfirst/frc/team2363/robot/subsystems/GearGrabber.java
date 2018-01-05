@@ -1,15 +1,22 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
+import static org.usfirst.frc.team2363.robot.RobotMap.GEAR_GRABBER_DOWN_SOLENOID;
+import static org.usfirst.frc.team2363.robot.RobotMap.GEAR_GRABBER_TALON;
+import static org.usfirst.frc.team2363.robot.RobotMap.GEAR_GRABBER_UP_SOLENOID;
+import static org.usfirst.frc.team2363.robot.RobotMap.GEAR_LIMIT_CHANNEL;
+import static org.usfirst.frc.team2363.robot.RobotMap.PCM_0;
+import static org.usfirst.frc.team2363.robot.RobotMap.PCM_1;
+import static org.usfirst.frc.team2363.robot.RobotMap.PLATE_DOWN_SOLENOID;
+import static org.usfirst.frc.team2363.robot.RobotMap.PLATE_UP_SOLENOID;
+
+import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStopGroup;
+
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
-
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStop;
-import org.usfirst.frc.team2363.robot.commands.gearGrabber.GearGrabberStopGroup;
-
-import com.ctre.CANTalon;
 
 /**
  *

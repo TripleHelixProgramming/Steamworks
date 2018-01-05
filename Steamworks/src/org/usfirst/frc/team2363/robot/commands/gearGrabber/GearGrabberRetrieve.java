@@ -1,12 +1,9 @@
 package org.usfirst.frc.team2363.robot.commands.gearGrabber;
 
-import static org.usfirst.frc.team2363.robot.Robot.*;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import static org.usfirst.frc.team2363.robot.Robot.gearGrabber;
 
-/**
- *
- */
+import edu.wpi.first.wpilibj.command.Command;
+
 public class GearGrabberRetrieve extends Command {
 	
 	private int stalledCount = 0;

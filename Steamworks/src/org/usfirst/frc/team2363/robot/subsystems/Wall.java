@@ -1,17 +1,20 @@
 package org.usfirst.frc.team2363.robot.subsystems;
 
+import static org.usfirst.frc.team2363.robot.RobotMap.CLIMBER_MOTOR_LEFT;
+import static org.usfirst.frc.team2363.robot.RobotMap.CLIMBER_MOTOR_RIGHT;
+import static org.usfirst.frc.team2363.robot.RobotMap.PCM_0;
+import static org.usfirst.frc.team2363.robot.RobotMap.WALL_EXTEND_SOLENOID;
+import static org.usfirst.frc.team2363.robot.RobotMap.WALL_RETRACT_SOLENOID;
+import static org.usfirst.frc.team2363.robot.RobotMap.WALL_TRIGGER_SOLENOID;
+
+import org.usfirst.frc.team2363.robot.commands.wall.WallOff;
+
 import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
-import static org.usfirst.frc.team2363.robot.Robot.tiltingWall;
-import static org.usfirst.frc.team2363.robot.RobotMap.*;
-
-import org.usfirst.frc.team2363.robot.Robot;
-import org.usfirst.frc.team2363.robot.commands.wall.WallOff;
 /**
  *
  */

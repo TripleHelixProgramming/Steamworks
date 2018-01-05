@@ -105,7 +105,6 @@ public class Robot extends IterativeRobot {
 		// to trigger the hopper.
 		SmartDashboard();
 		CameraServer.getInstance().startAutomaticCapture();
-		PowerDistributionPanel pdb = new PowerDistributionPanel();
 	}
 
 	/**
@@ -157,8 +156,6 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		
 		Robot.drivetrain.resetAngle();        // Reset the gyro.  This position is 0 for TurnToAngle(0);
-		Robot.drivetrain.shiftDown();         // Low gear for autonomous
-		
 		// reads the selected autonomous mode from SmartDashboard
 //		autonomousCommand = chooser.getSelected();
 //		autonomousCommand = new PixyCheck();
@@ -246,8 +243,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-
-		Robot.drivetrain.shiftUp();      // High gear for Teleop
 	}
 
 	/**
